@@ -7,21 +7,21 @@ int main(void) {
 
   WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer
 
-  P1DIR &= ~BIT3;
-  P1DIR |= BIT0;                            // Set P1.0 to output direction
+  P1DIR |= LED;
+  P1DIR &= ~BT;
+  P1OUT |= BT;
+  P1REN |= BT;//pull up
 
-  P1REN |= BIT0;
-  P1OUT |= BIT0;
+  P1OUT |= LED;
 
-  P1OUT |= BIT0;       // if P1.4 set, set P1.0
 
-  while (1) {
-      /*
-    if ( (BIT3 & P1IN) )
-        P1OUT |= BIT0;
-    else
-        P1OUT &= ~BIT0;                    // else reset
-    */
+  while(1) {
+
+      if ( (P1IN & BT) )
+          P1OUT &= ~LED;
+      else
+          P1OUT |= LED;
+
   }
 
 }
