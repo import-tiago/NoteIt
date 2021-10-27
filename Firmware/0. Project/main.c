@@ -1,27 +1,39 @@
 #include <msp430.h>
-
-#define LED BIT0
-#define BT BIT3
+#include <peripherals.h>
 
 int main(void) {
 
-  WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer
+	Init_Watchdog();
+	Init_Oscillator();
+	Init_Pins();
+	Init_GPIO_Interrupt();
 
-  P1DIR |= LED;
-  P1DIR &= ~BT;
-  P1OUT |= BT;
-  P1REN |= BT;//pull up
+	while (1) {
 
-  P1OUT |= LED;
+	}
+}
 
+#pragma vector=PORT2_VECTOR
+__interrupt void ISR_GPIO_PORT2(void) {
 
-  while(1) {
+	if ((P2IFG & GPIO_SDCARD_DETECT)) {
+		P2IFG &= ~GPIO_SDCARD_DETECT;
 
-      if ( (P1IN & BT) )
-          P1OUT &= ~LED;
-      else
-          P1OUT |= LED;
+	}
 
-  }
+	if ((P2IFG & GPIO_ROTARY_ENCODER_SWITCH)) {
+		P2IFG &= ~GPIO_ROTARY_ENCODER_SWITCH;
+
+	}
+
+	if ((P2IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
+		P2IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+
+	}
+
+	if ((P2IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
+		P2IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+
+	}
 
 }
