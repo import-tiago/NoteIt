@@ -5,25 +5,22 @@
 SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
-CMD_SRCS += \
-../lnk_msp430g2553.cmd 
-
 C_SRCS += \
-../main.c 
+../myLibs/peripherals/peripherals.c 
 
 C_DEPS += \
-./main.d 
+./myLibs/peripherals/peripherals.d 
 
 OBJS += \
-./main.obj 
+./myLibs/peripherals/peripherals.obj 
 
 OBJS__QUOTED += \
-"main.obj" 
+"myLibs\peripherals\peripherals.obj" 
 
 C_DEPS__QUOTED += \
-"main.d" 
+"myLibs\peripherals\peripherals.d" 
 
 C_SRCS__QUOTED += \
-"../main.c" 
+"../myLibs/peripherals/peripherals.c" 
 
 

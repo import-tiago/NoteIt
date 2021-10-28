@@ -1,1 +1,1 @@
-"./main.obj" "../lnk_msp430g2553.cmd" -llibc.a 
+"./main.obj" "./myLibs/peripherals/peripherals.obj" "./myLibs/sdcard/hal_SPI.obj" "./myLibs/sdcard/mmc.obj" "../lnk_msp430g2553.cmd" -llibc.a 

@@ -11,6 +11,9 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
+"./myLibs/peripherals/peripherals.obj" \
+"./myLibs/sdcard/hal_SPI.obj" \
+"./myLibs/sdcard/mmc.obj" \
 "../lnk_msp430g2553.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -23,7 +26,11 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include myLibs/peripherals/subdir_vars.mk
+-include myLibs/sdcard/subdir_vars.mk
 -include subdir_rules.mk
+-include myLibs/peripherals/subdir_rules.mk
+-include myLibs/sdcard/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -154,8 +161,8 @@ NoteIt.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" 
-	-$(RM) "main.d" 
+	-$(RM) "main.obj" "myLibs\peripherals\peripherals.obj" "myLibs\sdcard\hal_SPI.obj" "myLibs\sdcard\mmc.obj" 
+	-$(RM) "main.d" "myLibs\peripherals\peripherals.d" "myLibs\sdcard\hal_SPI.d" "myLibs\sdcard\mmc.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

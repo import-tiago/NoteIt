@@ -5,25 +5,28 @@
 SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
-CMD_SRCS += \
-../lnk_msp430g2553.cmd 
-
 C_SRCS += \
-../main.c 
+../myLibs/sdcard/hal_SPI.c \
+../myLibs/sdcard/mmc.c 
 
 C_DEPS += \
-./main.d 
+./myLibs/sdcard/hal_SPI.d \
+./myLibs/sdcard/mmc.d 
 
 OBJS += \
-./main.obj 
+./myLibs/sdcard/hal_SPI.obj \
+./myLibs/sdcard/mmc.obj 
 
 OBJS__QUOTED += \
-"main.obj" 
+"myLibs\sdcard\hal_SPI.obj" \
+"myLibs\sdcard\mmc.obj" 
 
 C_DEPS__QUOTED += \
-"main.d" 
+"myLibs\sdcard\hal_SPI.d" \
+"myLibs\sdcard\mmc.d" 
 
 C_SRCS__QUOTED += \
-"../main.c" 
+"../myLibs/sdcard/hal_SPI.c" \
+"../myLibs/sdcard/mmc.c" 
 
 
