@@ -1,3 +1,0 @@
-
-CapTouch_BoosterPack_UserExperience_GUI
-CapTouch_BoosterPack_UserExperience_GUI.jar,core.jar,JSynClasses.jar,sonia_v2_9.jar,serial.jar,RXTXcomm.jar

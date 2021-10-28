@@ -1,3 +1,0 @@
-
-LaunchPad_Temp_GUI
-LaunchPad_Temp_GUI.jar,core.jar,RXTXcomm.jar,serial.jar
