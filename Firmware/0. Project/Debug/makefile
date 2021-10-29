@@ -14,7 +14,7 @@ ORDERED_OBJS += \
 "./myLibs/peripherals/peripherals.obj" \
 "./myLibs/sdcard/hal_SPI.obj" \
 "./myLibs/sdcard/mmc.obj" \
-"../lnk_msp430g2553.cmd" \
+"../lnk_msp430fr4133.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -147,7 +147,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 NoteIt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/bin/cl430" -vmsp -Ooff --use_hw_mpy=none --advice:power=all --define=__MSP430G2553__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"NoteIt.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1100/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/lib" -i"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="NoteIt_linkInfo.xml" --use_hw_mpy=none --rom_model -o "NoteIt.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/bin/cl430" -vmspx -Ooff --use_hw_mpy=none --advice:power=all --advice:hw_config=all --define=__MSP430FR4133__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 -z -m"NoteIt.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccs1100/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/lib" -i"C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="NoteIt_linkInfo.xml" --use_hw_mpy=none --rom_model -o "NoteIt.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
