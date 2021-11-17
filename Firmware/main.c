@@ -1,8 +1,8 @@
 #include <msp430.h>
+#include <RTC/DS3231.h>
 #include <stdint.h>
 #include "./FatFS/ff.h"
 #include "./FatFS/diskio.h"
-#include <./RTC/dsLib.h>
 
 void Software_Trim();            // Software Trim to get the best DCOFTRIM value
 #define MCLK_FREQ_MHZ 1                     // MCLK = 1MHz
@@ -33,7 +33,8 @@ void FloatToPrint(float floatValue, int32_t splitValue[2])
     splitValue[1] = i32FractionPart;
 }
 
-void i2cSetReset(void){
+void i2cSetReset(void)
+{
     // TODO: Fix so delay isn't needed
     __delay_cycles(200);    // 200 us wait for whatever transfer to finish
     UCB0CTLW0 |= UCSWRST;
@@ -55,27 +56,31 @@ int main(void)
 
     // Configure GPIO
 
-    P1SEL0 |= BIT2 | BIT3;                    // I2C pins
-    P1SEL1 &= ~(BIT2 | BIT3);
-
-
-
-
-
-
+    /* I2C */
+#define SDA BIT2
+#define SCL BIT3
+    P1SEL0 |= SDA | SCL;                            // I2C pins
 
     PM5CTL0 &= ~LOCKLPM5; // Disable the GPIO power-on default high-impedance mode to activate previously configured port settings
 
     // Enable interrupts
     __bis_SR_register(GIE);
 
-    DS3231GetCurrentTime();
+
+    I2C_Init(DS3231_I2C_ADDRESS);
+    Set_Current_Time_and_Date(1, 2, 3, 4, 5, 6, 7);
+    Get_Current_Time_and_Date();
+
+
+
+
+
     DS3231ClearAlarm1Bits();
     DS3231SetAlarm1Round10Sec();
     DS3231TurnAlarm1On();
     i2cSetReset();
 
-    DS3231GetCurrentTime();
+
     DS3231SetAlarm1Plus10Sec();
 
     // Mount the SD Card

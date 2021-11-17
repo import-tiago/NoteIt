@@ -31,7 +31,7 @@
 
 
 // Defines -------------------------------------------------------------------------------------------
-#define DS3231_I2C_ADDRESS 0x68
+#define DS3231_I2C_ADDRESS    0x68
 #define DS3231_REG_SECONDS    0x00
 #define DS3231_REG_MINUTES    0x01
 #define DS3231_REG_HOURS      0x02
@@ -56,22 +56,24 @@
 
 
 // Global --------------------------------------------------------------------------------------------
-uint8_t g_getTimeArr[7];	//{seconds, minutes, hours, day, date, month, year}
+uint8_t date_and_time_array[7];	//{seconds, minutes, hours, day, date, month, year}
+
+void I2C_Init(uint8_t slave_addr);
+
+uint8_t BCD_to_DEC(uint8_t value);
+uint8_t DEC_to_BCD(uint8_t value);
+
+void Get_Current_Time_and_Date(void);
+void Set_Current_Time_and_Date(uint8_t second, uint8_t minute, uint8_t hour, uint8_t dayOfWeek, uint8_t dayOfMonth, uint8_t month, uint8_t year);
 
 
 
-
-// Functions -----------------------------------------------------------------------------------------
-extern uint8_t bcd2bin(uint8_t val);
-extern uint8_t bin2bcd(uint8_t val);
 extern uint8_t roundUpToTen(uint8_t val);
-extern void DS3231GetCurrentTime(void);
 extern void DS3231SetAlarm1Plus10Sec(void);
 extern void DS3231SetAlarm1Round10Sec(void);
 extern void DS3231TurnAlarm1On(void);
 extern void DS3231TurnAlarm1Off(void);
 extern void DS3231ClearAlarm1Bits(void);
-
-
+unsigned int read_register(unsigned int reg_addr);
 
 #endif /* DSLIB_H_ */
