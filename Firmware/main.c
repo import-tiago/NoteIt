@@ -16,16 +16,14 @@ uint8_t status = 17;    // Status variable that should change if successful
 float testFloat = 85432.123;    // Sample floating point number
 int32_t printValue[2]; // Size 2 array that will hold the split float for printing
 
-void FloatToPrint(float floatValue, int32_t splitValue[2])
-{
+void FloatToPrint(float floatValue, int32_t splitValue[2]) {
     int32_t i32IntegerPart;
     int32_t i32FractionPart;
 
     i32IntegerPart = (int32_t) floatValue;
     i32FractionPart = (int32_t) (floatValue * 1000.0f);
     i32FractionPart = i32FractionPart - (1000 * i32IntegerPart);
-    if (i32FractionPart < 0)
-    {
+    if (i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -33,15 +31,13 @@ void FloatToPrint(float floatValue, int32_t splitValue[2])
     splitValue[1] = i32FractionPart;
 }
 
-void i2cSetReset(void)
-{
+void i2cSetReset(void) {
     // TODO: Fix so delay isn't needed
     __delay_cycles(200);    // 200 us wait for whatever transfer to finish
     UCB0CTLW0 |= UCSWRST;
 }
 
-int main(void)
-{
+int main(void) {
     WDTCTL = WDTPW | WDTHOLD;       // Stop WDT
 
     __bis_SR_register(SCG0);                // Disable FLL
@@ -66,13 +62,13 @@ int main(void)
     // Enable interrupts
     __bis_SR_register(GIE);
 
+    I2C_Init(DS3231_SLAVE_ADDR);
+    Set_Clock_and_Calendar(0, 17, 21, 4,17, 11, 21);
 
-    I2C_Init(DS3231_I2C_ADDRESS);
-    Set_Current_Time_and_Date(1, 2, 3, 4, 5, 6, 7);
-    Get_Current_Time_and_Date();
-
-
-
+    while(1){
+        Get_Current_Time_and_Date();
+        _delay_cycles(1000);
+    }
 
 
     DS3231ClearAlarm1Bits();
@@ -80,12 +76,10 @@ int main(void)
     DS3231TurnAlarm1On();
     i2cSetReset();
 
-
     DS3231SetAlarm1Plus10Sec();
 
     // Mount the SD Card
-    switch (f_mount(&sdVolume, "", 0))
-    {
+    switch (f_mount(&sdVolume, "", 0)) {
     __no_operation();
 case FR_OK:
     status = 42;
@@ -107,12 +101,10 @@ default:
     break;
     }
 
-    if (status != 42)
-    {
+    if (status != 42) {
         // Error has occurred
         P4OUT |= BIT6;
-        while (1)
-            ;
+        while (1);
     }
 
 //  DS3231GetCurrentTime();
@@ -121,30 +113,25 @@ default:
     FILINFO fno;
     FRESULT fr;
     uint8_t i;
-    for (i = 0; i < 100; i++)
-    {
+    for (i = 0; i < 100; i++) {
         filename[5] = i / 10 + '0';
         filename[6] = i % 10 + '0';
         fr = f_stat(filename, &fno);
         __no_operation();
-        if (fr == FR_OK)
-        {
+        if (fr == FR_OK) {
             __no_operation();
             continue;
         }
-        else if (fr == FR_NO_FILE)
-        {
+        else if (fr == FR_NO_FILE) {
             __no_operation();
             break;
         }
-        else
-        {
+        else {
             __no_operation();
             // Error occurred
             P4OUT |= BIT6;
             //  P1OUT |= BIT0;
-            while (1)
-                ;
+            while (1);
         }
     }
 
@@ -154,23 +141,19 @@ default:
     FloatToPrint(testFloat, printValue);
 
     // Open & write
-    if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK)
-    {   // Open file - If nonexistent, create
+    if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
         f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
-        for (i = 0; i < 10; i++)
-        {
+        for (i = 0; i < 10; i++) {
             f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
         }
         f_sync(&logfile);
         testFloat += 1205.57;
         FloatToPrint(testFloat, printValue);
-        for (i = 0; i < 10; i++)
-        {
+        for (i = 0; i < 10; i++) {
             f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
         }
         f_close(&logfile);                          // Close the file
-        if (bw == 11)
-        {
+        if (bw == 11) {
             __no_operation();
             //    P1OUT |= BIT0;
         }
@@ -179,11 +162,9 @@ default:
     //   P1OUT |= BIT0;
     __no_operation();
 
-    while (1)
-        ;
+    while (1);
 }
-void Software_Trim()
-{
+void Software_Trim() {
     unsigned int oldDcoTap = 0xffff;
     unsigned int newDcoTap = 0xffff;
     unsigned int newDcoDelta = 0xffff;
@@ -195,19 +176,16 @@ void Software_Trim()
     unsigned int dcoFreqTrim = 3;
     unsigned char endLoop = 0;
 
-    do
-    {
+    do {
         CSCTL0 = 0x100;                         // DCO Tap = 256
-        do
-        {
+        do {
             CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
         }
         while (CSCTL7 & DCOFFG);               // Test DCO fault flag
 
         __delay_cycles((unsigned int) 3000 * MCLK_FREQ_MHZ); // Wait FLL lock status (FLLUNLOCK) to be stable
                                                              // Suggest to wait 24 cycles of divided FLL reference clock
-        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0))
-            ;
+        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0));
 
         csCtl0Read = CSCTL0;                   // Read CSCTL0
         csCtl1Read = CSCTL1;                   // Read CSCTL1
@@ -217,12 +195,11 @@ void Software_Trim()
         dcoFreqTrim = (csCtl1Read & 0x0070) >> 4;       // Get DCOFTRIM value
 
         if (newDcoTap < 256)                    // DCOTAP < 256
-        {
+                {
             newDcoDelta = 256 - newDcoTap; // Delta value between DCPTAP and 256
             if ((oldDcoTap != 0xffff) && (oldDcoTap >= 256)) // DCOTAP cross 256
                 endLoop = 1;                   // Stop while loop
-            else
-            {
+            else {
                 dcoFreqTrim--;
                 CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
             }
@@ -232,15 +209,14 @@ void Software_Trim()
             newDcoDelta = newDcoTap - 256; // Delta value between DCPTAP and 256
             if (oldDcoTap < 256)                // DCOTAP cross 256
                 endLoop = 1;                   // Stop while loop
-            else
-            {
+            else {
                 dcoFreqTrim++;
                 CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
             }
         }
 
         if (newDcoDelta < bestDcoDelta)         // Record DCOTAP closest to 256
-        {
+                {
             csCtl0Copy = csCtl0Read;
             csCtl1Copy = csCtl1Read;
             bestDcoDelta = newDcoDelta;
@@ -251,7 +227,6 @@ void Software_Trim()
 
     CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
     CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
-    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1))
-        ; // Poll until FLL is locked
+    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)); // Poll until FLL is locked
 }
 
