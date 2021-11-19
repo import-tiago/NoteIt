@@ -161,7 +161,7 @@ float Get_Temperature() {
     int8_t tMSB = I2C_Read_Single_Byte(DS3231_REG_TEMP_MSB);
     int8_t tLSB = I2C_Read_Single_Byte(DS3231_REG_TEMP_LSB);
 
-    int16_t  itemp  = ( tMSB << 8 | (tLSB & bit_mask2) );  // Shift upper byte, add lower
+    int16_t  itemp  = ( tMSB << 8 | (tLSB & 0xC0) );  // Shift upper byte, add lower
     float f = ( (float)itemp / 256.0 );              // Scale and return
 
     return f;
