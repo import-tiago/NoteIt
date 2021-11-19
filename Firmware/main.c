@@ -67,7 +67,8 @@ int main(void) {
 
     while(1){
         Get_Current_Time_and_Date();
-        _delay_cycles(1000);
+        float f = Get_Temperature();
+        _delay_cycles(10000);
     }
 
 

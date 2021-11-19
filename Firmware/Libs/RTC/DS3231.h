@@ -31,7 +31,7 @@
 
 
 // Defines -------------------------------------------------------------------------------------------
-#define DS3231_SLAVE_ADDR      0x68
+#define DS3231_SLAVE_ADDR     0x68
 #define DS3231_REG_SECONDS    0x00
 #define DS3231_REG_MINUTES    0x01
 #define DS3231_REG_HOURS      0x02
@@ -51,7 +51,11 @@
 #define DS3231_REG_AGING      0x10
 #define DS3231_REG_TEMP_MSB   0x11
 #define DS3231_REG_TEMP_LSB   0x12
-#define DS3231_TIME_LENGTH	  0x07
+#define DS3231_TIME_LENGTH	    0x07
+
+
+#define _BV(bit)    (1 << (bit))
+#define  OSF_BIT    7
 
 
 
@@ -66,6 +70,6 @@ uint8_t DEC_to_BCD(uint8_t value);
 
 void Set_Clock_and_Calendar(uint8_t second, uint8_t minute, uint8_t hour, uint8_t dayOfWeek, uint8_t dayOfMonth, uint8_t month, uint8_t year);
 void Get_Current_Time_and_Date(void);
-
+float Get_Temperature();
 
 #endif /* DSLIB_H_ */
