@@ -157,7 +157,7 @@ float Get_Temperature() {
     /* Extracts the effective data from the register, removing information
      from bits not relevant to the data in question. */
     static const int8_t bit_mask2 = 0xC0;
-
+    // TODO: Test other ways to resolve this calcs
     int8_t tMSB = I2C_Read_Single_Byte(DS3231_REG_TEMP_MSB);
     int8_t tLSB = I2C_Read_Single_Byte(DS3231_REG_TEMP_LSB);
 
