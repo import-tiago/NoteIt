@@ -2,6 +2,8 @@
 #include <stdint.h>
 
 void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_bytes) {
+   // I2C_Master_Mode_Init();
+
     UCB0CTLW0 |= UCSWRST;                          // Software reset enabled
     UCB0CTLW0 |= UCMODE_3 + UCMST + UCSYNC + UCTR; // I2C mode, Master mode, sync, transmitter, SMCLK
     UCB0BRW = 0xA;                              // Baud rate = SMCLK/10 = 100kHz
@@ -12,15 +14,17 @@ void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_byte
     UCB0CTLW0 &= ~UCSWRST;                         // Clear reset
     UCB0IE &= ~UCRXIE;                        // Clear rx interrupt
     UCB0IE &= ~UCTXIE;                        // Clear tx interrupt
-    /*
-    UCB0I2CSA = slave_addr;     // target chip Slave address
+
+/*
     UCB0CTLW0 |= UCSWRST;
     UCB0CTLW1 |= UCASTP_2;      // Auto stop generates
     UCB0TBCNT = n_bytes + 1;    // Auto stop count
+    UCB0I2CSA = slave_addr;     // target chip Slave address
     UCB0CTLW0 &= ~UCSWRST;
 */
 
     UCB0CTLW0 |= UCTR | UCTXSTT;    // Transmitter mode and Send start
+    //UCB0CTLW0 |= UCTXSTT;    // Transmitter mode and Send start
     while (!(UCB0IFG & UCTXIFG0));
 
     UCB0TXBUF = reg_addr;           // Send register address

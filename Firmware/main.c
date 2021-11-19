@@ -39,7 +39,7 @@ void i2cSetReset(void) {
 
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;       // Stop WDT
-/*
+
     __bis_SR_register(SCG0);                // Disable FLL
     CSCTL3 = SELREF__REFOCLK;               // Set REFO as FLL reference source
     CSCTL1 = DCOFTRIMEN_1 | DCOFTRIM0 | DCOFTRIM1 | DCORSEL_0; // DCOFTRIM=3, DCO Range = 1MHz
@@ -50,7 +50,7 @@ int main(void) {
     CSCTL4 = SELMS__DCOCLKDIV | SELA__REFOCLK; // set default REFO(~32768Hz) as ACLK source, ACLK = 32768Hz
                                                // default DCODIV as MCLK and SMCLK source
 
-    */
+
 
     // Configure GPIO
 
