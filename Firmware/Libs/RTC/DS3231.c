@@ -1,16 +1,32 @@
 #include <RTC/DS3231.h>
 #include <stdint.h>
 
-void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr) {
+void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_bytes) {
+    UCB0CTLW0 |= UCSWRST;                          // Software reset enabled
+    UCB0CTLW0 |= UCMODE_3 + UCMST + UCSYNC + UCTR; // I2C mode, Master mode, sync, transmitter, SMCLK
+    UCB0BRW = 0xA;                              // Baud rate = SMCLK/10 = 100kHz
+    UCB0CTLW1 |= UCASTP_2;                    // Auto stop
+    UCB0TBCNT = 0xF; // Auto stop count - 6 greater than necessary, will manual stop
 
+    UCB0I2CSA = 0x68;                       // Slave address
+    UCB0CTLW0 &= ~UCSWRST;                         // Clear reset
+    UCB0IE &= ~UCRXIE;                        // Clear rx interrupt
+    UCB0IE &= ~UCTXIE;                        // Clear tx interrupt
+    /*
     UCB0I2CSA = slave_addr;     // target chip Slave address
-    while (UCB0CTLW0 & UCTXSTP);             // Ensure stop condition got sent
-    UCB0CTLW0 |= UCTR;    // Transmitter mode
-    UCB0CTLW0 |= UCTXSTT; // Send start
+    UCB0CTLW0 |= UCSWRST;
+    UCB0CTLW1 |= UCASTP_2;      // Auto stop generates
+    UCB0TBCNT = n_bytes + 1;    // Auto stop count
+    UCB0CTLW0 &= ~UCSWRST;
+*/
+
+    UCB0CTLW0 |= UCTR | UCTXSTT;    // Transmitter mode and Send start
     while (!(UCB0IFG & UCTXIFG0));
 
     UCB0TXBUF = reg_addr;           // Send register address
     while (!(UCB0IFG & UCTXIFG0));
+
+
 }
 
 void I2C_Finish_Transmission() {
@@ -30,7 +46,9 @@ void I2C_Send(uint8_t value) {
 
 void I2C_Request_From(uint8_t slave_addr, uint8_t register_addr) {
 
-    UCB0I2CSA = slave_addr;                       // target chip Slave address
+    UCB0CTLW0 |= UCSWRST;
+        UCB0I2CSA = slave_addr;     // target chip Slave address
+        UCB0CTLW0 &= ~UCSWRST;
 
     UCB0CTLW0 |= UCTR;    // Transmitter mode
     UCB0CTLW0 |= UCTXSTT; // Send start
@@ -39,9 +57,9 @@ void I2C_Request_From(uint8_t slave_addr, uint8_t register_addr) {
     UCB0TXBUF = register_addr;           // Send register address
     while (!(UCB0IFG & UCTXIFG0));
 
-    //TODO: Repeated Start Condition (?)
+
     UCB0CTLW0 &= ~UCTR;             // Receiver mode
-    UCB0CTLW0 |= UCTXSTT;           // Send start
+    UCB0CTLW0 |=  UCTXSTT;           // Send Repeated Start Condition
     while (UCB0CTLW0 & UCTXSTT);    // Wait for start
 }
 
@@ -61,10 +79,22 @@ uint8_t DEC_to_BCD(uint8_t value) {
     return value + 6 * (value / 10);
 }
 
+
 void I2C_Master_Mode_Init() {
+    UCB0CTLW0 |= UCSWRST;                          // Software reset enabled
+    UCB0CTLW0 |= UCMODE_3 + UCMST + UCSYNC + UCTR; // I2C mode, Master mode, sync, transmitter, SMCLK
+    UCB0BRW = 0xA;                              // Baud rate = SMCLK/10 = 100kHz
+    UCB0CTLW1 |= UCASTP_2;                    // Auto stop
+    UCB0TBCNT = 0xF; // Auto stop count - 6 greater than necessary, will manual stop
+
+    UCB0I2CSA = 0x68;                       // Slave address
+    UCB0CTLW0 &= ~UCSWRST;                         // Clear reset
+    UCB0IE &= ~UCRXIE;                        // Clear rx interrupt
+    UCB0IE &= ~UCTXIE;                        // Clear tx interrupt
+    /*
     UCB0CTLW0 |= UCSWRST;                          // Enable changes operations to some bits from some registers from USCI_B
-    UCB0BRW = 0xA;                              // Clock prescaler setting = SMCLK/UCB0BRW = 1MHz/10 = 100kHz
-    UCB0CTLW0 |= UCMODE_3 | UCSYNC_1 | UCMST;                              // | UCTR; // I2C mode, Synchronous mode, Master mode, SMCLK
+    UCB0BRW = 10;                              // Clock prescaler setting = SMCLK/UCB0BRW = 1MHz/10 = 100kHz
+    UCB0CTLW0 |= UCMODE_3 | UCSYNC | UCMST;                              // | UCTR; // I2C mode, Synchronous mode, Master mode, SMCLK
     // Single-master system as default
     // Single-slave addresses as default
     // 7-bit slave address as default
@@ -72,11 +102,7 @@ void I2C_Master_Mode_Init() {
     //UCB0TBCNT  = 0xF;                              // Auto stop count greater than necessary = will manual stop
 
     UCB0CTLW0 &= ~UCSWRST;                         // Disable changes operations to some bits from some registers from USCI_B
-
-    //UCB0IE    &= ~UCRXIE;                          // Clear Rx interrupt
-    //UCB0IE    &= ~UCTXIE;                          // Clear Tx interrupt
-    UCB0IE   |= UCRXIE;                          // Clear Rx interrupt
-    UCB0IE   |= UCTXIE;                          // Clear Tx interrupt
+*/
 }
 
 // Read a single byte from RTC RAM.
@@ -97,7 +123,7 @@ int8_t I2C_Read_Single_Byte(uint8_t slave_addr, uint8_t addr) {
 // Returns the I2C status (zero if successful).
 void I2C_Write_Single_Byte(uint8_t slave_addr, uint8_t register_addr, int8_t data) {
 
-    I2C_Begin_Transmission(slave_addr, register_addr);
+    I2C_Begin_Transmission(slave_addr, register_addr, 1);
 
     I2C_Send(data);
 
@@ -131,7 +157,7 @@ uint8_t* Get_Current_Time_and_Date(void) {
 
 void Set_Clock_and_Calendar(uint8_t second, uint8_t minute, uint8_t hour, uint8_t week_day, uint8_t month_day, uint8_t month, uint8_t year) {
 
-    I2C_Begin_Transmission(DS3231_SLAVE_ADDR, DS3231_REG_SECONDS);
+    I2C_Begin_Transmission(DS3231_SLAVE_ADDR, DS3231_REG_SECONDS, 7);
 
     I2C_Send(DEC_to_BCD(second)); // set seconds
     I2C_Send(DEC_to_BCD(minute)); // set minutes
