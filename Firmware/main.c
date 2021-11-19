@@ -61,24 +61,30 @@ int main(void) {
 
     // Enable interrupts
     __bis_SR_register(GIE);
+    I2C_Master_Mode_Init();
 
-    I2C_Init(DS3231_SLAVE_ADDR);
-    Set_Clock_and_Calendar(0, 17, 21, 4,17, 11, 21);
+    Set_Clock_and_Calendar(0, 17, 21, 4, 17, 11, 21);
 
-    while(1){
-        Get_Current_Time_and_Date();
-        float f = Get_Temperature();
+
+
+    while (1) {
+        uint8_t array[7];
+        uint8_t y = 0;
+        uint8_t *time = Get_Current_Time_and_Date();
+        float temp = Get_Temperature();
+
+        for ( y = 0; y < 7; y++ ) {
+            array[y] = *(time++);
+
+           }
+
+
         _delay_cycles(10000);
+        __no_operation();
     }
 
 
-    DS3231ClearAlarm1Bits();
-    DS3231SetAlarm1Round10Sec();
-    DS3231TurnAlarm1On();
-    i2cSetReset();
-
-    DS3231SetAlarm1Plus10Sec();
-
+/*
     // Mount the SD Card
     switch (f_mount(&sdVolume, "", 0)) {
     __no_operation();
@@ -162,8 +168,8 @@ default:
 
     //   P1OUT |= BIT0;
     __no_operation();
+*/
 
-    while (1);
 }
 void Software_Trim() {
     unsigned int oldDcoTap = 0xffff;

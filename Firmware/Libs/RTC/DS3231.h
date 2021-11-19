@@ -22,13 +22,9 @@
 #ifndef DSLIB_H_
 #define DSLIB_H_
 
-
-
 // Includes ------------------------------------------------------------------------------------------
 #include <stdint.h>
 #include <msp430.h>
-
-
 
 // Defines -------------------------------------------------------------------------------------------
 #define DS3231_SLAVE_ADDR     0x68
@@ -37,7 +33,7 @@
 #define DS3231_REG_HOURS      0x02
 #define DS3231_REG_DAYOFWEEK  0x03
 #define DS3231_REG_DAYOFMONTH 0x04
-#define DS3231_REG_MONTH      0x05
+#define DS3231_REG_MONTH       0x05
 #define DS3231_REG_YEAR       0x06
 #define DS3231_REG_A1SECONDS  0x07
 #define DS3231_REG_A1MINUTES  0x08
@@ -53,23 +49,19 @@
 #define DS3231_REG_TEMP_LSB   0x12
 #define DS3231_TIME_LENGTH	    0x07
 
-
 #define _BV(bit)    (1 << (bit))
 #define  OSF_BIT    7
 
-
-
 // Global --------------------------------------------------------------------------------------------
-uint8_t date_and_time_array[7];	//{seconds, minutes, hours, day, date, month, year}
 
-void I2C_Init(uint8_t slave_addr);
+
+void I2C_Master_Mode_Init(void);
 
 uint8_t BCD_to_DEC(uint8_t value);
 uint8_t DEC_to_BCD(uint8_t value);
 
-
 void Set_Clock_and_Calendar(uint8_t second, uint8_t minute, uint8_t hour, uint8_t dayOfWeek, uint8_t dayOfMonth, uint8_t month, uint8_t year);
-void Get_Current_Time_and_Date(void);
+uint8_t* Get_Current_Time_and_Date(void);
 float Get_Temperature();
 
 #endif /* DSLIB_H_ */
