@@ -1,39 +1,16 @@
-// dsLib.h
-//
-//****************************************************************************************************
-// Author:
-// 	Nipun Gunawardena
-//
-// Credits:
-//	Inspired by https://github.com/mizraith/RTClib/blob/master/RTC_DS3231.cpp
-//
-// Requirements:
-//	dsLib.c
-//
-// Description:
-// 	Interface with DS3231 to get time
-//
-// Notes:
-//
-// Todo:
-//	Make more durable, timeouts, testing, etc.
-//****************************************************************************************************
+#ifndef RTC_H_
+#define RTC_H_
 
-#ifndef DSLIB_H_
-#define DSLIB_H_
-
-// Includes ------------------------------------------------------------------------------------------
-#include <stdint.h>
 #include <msp430.h>
+#include <stdint.h>
 
-// Defines -------------------------------------------------------------------------------------------
 #define DS3231_SLAVE_ADDR     0x68
 #define DS3231_REG_SECONDS    0x00
 #define DS3231_REG_MINUTES    0x01
 #define DS3231_REG_HOURS      0x02
 #define DS3231_REG_DAYOFWEEK  0x03
 #define DS3231_REG_DAYOFMONTH 0x04
-#define DS3231_REG_MONTH       0x05
+#define DS3231_REG_MONTH      0x05
 #define DS3231_REG_YEAR       0x06
 #define DS3231_REG_A1SECONDS  0x07
 #define DS3231_REG_A1MINUTES  0x08
@@ -47,15 +24,10 @@
 #define DS3231_REG_AGING      0x10
 #define DS3231_REG_TEMP_MSB   0x11
 #define DS3231_REG_TEMP_LSB   0x12
-#define DS3231_TIME_LENGTH	    0x07
+#define DS3231_TIME_LENGTH	  0x07
 
-#define _BV(bit)    (1 << (bit))
-#define  OSF_BIT    7
-
-// Global --------------------------------------------------------------------------------------------
-
-
-void I2C_Master_Mode_Init(void);
+#define _BV(bit)    		 (1 << (bit))
+#define  OSF_BIT    	      7
 
 uint8_t BCD_to_DEC(uint8_t value);
 uint8_t DEC_to_BCD(uint8_t value);
@@ -64,4 +36,4 @@ void Set_Clock_and_Calendar(uint8_t second, uint8_t minute, uint8_t hour, uint8_
 uint8_t* Get_Current_Time_and_Date(void);
 float Get_Temperature();
 
-#endif /* DSLIB_H_ */
+#endif // RTC_H_
