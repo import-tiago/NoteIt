@@ -1,12 +1,18 @@
-#include <./I2C/I2C.h>
+#include <./HAL_MCU/I2C/I2C.h>
+#include <./HAL_BOARD/HAL_BOARD.h>
+#include <./HAL_MCU/HAL_MCU.h>
 #include <stdint.h>
 #include <msp430.h>
 
-void I2C_Master_Mode_Init() {
-    UCB0CTLW0 |= UCSWRST;                                // Software reset enabled (Puts eUSCI_B in configuration mode)
-    UCB0CTLW0 |= UCMODE_3 | UCMST | UCSYNC_1 | UCSSEL_2; // I2C mode, Master mode, Synchronous mode, SMCLK as clock source
-    UCB0BRW = 10;                                        // Baud rate = SMCLK/10 = 100kHz
-    UCB0CTLW0 &= ~UCSWRST;                               // Clear software reset
+void I2C_Master_Mode_Init(uint8_t eUSCI) {
+    switch (eUSCI) {
+       case eUSCI_B0:
+        UCB0CTLW0 |= UCSWRST;                                // Software reset enabled (Puts eUSCI in configuration mode)
+        UCB0CTLW0 |= UCMODE_3 | UCMST | UCSYNC_1 | UCSSEL_2; // I2C mode, Master mode, Synchronous mode, SMCLK as clock source
+        UCB0BRW = 10;                                        // Clock prescaler = SMCLK/10 = 100kHz
+        UCB0CTLW0 &= ~UCSWRST;                               // Clear software reset
+    break;
+    }
 }
 
 void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_bytes) {

@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <./RTC/DS3231.h>
-#include <./I2C/I2C.h>
+#include <./HAL_MCU/I2C/I2C.h>
 
 uint8_t BCD_to_DEC(uint8_t value) {
     return value - 6 * (value >> 4);

@@ -1,15 +1,19 @@
 #include <msp430.h>
 #include <stdint.h>
-#include <./I2C/I2C.h>
+
+#include <./HAL_BOARD/HAL_BOARD.h>
+#include <./HAL_MCU/HAL_MCU.h>
+#include <./HAL_MCU/I2C/I2C.h>
+#include <./HAL_MCU/SPI/SPI.h>
 #include <./RTC/DS3231.h>
-#include <./FatFS/ff.h>
-#include <./FatFS/diskio.h>
+#include <./DISPLAY/SSD1306.h>
+#include <./SDCARD/ff.h>
+#include <./SDCARD/diskio.h>
 
 uint8_t *g_current_time_and_date;
 float temp = 0;
 
-#define SDA BIT2
-#define SCL BIT3
+
 
 FATFS sdVolume;     // FatFs work area needed for each volume
 FIL logfile;        // File object needed for each open file
@@ -36,12 +40,25 @@ void FloatToPrint(float floatValue, int32_t splitValue[2]) {
 }
 
 int main(void) {
-    WDTCTL = WDTPW | WDTHOLD;   // Stop WDT
-    P1SEL0 |= SDA | SCL;        // I2C pins
-    PM5CTL0 &= ~LOCKLPM5;       // Disable the GPIO power-on default high-impedance mode to activate previously configured port settings
+
+    Watchdog_Init();
+    GPIOs_Init();
+    //Oscillator_Init(); //16MHz
+    //SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
+    SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
+    //I2C_Master_Mode_Init(eUSCI_B0); //RTC
+
     __enable_interrupt();
 
-    I2C_Master_Mode_Init();
+    Display_Init();
+
+    string_typer(0, 0, "TESTE", 0, 1000);
+
+    while (1) {
+
+    }
+
+/*
 
     Set_Clock_and_Calendar(0, 17, 21, 4, 17, 11, 21);
 
@@ -52,90 +69,89 @@ int main(void) {
         __no_operation();
     }
 
-    /*
-     // Mount the SD Card
-     switch (f_mount(&sdVolume, "", 0)) {
-     __no_operation();
-     case FR_OK:
-     status = 42;
-     break;
-     case FR_INVALID_DRIVE:
-     status = 1;
-     break;
-     case FR_DISK_ERR:
-     status = 2;
-     break;
-     case FR_NOT_READY:
-     status = 3;
-     break;
-     case FR_NO_FILESYSTEM:
-     status = 4;
-     break;
-     default:
-     status = 5;
-     break;
-     }
+    //SD CARD Test
+    // Mount the SD Card
+    switch (f_mount(&sdVolume, "", 0)) {
+    __no_operation();
+case FR_OK:
+    status = 42;
+    break;
+case FR_INVALID_DRIVE:
+    status = 1;
+    break;
+case FR_DISK_ERR:
+    status = 2;
+    break;
+case FR_NOT_READY:
+    status = 3;
+    break;
+case FR_NO_FILESYSTEM:
+    status = 4;
+    break;
+default:
+    status = 5;
+    break;
+    }
 
-     if (status != 42) {
-     // Error has occurred
-     P4OUT |= BIT6;
-     while (1);
-     }
+    if (status != 42) {
+        // Error has occurred
+        P4OUT |= BIT6;
+        while (1);
+    }
 
-     //  DS3231GetCurrentTime();
+    //  DS3231GetCurrentTime();
 
-     char filename[] = "LOG2_00.csv";
-     FILINFO fno;
-     FRESULT fr;
-     uint8_t i;
-     for (i = 0; i < 100; i++) {
-     filename[5] = i / 10 + '0';
-     filename[6] = i % 10 + '0';
-     fr = f_stat(filename, &fno);
-     __no_operation();
-     if (fr == FR_OK) {
-     __no_operation();
-     continue;
-     }
-     else if (fr == FR_NO_FILE) {
-     __no_operation();
-     break;
-     }
-     else {
-     __no_operation();
-     // Error occurred
-     P4OUT |= BIT6;
-     //  P1OUT |= BIT0;
-     while (1);
-     }
-     }
+    char filename[] = "LOG2_00.csv";
+    FILINFO fno;
+    FRESULT fr;
+    uint8_t i;
+    for (i = 0; i < 100; i++) {
+        filename[5] = i / 10 + '0';
+        filename[6] = i % 10 + '0';
+        fr = f_stat(filename, &fno);
+        __no_operation();
+        if (fr == FR_OK) {
+            __no_operation();
+            continue;
+        }
+        else if (fr == FR_NO_FILE) {
+            __no_operation();
+            break;
+        }
+        else {
+            __no_operation();
+            // Error occurred
+            P4OUT |= BIT6;
+            //  P1OUT |= BIT0;
+            while (1);
+        }
+    }
 
-     // Initialize result variable
-     UINT bw = 0;
+    // Initialize result variable
+    UINT bw = 0;
 
-     FloatToPrint(testFloat, printValue);
+    FloatToPrint(testFloat, printValue);
 
-     // Open & write
-     if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
-     f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
-     for (i = 0; i < 10; i++) {
-     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-     }
-     f_sync(&logfile);
-     testFloat += 1205.57;
-     FloatToPrint(testFloat, printValue);
-     for (i = 0; i < 10; i++) {
-     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-     }
-     f_close(&logfile);                          // Close the file
-     if (bw == 11) {
-     __no_operation();
-     //    P1OUT |= BIT0;
-     }
-     }
+    // Open & write
+    if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
+        f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
+        for (i = 0; i < 10; i++) {
+            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+        }
+        f_sync(&logfile);
+        testFloat += 1205.57;
+        FloatToPrint(testFloat, printValue);
+        for (i = 0; i < 10; i++) {
+            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+        }
+        f_close(&logfile);                          // Close the file
+        if (bw == 11) {
+            __no_operation();
+            //    P1OUT |= BIT0;
+        }
+    }
 
-     //   P1OUT |= BIT0;
-     __no_operation();
-     */
-
+    //   P1OUT |= BIT0;
+    __no_operation();
+*/
 }
