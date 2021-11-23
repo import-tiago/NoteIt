@@ -7,39 +7,36 @@
 void SPI_Master_Mode_Init(uint8_t eUSCI) {
     switch (eUSCI) {
     case eUSCI_A0:
-        UCA0CTLW0 |=  UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
+        UCA0CTLW0 |= UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
         UCA0CTLW0 |=
-                       UCMODE_0 |  // 3-pin SPI mode (without slave transmission control a.k.a. UCxSTE pin)
-                       UCMST_1  |  // Master mode
-                       UCSYNC_1 |  // Synchronous mode
-                       UCCKPH_1 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
-                       UCCKPL_1 |  // Clock polarity = LOW as inactive state
-                       UCSSEL_2 |  // eUSCI clock source = SMCLK
-                       UCMSB;      // Direction of the receive and transmit shift register is MSB first
-        UCA0BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+        UCMODE_0 |  // 3-pin SPI mode (without slave transmission control a.k.a. UCxSTE pin)
+                UCMST_1 |  // Master mode
+                UCSYNC_1 |  // Synchronous mode
+                UCCKPH_1 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
+                UCCKPL_1 |  // Clock polarity = LOW as inactive state
+                UCSSEL_2 |  // eUSCI clock source = SMCLK
+                UCMSB;      // Direction of the receive and transmit shift register is MSB first
+        //UCA0BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+
         UCA0CTLW0 &= ~UCSWRST;    // Clear software reset
         break;
 
-
     case eUSCI_B1:
-        UCB1CTLW0 |=  UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
+        UCB1CTLW0 |= UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
         UCB1CTLW0 |=
-                       UCMODE_0 |  // 3-pin SPI mode
-                       UCMST_1  |  // Master mode
-                       UCSYNC_1 |  // Synchronous mode
-                       UCCKPH_1 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
-                       UCCKPL_1 |  // Clock polarity = LOW as inactive state
-                       UCSSEL_2 |  // eUSCI clock source = SMCLK
-                       UCMSB;      // Direction of the receive and transmit shift register is MSB first
-        UCA1BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+        UCMODE_0 |  // 3-pin SPI mode
+                UCMST_1 |  // Master mode
+                UCSYNC_1 |  // Synchronous mode
+                UCCKPH_1 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
+                UCCKPL_1 |  // Clock polarity = LOW as inactive state
+                UCSSEL_2 |  // eUSCI clock source = SMCLK
+                UCMSB;      // Direction of the receive and transmit shift register is MSB first
+        UCB1BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+
         UCB1CTLW0 &= ~UCSWRST;    // Clear software reset
         break;
     }
 }
-
-
-
-
 
 static void rcvr_spi_m(uint8_t *dst) {
     *dst = rcvr_spi();

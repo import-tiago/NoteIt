@@ -75,11 +75,12 @@ void GPIOs_Init() {
 	SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
 	P1SEL0  |= SPI_UCA0_SIMO | SPI_UCA0_SOMI | SPI_UCA0_CLK; //SD Card (SPI)
 	
-	SYSCFG2 |= USCIB0RMP;                       			 //Set the remapping source
+	SYSCFG3 |= USCIB0RMP;                       			 //Set the remapping source
 	P1SEL0  |= I2C_UCB0_SDA | I2C_UCB0_SCL;                  //RTC (I2C)
 	
-	SYSCFG2 |= USCIB1RMP;                       			 //Set the remapping source
-	P4SEL0  |= SPI_UCB1_SIMO | SPI_UCB1_SOMI | SPI_UCB1_CLK; //SD Card (SPI)
+	SYSCFG3 |= USCIB1RMP;                       			 //Set the remapping source
+	P4SEL0  |= SPI_UCB1_SIMO | SPI_UCB1_SOMI; //OLED Display (SPI)
+	P5SEL0  |= SPI_UCB1_CLK;
 	
     PM5CTL0 &= ~LOCKLPM5; // GPIO High-Impedance OFF
 }
