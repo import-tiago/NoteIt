@@ -11,7 +11,7 @@ uint8_t DEC_to_BCD(uint8_t value) {
 }
 
 uint8_t* Get_Current_Time_and_Date(void) {
-    static uint8_t date_and_time_array[7];
+    static int8_t date_and_time_array[7];
     int i = 0;
 
     static const uint8_t bit_mask[] = { 0x7F, 0x7F, 0x3F, 0x7, 0x3F, 0x1F, 0xFF };
