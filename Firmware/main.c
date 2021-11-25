@@ -15,6 +15,8 @@
 int8_t *g_current_time_and_date;
 float temp = 0;
 
+int pos;
+
 FATFS sdVolume;     // FatFs work area needed for each volume
 FIL logfile;        // File object needed for each open file
 uint16_t fp;        // Used for sizeof
@@ -43,6 +45,7 @@ int main(void) {
 
     Watchdog_Init();
     GPIOs_Init();
+    GPIO_Interrupt_Init();
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
@@ -70,11 +73,11 @@ int main(void) {
         temp = Get_Temperature();
         sprintf(array_temp, "%.2f", temp);
 
-        sec = *(g_current_time_and_date+0);
-        min = *(g_current_time_and_date+1);
-        hr = *(g_current_time_and_date+2);
+        sec = *(g_current_time_and_date + 0);
+        min = *(g_current_time_and_date + 1);
+        hr = *(g_current_time_and_date + 2);
 
-        sprintf(clock, "%d:%d:%d", hr, min,sec );
+        sprintf(clock, "%d:%d:%d", hr, min, sec);
 
         string_typer(0, 0, array_temp, 2, 1000);
         string_typer(0, 4, clock, 2, 1000);
@@ -178,4 +181,42 @@ int main(void) {
      //   P1OUT |= BIT0;
      __no_operation();
      */
+}
+
+//EXTERNAL INPUT EDGE DETECT
+#pragma vector=PORT4_VECTOR
+__interrupt void Port_4(void) {
+
+  //  P4IE &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+
+    if ((P4IFG & GPIO_ROTARY_ENCODER_BUTTON)) {
+        if ((P4IN & GPIO_ROTARY_ENCODER_BUTTON))
+            pos++;
+        else
+            pos--;
+
+        //P4IES ^= GPIO_ROTARY_ENCODER_BUTTON;   // Toggle the edge trigger
+        P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;  // Clear interrupt flag
+    }
+
+    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
+        if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A))
+            pos++;
+        else
+            pos--;
+
+        //P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;   // Toggle the edge trigger
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;  // Clear interrupt flag
+    }
+
+    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
+        if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B))
+            pos++;
+        else
+            pos--;
+
+       // P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_B;   // Toggle the edge trigger
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;  // Clear interrupt flag
+    }
+   // P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
 }

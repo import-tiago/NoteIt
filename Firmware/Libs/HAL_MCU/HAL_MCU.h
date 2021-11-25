@@ -14,5 +14,6 @@ void Oscillator_Init();
 void GPIOs_Init();
 void GPIO_Interrupt_Init();
 void ADC_Init();
+void Init_GPIO_Interrupt();
 
 #endif // HAL_MCU_H_

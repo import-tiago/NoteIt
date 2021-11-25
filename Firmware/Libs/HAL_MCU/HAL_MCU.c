@@ -64,28 +64,37 @@ void GPIOs_Init() {
     P4DIR &= ~GPIO_SDCARD_DETECT;
     P4DIR &= ~GPIO_EXTERNAL_SUPPLY_DETECT;
 
-    /*  THIRD STEP: SPECIAL FUNCTIONS  */		
-    P2SEL0  |= XTAL_IN | XTAL_OUT;                           //Low Frequency Crystal
-	
-	P1SEL0  |= ADC_BATTERY_VOLTAGE;                          //Battery Voltage Monitor (ADC)
-	P1SEL1  |= ADC_BATTERY_VOLTAGE;
+    //PULL-UPs and PULL DOWNs
+    P4OUT |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B; //enable pull-up resistor
+    P4REN |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;   //enable pull-up resistor
 
-	P2SEL0  |= UART_UCA1_RX;                                 //Data logger (UART)
-	
-	SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
-	P1SEL0  |= SPI_UCA0_SIMO | SPI_UCA0_SOMI | SPI_UCA0_CLK; //SD Card (SPI)
-	
-	SYSCFG3 |= USCIB0RMP;                       			 //Set the remapping source
-	P1SEL0  |= I2C_UCB0_SDA | I2C_UCB0_SCL;                  //RTC (I2C)
-	
-	SYSCFG3 |= USCIB1RMP;                       			 //Set the remapping source
-	P4SEL0  |= SPI_UCB1_SIMO | SPI_UCB1_SOMI; //OLED Display (SPI)
-	P5SEL0  |= SPI_UCB1_CLK;
-	
+
+    /*  THIRD STEP: SPECIAL FUNCTIONS  */
+    P2SEL0 |= XTAL_IN | XTAL_OUT;                           //Low Frequency Crystal
+
+    P1SEL0 |= ADC_BATTERY_VOLTAGE;                          //Battery Voltage Monitor (ADC)
+    P1SEL1 |= ADC_BATTERY_VOLTAGE;
+
+    P2SEL0 |= UART_UCA1_RX;                                 //Data logger (UART)
+
+    SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
+    P1SEL0 |= SPI_UCA0_SIMO | SPI_UCA0_SOMI | SPI_UCA0_CLK; //SD Card (SPI)
+
+    SYSCFG3 |= USCIB0RMP;                       			 //Set the remapping source
+    P1SEL0 |= I2C_UCB0_SDA | I2C_UCB0_SCL;                  //RTC (I2C)
+
+    SYSCFG3 |= USCIB1RMP;                       			 //Set the remapping source
+    P4SEL0 |= SPI_UCB1_SIMO | SPI_UCB1_SOMI; //OLED Display (SPI)
+    P5SEL0 |= SPI_UCB1_CLK;
+
     PM5CTL0 &= ~LOCKLPM5; // GPIO High-Impedance OFF
 }
 
-void GPIO_Interrupt_Init() {    
+void GPIO_Interrupt_Init() {
+
+    P4IES |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
+    P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
+    P4IFG &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
     //P1IES |= BIT2;   // Select the wake-up edge trigger (0: low-to-high | 1: high-to-low)
     //P1IE |= BIT2;   // Set the interrupt enable
     //P1IFG &= ~BIT2;    
@@ -107,66 +116,82 @@ void ADC_Init() {
 }
 
 void Software_Trim() {
-	unsigned int oldDcoTap = 0xffff;
-	unsigned int newDcoTap = 0xffff;
-	unsigned int newDcoDelta = 0xffff;
-	unsigned int bestDcoDelta = 0xffff;
-	unsigned int csCtl0Copy = 0;
-	unsigned int csCtl1Copy = 0;
-	unsigned int csCtl0Read = 0;
-	unsigned int csCtl1Read = 0;
-	unsigned int dcoFreqTrim = 3;
-	unsigned char endLoop = 0;
+    unsigned int oldDcoTap = 0xffff;
+    unsigned int newDcoTap = 0xffff;
+    unsigned int newDcoDelta = 0xffff;
+    unsigned int bestDcoDelta = 0xffff;
+    unsigned int csCtl0Copy = 0;
+    unsigned int csCtl1Copy = 0;
+    unsigned int csCtl0Read = 0;
+    unsigned int csCtl1Read = 0;
+    unsigned int dcoFreqTrim = 3;
+    unsigned char endLoop = 0;
 
-	do {
-		CSCTL0 = 0x100;                         // DCO Tap = 256
-		do {
-			CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
-		} while (CSCTL7 & DCOFFG);               // Test DCO fault flag
+    do {
+        CSCTL0 = 0x100;                         // DCO Tap = 256
+        do {
+            CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
+        }
+        while (CSCTL7 & DCOFFG);               // Test DCO fault flag
 
-		__delay_cycles((unsigned int) 3000 * 16);               // Wait FLL lock status (FLLUNLOCK) to be stable
-																		   // Suggest to wait 24 cycles of divided FLL reference clock
-		while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0))
-			;
+        __delay_cycles((unsigned int) 3000 * 16);               // Wait FLL lock status (FLLUNLOCK) to be stable
+                                                                // Suggest to wait 24 cycles of divided FLL reference clock
+        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0));
 
-		csCtl0Read = CSCTL0;                   // Read CSCTL0
-		csCtl1Read = CSCTL1;                   // Read CSCTL1
+        csCtl0Read = CSCTL0;                   // Read CSCTL0
+        csCtl1Read = CSCTL1;                   // Read CSCTL1
 
-		oldDcoTap = newDcoTap;                 // Record DCOTAP value of last time
-		newDcoTap = csCtl0Read & 0x01ff;       // Get DCOTAP value of this time
-		dcoFreqTrim = (csCtl1Read & 0x0070) >> 4;       // Get DCOFTRIM value
+        oldDcoTap = newDcoTap;                 // Record DCOTAP value of last time
+        newDcoTap = csCtl0Read & 0x01ff;       // Get DCOTAP value of this time
+        dcoFreqTrim = (csCtl1Read & 0x0070) >> 4;       // Get DCOFTRIM value
 
-		if (newDcoTap < 256)                    // DCOTAP < 256
-				{
-			newDcoDelta = 256 - newDcoTap;     // Delta value between DCPTAP and 256
-			if ((oldDcoTap != 0xffff) && (oldDcoTap >= 256)) // DCOTAP cross 256
-				endLoop = 1;                   // Stop while loop
-			else {
-				dcoFreqTrim--;
-				CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
-			}
-		} else                                   // DCOTAP >= 256
-		{
-			newDcoDelta = newDcoTap - 256;     // Delta value between DCPTAP and 256
-			if (oldDcoTap < 256)                // DCOTAP cross 256
-				endLoop = 1;                   // Stop while loop
-			else {
-				dcoFreqTrim++;
-				CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
-			}
-		}
+        if (newDcoTap < 256)                    // DCOTAP < 256
+                {
+            newDcoDelta = 256 - newDcoTap;     // Delta value between DCPTAP and 256
+            if ((oldDcoTap != 0xffff) && (oldDcoTap >= 256)) // DCOTAP cross 256
+                endLoop = 1;                   // Stop while loop
+            else {
+                dcoFreqTrim--;
+                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
+            }
+        }
+        else                                   // DCOTAP >= 256
+        {
+            newDcoDelta = newDcoTap - 256;     // Delta value between DCPTAP and 256
+            if (oldDcoTap < 256)                // DCOTAP cross 256
+                endLoop = 1;                   // Stop while loop
+            else {
+                dcoFreqTrim++;
+                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
+            }
+        }
 
-		if (newDcoDelta < bestDcoDelta)         // Record DCOTAP closest to 256
-				{
-			csCtl0Copy = csCtl0Read;
-			csCtl1Copy = csCtl1Read;
-			bestDcoDelta = newDcoDelta;
-		}
+        if (newDcoDelta < bestDcoDelta)         // Record DCOTAP closest to 256
+                {
+            csCtl0Copy = csCtl0Read;
+            csCtl1Copy = csCtl1Read;
+            bestDcoDelta = newDcoDelta;
+        }
 
-	} while (endLoop == 0);                      // Poll until endLoop == 1
+    }
+    while (endLoop == 0);                      // Poll until endLoop == 1
 
-	CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
-	CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
-	while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1))
-		; // Poll until FLL is locked
+    CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
+    CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
+    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)); // Poll until FLL is locked
+}
+
+void Init_GPIO_Interrupt() {
+
+    P4IES |= GPIO_ROTARY_ENCODER_BUTTON;   // Select the wake-up edge trigger (0: low-to-high | 1: high-to-low)
+    P4IE |= GPIO_ROTARY_ENCODER_BUTTON;    // Set the interrupt enable
+    P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;
+
+    P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;   // Select the wake-up edge trigger (0: low-to-high | 1: high-to-low)
+    P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;    // Set the interrupt enable
+    P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+
+    P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_B;   // Select the wake-up edge trigger (0: low-to-high | 1: high-to-low)
+    P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_B;    // Set the interrupt enable
+    P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
 }
