@@ -41,11 +41,16 @@ void FloatToPrint(float floatValue, int32_t splitValue[2]) {
     splitValue[1] = i32FractionPart;
 }
 
+void delay_ms(uint8_t v) {
+    while (v--)
+        __delay_cycles(1000);
+}
+
 int main(void) {
 
     Watchdog_Init();
     GPIOs_Init();
-    GPIO_Interrupt_Init();
+    //GPIO_Interrupt_Init();
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
@@ -57,32 +62,121 @@ int main(void) {
 
     string_typer(0, 0, "TESTE", 2, 1000);
 
-    Set_Clock_and_Calendar(0, 9, 21, 4, 23, 11, 21);
+    Set_Clock_and_Calendar(58, 9, 21, 4, 23, 11, 21);
+
+    int counter = 0;
+    int aState;
+    int aLastState;
+
+    aLastState = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
+
+    while (1) {
+        aState = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A); // Reads the "current" state of the outputA
+        // If the previous and the current state of the outputA are different, that means a Pulse has occured
+        if (aState != aLastState ) {
+            delay_ms(1);
+            // If the outputB state is different to the outputA state, that means the encoder is rotating clockwise
+            if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B) != aState) {
+                counter++;
+            }
+            else {
+                counter--;
+            }
+
+            char array[5] = { 0 };
+
+            fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
+
+            sprintf(array, "%d", counter);
+            string_typer(0, 0, array, 2, 1000);
+            //Serial.print("Position: ");
+            // Serial.println(counter);
+
+             aLastState = aState; // Updates the previous state of the outputA with the current state
+        }
+
+    }
 
     char array_temp[10] = { 0 };
     char clock[20] = { 0 };
     char sec = 0;
     char min = 0;
     char hr = 0;
+    uint16_t index = 0;
+    uint16_t last = 1;
+    while (1) {
+
+        const static uint16_t rot_enc_table[] = { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 };
+
+        static uint16_t a = 0; // the old value of the sensor ports
+        static uint16_t b = 0; // the old value of the sensor ports
+        static uint16_t ab = 0;
+        static uint16_t angle = 0;
+
+        static uint8_t prevNextCode = 0;
+        prevNextCode <<= 2;
+
+        a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
+
+        if (a)
+            prevNextCode |= 0x02;
+
+        b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B);
+        if (b)
+            prevNextCode |= 0x01;
+
+        prevNextCode &= 0x0f;
+
+        index = (prevNextCode & 0x0f);
+
+        if (last != index) {
+            delay_ms(100);
+            last = index;
+            ab = rot_enc_table[index];
+
+            // P4IFG &= ~(GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+
+            char array[5] = { 0 };
+
+            fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
+
+            sprintf(array, "%d", a);
+            string_typer(0, 0, array, 2, 1000);
+
+            sprintf(array, "%d", index);
+            string_typer(0, 2, array, 2, 1000);
+
+            sprintf(array, "%d", ab);
+            string_typer(0, 4, array, 2, 1000);
+            __no_operation();
+
+            delay_ms(100);
+        }
+
+    }
 
     while (1) {
-        memset(array_temp, '\0', 10);
-        memset(clock, '\0', 20);
+        /*
+         memset(array_temp, '\0', 10);
+         memset(clock, '\0', 20);
 
-        g_current_time_and_date = Get_Current_Time_and_Date();
-        temp = Get_Temperature();
-        sprintf(array_temp, "%.2f", temp);
+         g_current_time_and_date = Get_Current_Time_and_Date();
+         temp = Get_Temperature();
+         sprintf(array_temp, "%.2f", temp);
 
-        sec = *(g_current_time_and_date + 0);
-        min = *(g_current_time_and_date + 1);
-        hr = *(g_current_time_and_date + 2);
+         sec = *(g_current_time_and_date + 0);
+         min = *(g_current_time_and_date + 1);
+         hr = *(g_current_time_and_date + 2);
 
-        sprintf(clock, "%d:%d:%d", hr, min, sec);
+         sprintf(clock, "%d:%d:%d", hr, min, sec);
 
-        string_typer(0, 0, array_temp, 2, 1000);
-        string_typer(0, 4, clock, 2, 1000);
-        _delay_cycles(10000);
-        __no_operation();
+         fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
+
+         string_typer(0, 0, array_temp, 2, 1000);
+         string_typer(0, 4, clock, 2, 1000);
+         _delay_cycles(10000);
+         __no_operation();
+         */
     }
 
     /*
@@ -186,37 +280,80 @@ int main(void) {
 //EXTERNAL INPUT EDGE DETECT
 #pragma vector=PORT4_VECTOR
 __interrupt void Port_4(void) {
+    /*
 
-  //  P4IE &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+     const static uint16_t rot_enc_table[] = {0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0};
 
-    if ((P4IFG & GPIO_ROTARY_ENCODER_BUTTON)) {
-        if ((P4IN & GPIO_ROTARY_ENCODER_BUTTON))
-            pos++;
-        else
-            pos--;
+     static uint16_t a = 0; // the old value of the sensor ports
+     static uint16_t b = 0; // the old value of the sensor ports
+     static uint16_t ab = 0;
+     static uint16_t angle = 0;
+     */
+    /*
 
-        //P4IES ^= GPIO_ROTARY_ENCODER_BUTTON;   // Toggle the edge trigger
-        P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;  // Clear interrupt flag
-    }
 
-    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
-        if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A))
-            pos++;
-        else
-            pos--;
+     static unsigned char push_pos = 0;
 
-        //P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;   // Toggle the edge trigger
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;  // Clear interrupt flag
-    }
 
-    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
-        if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B))
-            pos++;
-        else
-            pos--;
+     ab |= (port & 0x3); // OR in the two new bits
+     angle += table[(ab & 0xf)]; // get the change from the 16 entry table
+     */
+    //  P4IE &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+    /*
+     if ((P4IFG & GPIO_ROTARY_ENCODER_BUTTON)) {
+     // P4IES ^= GPIO_ROTARY_ENCODER_BUTTON;   // Toggle the edge trigger
+     P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;  // Clear interrupt flag
+     }
 
-       // P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_B;   // Toggle the edge trigger
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;  // Clear interrupt flag
-    }
-   // P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
+     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
+     a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
+     b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B) << 2;
+     ab = (a | b);
+     // P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;   // Toggle the edge trigger
+     P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;  // Clear interrupt flag
+     }
+     */
+    /*
+     static uint8_t prevNextCode = 0;
+     prevNextCode <<= 2;
+
+     if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A))
+     prevNextCode |= 0x02;
+
+     if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B))
+     prevNextCode |= 0x01;
+
+     prevNextCode &= 0x0f;
+
+     ab = rot_enc_table[( prevNextCode & 0x0f )];
+
+     P4IFG &= ~(GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+
+     */
+    /*
+     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
+     a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
+     b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B) << 2;
+     ab = (a | b);
+     //   P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_B;   // Toggle the edge trigger
+     P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;  // Clear interrupt flag
+     }
+     */
+    /*
+
+     char array[5] = { 0 };
+
+     fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
+
+     sprintf(array, "%d", a);
+     string_typer(0, 0, array, 2, 1000);
+
+     sprintf(array, "%d", a);
+     string_typer(0, 2, array, 2, 1000);
+
+     sprintf(array, "%d", ab);
+     string_typer(0, 4, array, 2, 1000);
+     __no_operation();
+     */
+    // P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
 }

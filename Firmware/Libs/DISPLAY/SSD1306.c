@@ -16,7 +16,6 @@ void Display_Init() {
 
     while (current_command) {
         set_instruction(COMMAND_MODE, display_initialization_sequence[total_commands - current_command]);
-        //set_instruction(DATA_MODE, display_initialization_sequence[total_commands - current_command]);
         current_command--;
     }
 
