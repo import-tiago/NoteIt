@@ -11,65 +11,10 @@
 #include <./DISPLAY/SSD1306.h>
 #include <./SDCARD/ff.h>
 #include <./SDCARD/diskio.h>
-//#include <./ROTARY_ENCODER/RotaryEncoder.h>
+#include <./ROTARY_ENCODER/RotaryEncoder.h>
 
-unsigned int MSB;
-unsigned int LSB;
-unsigned int encoded;
-unsigned int sum;
-unsigned int state;
-
-#define R_START 0x0
-
-// Use the full-step state table (emits a code at 00 only)
-#define R_CW_FINAL 0x1
-#define R_CW_BEGIN 0x2
-#define R_CW_NEXT 0x3
-#define R_CCW_BEGIN 0x4
-#define R_CCW_FINAL 0x5
-#define R_CCW_NEXT 0x6
-// Enable this to emit codes twice per step.
-#define HALF_STEP
-
-// Values returned by 'process'
-// No complete step yet.
-#define DIR_NONE 0x0
-// Clockwise step.
-#define DIR_CW 0x10
-// Anti-clockwise step.
-#define DIR_CCW 0x20
-const unsigned char ttable[7][4] = {
-// R_START
-                                     {
-                                     R_START,
-                                       R_CW_BEGIN, R_CCW_BEGIN, R_START },
-                                     // R_CW_FINAL
-                                     {
-                                     R_CW_NEXT,
-                                       R_START, R_CW_FINAL, R_START | DIR_CW },
-                                     // R_CW_BEGIN
-                                     {
-                                     R_CW_NEXT,
-                                       R_CW_BEGIN, R_START, R_START },
-                                     // R_CW_NEXT
-                                     {
-                                     R_CW_NEXT,
-                                       R_CW_BEGIN, R_CW_FINAL, R_START },
-                                     // R_CCW_BEGIN
-                                     {
-                                     R_CCW_NEXT,
-                                       R_START, R_CCW_BEGIN, R_START },
-                                     // R_CCW_FINAL
-                                     {
-                                     R_CCW_NEXT,
-                                       R_CCW_FINAL, R_START, R_START | DIR_CCW },
-                                     // R_CCW_NEXT
-                                     {
-                                     R_CCW_NEXT,
-                                       R_CCW_FINAL, R_CCW_BEGIN, R_START }, };
-
-int8_t *g_current_time_and_date;
-float temp = 0;
+int Debounce_B();
+int Debounce_A();
 
 int pos;
 
@@ -96,55 +41,18 @@ void FloatToPrint(float floatValue, int32_t splitValue[2]) {
     splitValue[0] = i32IntegerPart;
     splitValue[1] = i32FractionPart;
 }
-volatile int lastEncoded = 0;
-volatile long encoderValue = 0;
+
 void delay_ms(uint8_t v) {
     while (v--)
         __delay_cycles(1000);
 }
-/*
- void updateEncoder() {
- int MSB = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A); //MSB = most significant bit
- int LSB = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B); //LSB = least significant bit
 
- int encoded = (MSB << 1) | LSB; // converting the 2-pin value into a single number
- int sum = (lastEncoded << 2) | encoded; // adding it to the previous encoded value
-
- if (sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011)
- encoderValue++;
- if (sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000)
- encoderValue--;
-
- lastEncoded = encoded; //store this value for next time
- }
- */
 char array[5] = { 0 };
-static uint8_t prevNextCode = 0;
-static uint16_t store = 0;
-// A vald CW or  CCW move returns 1, invalid returns 0.
-int8_t read_rotary() {
-    static int8_t rot_enc_table[] = { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 };
+int8_t value = 0;
+int8_t incValue = 0;
 
-    prevNextCode <<= 2;
-    if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A))
-        prevNextCode |= 0x02;
-    if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B))
-        prevNextCode |= 0x01;
-    prevNextCode &= 0x0f;
-
-    // If valid then store as 16 bit data.
-    if (rot_enc_table[prevNextCode]) {
-        store <<= 4;
-        store |= prevNextCode;
-        //if (store==0xd42b) return 1;
-        //if (store==0xe817) return -1;
-        if ((store & 0xff) == 0x2b)
-            return -1;
-        if ((store & 0xff) == 0x17)
-            return 1;
-    }
-    return 0;
-}
+int countA = 0, countB = 0, stateA, stateB; //Declare required variables
+int _a, _b;
 
 int main(void) {
 
@@ -153,7 +61,7 @@ int main(void) {
     // GPIO_Interrupt_Init();
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
-    SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
+    SPI_Master_Mode_Init(eUSCI_B1); //Db isplay OLED
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
     __enable_interrupt();
@@ -163,31 +71,17 @@ int main(void) {
     string_typer(0, 0, "TESTE", 2, 1000);
 
     Set_Clock_and_Calendar(58, 9, 21, 4, 23, 11, 21);
-    state = R_START;
+
     while (1) {
 
-        static int8_t c, val;
+         incValue = Rotary_Encoder_Read();
 
-        if (val = read_rotary()) {
-            c += val;
-            //Serial.print(c);Serial.print(" ");
-
-            if (prevNextCode == 0x0b) {
-
-                fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
-
-                sprintf(array, "%d", c);
-                string_typer(0, 0, array, 2, 1000);
-            }
-
-            if (prevNextCode == 0x07) {
-                fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
-
-                sprintf(array, "%d", c);
-                string_typer(0, 0, array, 2, 1000);
-            }
-        }
-
+         if (Rotary_Encoder_Changed()) {
+         value += incValue;
+         fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
+         sprintf(array, "%d", value);
+         string_typer(0, 0, array, 2, 1000);
+         }
 
     }
 
@@ -305,82 +199,6 @@ int main(void) {
 
 //EXTERNAL INPUT EDGE DETECT
 #pragma vector=PORT4_VECTOR
-__interrupt void Port_4(void) {
+__interrupt void ISR_Rotary_Encoder_Monitor(void) {
 
-    /*
-
-     const static uint16_t rot_enc_table[] = {0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0};
-
-     static uint16_t a = 0; // the old value of the sensor ports
-     static uint16_t b = 0; // the old value of the sensor ports
-     static uint16_t ab = 0;
-     static uint16_t angle = 0;
-     */
-    /*
-
-
-     static unsigned char push_pos = 0;
-
-
-     ab |= (port & 0x3); // OR in the two new bits
-     angle += table[(ab & 0xf)]; // get the change from the 16 entry table
-     */
-    //  P4IE &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
-    /*
-     if ((P4IFG & GPIO_ROTARY_ENCODER_BUTTON)) {
-     // P4IES ^= GPIO_ROTARY_ENCODER_BUTTON;   // Toggle the edge trigger
-     P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;  // Clear interrupt flag
-     }
-
-     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
-     a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
-     b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B) << 2;
-     ab = (a | b);
-     // P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;   // Toggle the edge trigger
-     P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;  // Clear interrupt flag
-     }
-     */
-    /*
-     static uint8_t prevNextCode = 0;
-     prevNextCode <<= 2;
-
-     if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A))
-     prevNextCode |= 0x02;
-
-     if ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B))
-     prevNextCode |= 0x01;
-
-     prevNextCode &= 0x0f;
-
-     ab = rot_enc_table[( prevNextCode & 0x0f )];
-
-     P4IFG &= ~(GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
-
-     */
-    /*
-     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
-     a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
-     b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B) << 2;
-     ab = (a | b);
-     //   P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_B;   // Toggle the edge trigger
-     P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;  // Clear interrupt flag
-     }
-     */
-    /*
-
-     char array[5] = { 0 };
-
-     fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00);
-
-     sprintf(array, "%d", a);
-     string_typer(0, 0, array, 2, 1000);
-
-     sprintf(array, "%d", a);
-     string_typer(0, 2, array, 2, 1000);
-
-     sprintf(array, "%d", ab);
-     string_typer(0, 4, array, 2, 1000);
-     __no_operation();
-     */
-    // P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
 }
