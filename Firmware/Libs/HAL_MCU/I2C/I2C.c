@@ -19,7 +19,7 @@ void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_byte
     UCB0I2CSA = slave_addr;         // target chip Slave address
     UCB0CTLW0 |= UCSWRST;           // Software reset enabled (Puts eUSCI_B in configuration mode)
     UCB0CTLW1 |= UCASTP_2;          // Auto stop generates
-    UCB0TBCNT = n_bytes + 2;        // Auto stop count
+    UCB0TBCNT = n_bytes + 3;        // Auto stop count
     UCB0CTLW0 &= ~UCSWRST;          // Clears software reset
 
     UCB0CTLW0 |= UCTR;              // Transmitter mode

@@ -9,13 +9,13 @@
 #include <./HAL_MCU/I2C/I2C.h>
 #include <./HAL_MCU/SPI/SPI.h>
 #include <./RTC/DS3231.h>
-#include <./DISPLAY/SSD1306.h>
+
 #include <./SDCARD/ff.h>
 #include <./SDCARD/diskio.h>
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
 #include <./DISPLAY/oled.h>
-
+uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int pos;
 int8_t *g_current_time_and_date;
 FATFS sdVolume;     // FatFs work area needed for each volume
@@ -59,12 +59,12 @@ void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x2 = y;
 
     sprintf(array, "%.0f", Get_Temperature());
-    string_typer(temp_x, 0, array, font_size, 1000);
+   // string_typer(temp_x, 0, array, font_size, 1000);
     temp_x2 = temp_x + 4;
-    temp_x2 *= (f_width + space_char);
+   // temp_x2 *= (f_width + space_char);
 
-    convert_font_size(temp_x2, 0, 128, font_size);
-    string_typer(temp_x + 6, 0, "C", font_size, 1000);
+   // convert_font_size(temp_x2, 0, 128, font_size);
+  //  string_typer(temp_x + 6, 0, "C", font_size, 1000);
 }
 
 void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
@@ -83,9 +83,34 @@ void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
     min = *(g_current_time_and_date + 1);
     hr = *(g_current_time_and_date + 2);
 
-    sprintf(clock, "%02d:%02d", hr, min);
+    sprintf(clock, "%02dh%02d", hr, min);
 
-    string_typer(x, y, clock, font_size, 1000);
+
+    SSD1306_string(x, y, clock, font_size, 0, oled_buf);
+
+}
+
+void Show_Calendar(uint8_t x, uint8_t y, uint8_t font_size) {
+
+    char calendar[20] = { 0 };
+
+    char day = 0;
+    char month = 0;
+    char year = 0;
+
+    memset(calendar, '\0', 20);
+
+    g_current_time_and_date = Get_Current_Time_and_Date();
+
+    day = *(g_current_time_and_date + 4);
+    month = *(g_current_time_and_date + 5);
+    year = *(g_current_time_and_date + 6);
+
+    sprintf(calendar, "%02d/%02d/%02d", day, month, year);
+
+
+    SSD1306_string(x, y, calendar, font_size, 0, oled_buf);
+
 }
 
 const unsigned char ti_logo[] = {
@@ -98,7 +123,7 @@ const unsigned char ti_logo[] = {
 //  84    85    86    87    88    89    90    91    92    93    94    95    96    97    98    99   100   101   102   103   104   105   106   107   108   109   110   111
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x07, 0x07, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t oled_buf[WIDTH * HEIGHT / 8];
+
 int main(void) {
 
     Watchdog_Init();
@@ -111,7 +136,25 @@ int main(void) {
 
     __enable_interrupt();
 
+    Set_Clock_and_Calendar(0, 16, 13, 1, 28, 11, 21);
+
+
     SSD1306_begin();
+    SSD1306_bitmap(85, 2, Bat816, 16, 8, oled_buf);
+
+
+    while(1){
+        Show_Clock(55, 0, 12);
+        Show_Calendar(0, 0, 12);
+        SSD1306_string(103, 0, "100%", 12, 0, oled_buf);
+        SSD1306_display(oled_buf);
+    }
+
+
+
+
+
+
      SSD1306_clear(oled_buf);
 
      /* display images of bitmap matrix */
@@ -140,7 +183,7 @@ int main(void) {
 
     Display_Init();
 
-    Set_Clock_and_Calendar(58, 9, 21, 4, 23, 11, 21);
+    //Set_Clock_and_Calendar(58, 9, 21, 4, 23, 11, 21);
 
     OLED_Display_Clear();
 
@@ -184,20 +227,18 @@ int main(void) {
                     else
                         i = 23;
                 }
-                fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
-                sprintf(array, "%d", i);
-                string_typer(0, 0, array, 2, 1000);
+              //  fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
+               // sprintf(array, "%d", i);
+               // string_typer(0, 0, array, 2, 1000);
             }
 
         }
         while (adj_status == Rotary_Encoder_Push_Button());
 
-        fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
+      //  fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
 
-        string_typer(0, 0, "END", 2, 1000);
-        while (1) {
+       // string_typer(0, 0, "END", 2, 1000);
 
-        }
 
     }
 
