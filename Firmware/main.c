@@ -14,6 +14,8 @@
 #include <./SDCARD/diskio.h>
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
+#include <./DISPLAY/oled.h>
+
 int pos;
 int8_t *g_current_time_and_date;
 FATFS sdVolume;     // FatFs work area needed for each volume
@@ -96,7 +98,7 @@ const unsigned char ti_logo[] = {
 //  84    85    86    87    88    89    90    91    92    93    94    95    96    97    98    99   100   101   102   103   104   105   106   107   108   109   110   111
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x07, 0x07, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-
+uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int main(void) {
 
     Watchdog_Init();
@@ -108,6 +110,33 @@ int main(void) {
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
     __enable_interrupt();
+
+    SSD1306_begin();
+     SSD1306_clear(oled_buf);
+
+     /* display images of bitmap matrix */
+     SSD1306_bitmap(0, 2, Signal816, 16, 8, oled_buf);
+     SSD1306_bitmap(24, 2,Bluetooth88, 8, 8, oled_buf);
+     SSD1306_bitmap(40, 2, Msg816, 16, 8, oled_buf);
+     SSD1306_bitmap(64, 2, GPRS88, 8, 8, oled_buf);
+     SSD1306_bitmap(90, 2, Alarm88, 8, 8, oled_buf);
+     SSD1306_bitmap(112, 2, Bat816, 16, 8, oled_buf);
+
+     SSD1306_string(0, 52, "MUSIC", 12, 0, oled_buf);
+     SSD1306_string(52, 52, "MENU", 12, 0, oled_buf);
+     SSD1306_string(98, 52, "PHONE", 12, 0, oled_buf);
+
+     SSD1306_char3216(0, 16, '1', oled_buf);
+     SSD1306_char3216(16, 16, '2', oled_buf);
+     SSD1306_char3216(32, 16, ':', oled_buf);
+     SSD1306_char3216(48, 16, '3', oled_buf);
+     SSD1306_char3216(64, 16, '4', oled_buf);
+     SSD1306_char3216(80, 16, ':', oled_buf);
+     SSD1306_char3216(96, 16, '5', oled_buf);
+     SSD1306_char3216(112, 16, '6', oled_buf);
+
+     SSD1306_display(oled_buf);
+
 
     Display_Init();
 
