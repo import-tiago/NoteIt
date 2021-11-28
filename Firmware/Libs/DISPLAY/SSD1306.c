@@ -7,6 +7,8 @@
 
 unsigned char byte, bit_num;        // global buffer and bit index
 #define max_f_size      8       // max. font cache size for resize function
+unsigned char *dataBuffer;
+
 
 void Display_Init() {
     uint8_t total_commands = sizeof(display_initialization_sequence);
@@ -19,7 +21,7 @@ void Display_Init() {
         current_command--;
     }
 
-    fill_display(LCD_PIXELS_WIDTH, LCD_PIXELS_HEIGHT, 0x00); // display RAM is undefined after reset, clean dat shit
+    fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00); // display RAM is undefined after reset, clean dat shit
 }
 
 void set_instruction(unsigned char transmission_mode, unsigned char number) {
@@ -40,20 +42,20 @@ void fill_display(unsigned char width, unsigned char height, unsigned char byte)
     while (height--) {
         set_cursor(0, height);
         while (width--)
-            set_instruction(1, byte);
-        width = LCD_PIXELS_WIDTH;
+            set_instruction(DATA_MODE, byte);
+        width = DISPLAY_PIXELS_WIDTH;
     }
 }
 
 void set_cursor(unsigned char x, unsigned char y) {
-    set_instruction(0, 0x0F & x);			    // set lower nibble of the column start address
-    set_instruction(0, 0x10 + (x >> 4));			    // set higher nibble of the column start address
-    set_instruction(0, 0xB0 + y);
+    set_instruction(COMMAND_MODE, 0x0F & x);			    // set lower nibble of the column start address
+    set_instruction(COMMAND_MODE, 0x10 + (x >> 4));			    // set higher nibble of the column start address
+    set_instruction(COMMAND_MODE, 0xB0 + y);
 }
 
 void wait_ms(unsigned int m_sec) {
-  //  while (m_sec--)
- //       __delay_cycles(1000);
+    //  while (m_sec--)
+    //       __delay_cycles(1000);
 }
 
 void string_typer(unsigned char x, unsigned char y, const char *text, unsigned char f_size, unsigned int ms) {
@@ -68,6 +70,10 @@ void string_typer(unsigned char x, unsigned char y, const char *text, unsigned c
     }
 }
 
+void OLED_Display_Clear() {
+    fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
+}
+
 void write_char(unsigned char x, unsigned char y, unsigned char character, unsigned char f_size) {
     x *= (f_width + space_char);
     set_cursor(x, y);
@@ -79,7 +85,7 @@ void write_char(unsigned char x, unsigned char y, unsigned char character, unsig
 
 void send_data_array(const char *d_array, unsigned char size) {
     while (size--)
-        set_instruction(1, *d_array++);
+        set_instruction(DATA_MODE, *d_array++);
 }
 
 // horizontal resize with cache (every bit in one byte will be resized to f_size, for example:
@@ -109,7 +115,7 @@ void convert_font_size(unsigned char x, unsigned char y, unsigned char character
                     if (bit_num_b > 7 && px_size > 0)       // byte overflow, new byte
                             {
                         set_cursor(x + x_pos_new, y + y_pos_new++); // set cursor (increment y-new position)
-                        set_instruction(1, byte);                   // send byte
+                        set_instruction(DATA_MODE, byte);                   // send byte
                         bit_num_b = 0;          // reset bit counter (buffer)
                         cache[i++] = byte;              // save byte in cache
                         byte = 0;                               // reset byte
@@ -127,7 +133,7 @@ void convert_font_size(unsigned char x, unsigned char y, unsigned char character
             if (bit_num_b > 7)                      // byte overflow, new byte
                     {
                 set_cursor(x + x_pos_new, y + y_pos_new++);
-                set_instruction(1, byte);
+                set_instruction(DATA_MODE, byte);
                 bit_num_b -= 8;
                 cache[i++] = byte;
                 byte = 0;
@@ -144,7 +150,7 @@ void convert_font_size(unsigned char x, unsigned char y, unsigned char character
         while (size--) {
             while (i < f_size) {
                 set_cursor(x + x_pos_new, y + y_pos_new++);
-                set_instruction(1, cache[i++]);     // horizontal cache write
+                set_instruction(DATA_MODE, cache[i++]);     // horizontal cache write
             }
             i = 0;
             y_pos_new = 0;
@@ -158,4 +164,51 @@ void convert_font_size(unsigned char x, unsigned char y, unsigned char character
         i = 0;                      // reset cache counter
         bit_num = 0;
     }
+}
+
+void drawImage(unsigned char x, unsigned char y, unsigned char sx, unsigned char sy, const unsigned char img[], unsigned char invert) {
+    unsigned int j, t;
+    unsigned char i, p, p0, p1, n, n1, b;
+
+    if (((x + sx) > DISPLAY_PIXELS_WIDTH) || ((y + sy) > DISPLAY_PIXELS_HEIGHT) || (sx == 0) || (sy == 0))
+        return;
+
+    // Total bytes of the image array
+    if (sy % 8)
+        t = (sy / 8 + 1) * sx;
+    else
+        t = (sy / 8) * sx;
+    p0 = y / 8;                 // first page index
+    p1 = (y + sy - 1) / 8;      // last page index
+    n = y % 8;                  // offset form begin of page
+
+    n1 = (y + sy) % 8;
+    if (n1)
+        n1 = 8 - n1;
+
+    j = 0;                      // bytes counter [0..t], or [0..(t+sx)]
+    dataBuffer = malloc(sx + 1);       // allocate memory for the buf
+    //dataBuffer[0] = SSD1306_DATA_MODE; // fist item "send data mode"
+    for (p = p0; p < (p1 + 1); p++) {
+        //setCursor(x, p);
+        for (i = x; i < (x + sx); i++) {
+            if (p == p0) {
+                b = (img[j] << n) & 0xFF;
+            }
+            else if ((p == p1) && (j >= t)) {
+                b = (img[j - sx] >> n1) & 0xFF;
+            }
+            else {
+                b = ((img[j - sx] >> (8 - n)) & 0xFF) | ((img[j] << n) & 0xFF);
+            };
+            if (invert)
+                dataBuffer[i - x + 1] = b;
+            else
+                dataBuffer[i - x + 1] = ~b;
+            j++;
+        }
+        set_cursor(x, p);
+        set_instruction(DATA_MODE, dataBuffer); // send the buf to display
+    }
+    free(dataBuffer);
 }

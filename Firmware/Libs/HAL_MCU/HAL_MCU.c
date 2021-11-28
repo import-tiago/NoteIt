@@ -67,6 +67,8 @@ void GPIOs_Init() {
     //PULL-UPs and PULL DOWNs
     //P4REN |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;   // Allows internal pull-up or pull-down resistor
     //P4OUT |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;   // Enable pull-up
+    P4REN |= GPIO_ROTARY_ENCODER_BUTTON ;   // Allows internal pull-up or pull-down resistor
+    P4OUT |= GPIO_ROTARY_ENCODER_BUTTON ;   // Enable pull-up
 
 
     /*  THIRD STEP: SPECIAL FUNCTIONS  */

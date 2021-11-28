@@ -6,8 +6,10 @@
 
 #define f_width     5
 
+// standard ascii 5x7 font
 // 128 chars = 640 bytes (128*5bytes)
-static const int8_t ascii_table[][f_width]={0xFF,0xFF,0xFF,0xFF,0xFF,    // ASCII 00: all pixel
+static const int8_t ascii_table[][f_width]={
+                             0xFF,0xFF,0xFF,0xFF,0xFF,    // ASCII 00: all pixel
                              0x00,0x00,0x00,0x00,0x00,          // ASCII 01: reserved
                              0x00,0x00,0x00,0x00,0x00,          // ASCII 02: reserved
                              0x00,0x00,0x00,0x00,0x00,          // ASCII 03: reserved
@@ -134,7 +136,8 @@ static const int8_t ascii_table[][f_width]={0xFF,0xFF,0xFF,0xFF,0xFF,    // ASCI
                              0x00,0x00,0x7f,0x00,0x00,          // ASCII 7c: |
                              0x00,0x41,0x36,0x08,0x00,          // ASCII 7d: }
                              0x10,0x08,0x08,0x10,0x08,          // ASCII 7e: ->
-                             0x78,0x46,0x41,0x46,0x78           // ASCII 7f: <-
+                             0x78,0x46,0x41,0x46,0x78,          // ASCII 7f: <-
+                             0x00,0x06,0x09,0x09,0x06          // degree symbol //0x04,  0x0A,  0x11,  0x0A,  0x04 //
                              };
 
 static const uint8_t display_initialization_sequence[] = { 0xAE,           // DISPLAY OFF
@@ -163,8 +166,8 @@ static const uint8_t display_initialization_sequence[] = { 0xAE,           // DI
                                           0xA6,           // NORMAL MODE (A7 for inverse display)
                                           0xAF };         // DISPLAY ON
 
-#define LCD_PIXELS_WIDTH		128
-#define LCD_PIXELS_HEIGHT     64
+#define DISPLAY_PIXELS_WIDTH		128
+#define DISPLAY_PIXELS_HEIGHT     64
 
 
 #define COMMAND_MODE 0
@@ -181,4 +184,6 @@ void write_char(unsigned char x, unsigned char y, unsigned char character, unsig
 void wait_ms(unsigned int m_sec);
 void send_data_array(const char *d_array, unsigned char size);
 void convert_font_size(unsigned char x, unsigned char y, unsigned char character, unsigned char f_size);
+void OLED_Display_Clear();
+void drawImage(unsigned char x, unsigned char y, unsigned char sx, unsigned char sy, const unsigned char img[], unsigned char invert) ;
 #endif // SSD1306_H_

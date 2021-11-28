@@ -29,6 +29,25 @@ int8_t Rotary_Encoder_Read() {
     return m_val;
 }
 
+uint8_t Rotary_Encoder_Push_Button(){
+
+      buttonState = (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
+
+      if (buttonState != lastButtonState) {
+
+        if (buttonState) {      // if the state has changed, increment the counter
+          buttonPushCounter++; // if the current state is HIGH then the button went from off to on:
+        } else {
+
+        }
+      }
+      lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
+
+
+return buttonPushCounter;
+
+}
+
 uint8_t Rotary_Encoder_Changed(void) {
     return m_val != 0;
 }
@@ -37,10 +56,10 @@ static int8_t incrementValue(void) {
     return m_val;
 }
 
-static uint8_t isCW(void) {
+ uint8_t Rotary_Encoder_is_Clockwise(void) {
     return m_code == 0x07;
 }
 
-uint8_t isCCW(void) {
+uint8_t Rotary_Encoder_is_Counterclockwise(void) {
     return m_code == 0x0b;
 }
