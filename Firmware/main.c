@@ -15,6 +15,28 @@
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
 #include <./DISPLAY/oled.h>
+
+typedef enum {
+    HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
+} Screens_List;
+
+Screens_List Screen = HOME_SCREEN;
+
+#define DATALOGGER_IDLE_STATE 0
+#define DATALOGGER_RECEIVING_STATE 1
+
+char Datalogger_States[2][30] = { { "waiting data..." }, { "saving data..." } };
+
+uint8_t Current_Datalogger_State = DATALOGGER_IDLE_STATE;
+
+// 'CHECKED_BUTTON', 10x10px
+const unsigned char Bitmap_CHECKED_BUTTON[] = { 0x00, 0x00, 0x3f, 0x00, 0x5e, 0x80, 0x6d, 0x80, 0x73, 0x80, 0x73, 0x80, 0x6d, 0x80, 0x5e, 0x80, 0x3f, 0x00, 0x00, 0x00 };
+// 'CHECK_BUTTON', 10x10px
+const unsigned char Bitmap_CHECK_BUTTON[] = { 0x00, 0x00, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x00, 0x00 };
+
+// 'CUREENT_PAGE2', 5x5px
+const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
+
 uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int pos;
 int8_t *g_current_time_and_date;
@@ -59,12 +81,12 @@ void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x2 = y;
 
     sprintf(array, "%.0f", Get_Temperature());
-   // string_typer(temp_x, 0, array, font_size, 1000);
+    // string_typer(temp_x, 0, array, font_size, 1000);
     temp_x2 = temp_x + 4;
-   // temp_x2 *= (f_width + space_char);
+    // temp_x2 *= (f_width + space_char);
 
-   // convert_font_size(temp_x2, 0, 128, font_size);
-  //  string_typer(temp_x + 6, 0, "C", font_size, 1000);
+    // convert_font_size(temp_x2, 0, 128, font_size);
+    //  string_typer(temp_x + 6, 0, "C", font_size, 1000);
 }
 
 void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
@@ -85,7 +107,6 @@ void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
 
     sprintf(clock, "%02dh%02d", hr, min);
 
-
     SSD1306_string(x, y, clock, font_size, 0, oled_buf);
 
 }
@@ -104,25 +125,125 @@ void Show_Calendar(uint8_t x, uint8_t y, uint8_t font_size) {
 
     day = *(g_current_time_and_date + 4);
     month = *(g_current_time_and_date + 5);
-    year = *(g_current_time_and_date + 6);
 
-    sprintf(calendar, "%02d/%02d/%02d", day, month, year);
-
+    sprintf(calendar, "%02d/%02d", day, month);
 
     SSD1306_string(x, y, calendar, font_size, 0, oled_buf);
 
 }
 
-const unsigned char ti_logo[] = {
-//   0     1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22    23    24    25    26    27
-  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0x80, 0x00, 0x00, 0x80, 0x98, 0x08, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00,
-//  28    29    30    31    32    33    34    35    36    37    38    39    40    41    42    43    44    45    46    47    48    49    50    51    52    53    54    55
-  0x00, 0x10, 0x30, 0x70, 0xF0, 0xF0, 0xF0, 0xF0, 0xFF, 0xFF, 0xFF, 0xFF, 0xE7, 0x61, 0x01, 0x00, 0xF0, 0x3F, 0x01, 0x00, 0xE0, 0xE1, 0xF9, 0xFF, 0xFF, 0xFF, 0xF0, 0x00,
-//  56    57    58    59    60    61    62    63    64    65    66    67    68    69    70    71    72    73    74    75    76    77    78    79    80    81    82    83
-  0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0x0F, 0x07, 0x03, 0x03, 0x03, 0x07, 0x1F, 0x60, 0xE0, 0xE0, 0xE1, 0xE0, 0xE0, 0x61, 0x31, 0x1F, 0x0F, 0x07, 0x07, 0x03, 0x03, 0x00,
-//  84    85    86    87    88    89    90    91    92    93    94    95    96    97    98    99   100   101   102   103   104   105   106   107   108   109   110   111
-  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x07, 0x07, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+void Build_Status_Bar() {
+   // SSD1306_clear(oled_buf);
+    Show_Clock(0, 0, 12);
+    Show_Calendar(50, 0, 12);
+    SSD1306_bitmap(86, 2, Bat816, 16, 8, oled_buf);
+    SSD1306_string(104, 0, "100%", 12, 0, oled_buf);
+    SSD1306_display(oled_buf);
+}
+
+void Build_Pages_Bar(uint8_t selected_screen) {
+
+    uint8_t x = 0, y = 0;
+   SSD1306_clear(oled_buf);
+    if (selected_screen == 0) {
+        x = 53;
+        y = 50;
+        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+    }
+    else if (selected_screen == 1) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, ".\0", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 8, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 15 , y - 10, "..", 14, 0, oled_buf);
+    }
+    else if (selected_screen == 2) {
+          x = 53;
+          y = 50;
+          SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
+          SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
+          SSD1306_string(x + 23 , y - 10, ".\0", 14, 0, oled_buf);
+      }
+    else if (selected_screen == 3) {
+          x = 53;
+          y = 50;
+          SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
+          SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
+
+      }
+    Build_Status_Bar();
+    SSD1306_display(oled_buf);
+}
+
+void Show_Current_Baudrate() {
+    char *state;
+    if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
+        state = &Datalogger_States[DATALOGGER_IDLE_STATE][0];
+
+    uint32_t Current_Baudrate = 115200;
+    char array[20] = { 0 };
+    ltoa(Current_Baudrate, array, 10);
+
+    uint8_t array_len = strlen(array);
+    uint8_t i = 0;
+
+    uint8_t x = 5;
+    uint8_t y = 15;
+    uint8_t step = 20;
+
+    for (i = 0; i < array_len; i++)
+        SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
+
+    SSD1306_string(24, y + 18, state, 12, 0, oled_buf);
+
+    SSD1306_display(oled_buf);
+    __no_operation();
+}
+
+void Run_SFM() { //State Finite Machine
+    switch (Screen) {
+
+    case HOME_SCREEN: {
+
+
+        Build_Pages_Bar(0);
+        Show_Current_Baudrate();
+        __no_operation();
+
+        uint8_t adj_status = Rotary_Encoder_Push_Button();
+        static uint8_t i = 0;
+        do {
+          //  Build_Status_Bar();
+            Rotary_Encoder_Read();
+
+            if (Rotary_Encoder_Changed()) {
+                if (Rotary_Encoder_is_Clockwise()) {
+                    if (i < 3)
+                        i++;
+                    else
+                        i = 0;
+
+                    Build_Pages_Bar(i);
+                }
+                if (Rotary_Encoder_is_Counterclockwise()) {
+                    if (i > 0)
+                        i--;
+                    else
+                        i = 3;
+                    Build_Pages_Bar(i);
+                }
+
+            }
+
+        }
+        while (adj_status == Rotary_Encoder_Push_Button());
+
+        break;
+
+    }
+    }
+}
 
 int main(void) {
 
@@ -131,116 +252,40 @@ int main(void) {
     // GPIO_Interrupt_Init();
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
-    SPI_Master_Mode_Init(eUSCI_B1); //Db isplay OLED
+    SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
     __enable_interrupt();
 
-    Set_Clock_and_Calendar(0, 16, 13, 1, 28, 11, 21);
-
+    //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
 
     SSD1306_begin();
-    SSD1306_bitmap(85, 2, Bat816, 16, 8, oled_buf);
+    SSD1306_clear(oled_buf);
 
-
-    while(1){
-        Show_Clock(55, 0, 12);
-        Show_Calendar(0, 0, 12);
-        SSD1306_string(103, 0, "100%", 12, 0, oled_buf);
-        SSD1306_display(oled_buf);
+    while (1) {
+        Run_SFM();
     }
 
+    __no_operation();
 
+    SSD1306_string(0, 52, "MUSIC", 12, 0, oled_buf);
+    SSD1306_string(52, 52, "MENU", 12, 0, oled_buf);
+    SSD1306_string(98, 52, "PHONE", 12, 0, oled_buf);
 
+    SSD1306_char3216(0, 16, '1', oled_buf);
+    SSD1306_char3216(16, 16, '2', oled_buf);
+    SSD1306_char3216(32, 16, ':', oled_buf);
+    SSD1306_char3216(48, 16, '3', oled_buf);
+    SSD1306_char3216(64, 16, '4', oled_buf);
+    SSD1306_char3216(80, 16, ':', oled_buf);
+    SSD1306_char3216(96, 16, '5', oled_buf);
+    SSD1306_char3216(112, 16, '6', oled_buf);
 
-
-
-     SSD1306_clear(oled_buf);
-
-     /* display images of bitmap matrix */
-     SSD1306_bitmap(0, 2, Signal816, 16, 8, oled_buf);
-     SSD1306_bitmap(24, 2,Bluetooth88, 8, 8, oled_buf);
-     SSD1306_bitmap(40, 2, Msg816, 16, 8, oled_buf);
-     SSD1306_bitmap(64, 2, GPRS88, 8, 8, oled_buf);
-     SSD1306_bitmap(90, 2, Alarm88, 8, 8, oled_buf);
-     SSD1306_bitmap(112, 2, Bat816, 16, 8, oled_buf);
-
-     SSD1306_string(0, 52, "MUSIC", 12, 0, oled_buf);
-     SSD1306_string(52, 52, "MENU", 12, 0, oled_buf);
-     SSD1306_string(98, 52, "PHONE", 12, 0, oled_buf);
-
-     SSD1306_char3216(0, 16, '1', oled_buf);
-     SSD1306_char3216(16, 16, '2', oled_buf);
-     SSD1306_char3216(32, 16, ':', oled_buf);
-     SSD1306_char3216(48, 16, '3', oled_buf);
-     SSD1306_char3216(64, 16, '4', oled_buf);
-     SSD1306_char3216(80, 16, ':', oled_buf);
-     SSD1306_char3216(96, 16, '5', oled_buf);
-     SSD1306_char3216(112, 16, '6', oled_buf);
-
-     SSD1306_display(oled_buf);
-
-
-    Display_Init();
-
-    //Set_Clock_and_Calendar(58, 9, 21, 4, 23, 11, 21);
-
-    OLED_Display_Clear();
-
-    write_char(0, 0, '.', 2);
-
-
-
-    string_typer(0, 5, " ", 2, 1000);
-
-
-
-
-
-
-
-    Show_Clock(0, 0, 0);
-    Show_Temperature(13, 0, 0);
+    SSD1306_display(oled_buf);
 
     static i = 0;
 
-    while (1) {
 
-        uint8_t adj_hour = 0;
-        uint8_t adj_min = 0;
-        uint8_t adj_status = 0;
-
-        adj_status = Rotary_Encoder_Push_Button();
-        do {
-
-            Rotary_Encoder_Read();
-            if (Rotary_Encoder_Changed()) {
-                if (Rotary_Encoder_is_Clockwise()) {
-                    if (i < 24)
-                        i++;
-                    else
-                        i = 0;
-                }
-                if (Rotary_Encoder_is_Counterclockwise()) {
-                    if (i > 0)
-                        i--;
-                    else
-                        i = 23;
-                }
-              //  fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
-               // sprintf(array, "%d", i);
-               // string_typer(0, 0, array, 2, 1000);
-            }
-
-        }
-        while (adj_status == Rotary_Encoder_Push_Button());
-
-      //  fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
-
-       // string_typer(0, 0, "END", 2, 1000);
-
-
-    }
 
     while (1) {
         /*
