@@ -15,8 +15,8 @@
  / by use of this software.
  /----------------------------------------------------------------------------*/
 
-#include "ff.h"			/* Declarations of FatFs API */
-#include "diskio.h"		/* Declarations of disk I/O functions */
+#include "./SDCARD/ff.h"			/* Declarations of FatFs API */
+#include "./SDCARD/diskio.h"		/* Declarations of disk I/O functions */
 
 /*--------------------------------------------------------------------------
 

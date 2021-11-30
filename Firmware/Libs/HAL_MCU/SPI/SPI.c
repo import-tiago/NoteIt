@@ -16,7 +16,7 @@ void SPI_Master_Mode_Init(uint8_t eUSCI) {
                 UCCKPL_1 |  // Clock polarity = LOW as inactive state
                 UCSSEL_2 |  // eUSCI clock source = SMCLK
                 UCMSB;      // Direction of the receive and transmit shift register is MSB first
-        //UCA0BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+        UCA0BRW = 4;             // Clock prescaler = SMCLK/4 = 250kHz
 
         UCA0CTLW0 &= ~UCSWRST;    // Clear software reset
         break;
@@ -31,7 +31,7 @@ void SPI_Master_Mode_Init(uint8_t eUSCI) {
                 UCCKPL_1 |  // Clock polarity = LOW as inactive state
                 UCSSEL_2 |  // eUSCI clock source = SMCLK
                 UCMSB;      // Direction of the receive and transmit shift register is MSB first
-        UCB1BRW = 4;             // Clock prescaler = SMCLK/64 = 250kHz
+        UCB1BRW = 4;             // Clock prescaler = SMCLK/4 = 250kHz
 
         UCB1CTLW0 &= ~UCSWRST;    // Clear software reset
         break;

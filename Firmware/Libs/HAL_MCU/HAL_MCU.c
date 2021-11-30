@@ -79,7 +79,7 @@ void GPIOs_Init() {
 
     P2SEL0 |= UART_UCA1_RX;                                 //Data logger (UART)
 
-    SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
+    //SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
     P1SEL0 |= SPI_UCA0_SIMO | SPI_UCA0_SOMI | SPI_UCA0_CLK; //SD Card (SPI)
 
     SYSCFG3 |= USCIB0RMP;                       			 //Set the remapping source

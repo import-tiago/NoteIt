@@ -12,6 +12,10 @@
 
 #include <./SDCARD/ff.h>
 #include <./SDCARD/diskio.h>
+
+
+
+
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
 #include <./DISPLAY/oled.h>
@@ -20,7 +24,11 @@ typedef enum {
     HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
 } Screens_List;
 
-Screens_List Screen = HOME_SCREEN;
+uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
+
+uint32_t Current_Baudrate = 115200;
+
+Screens_List Current_Screen = HOME_SCREEN;
 
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
@@ -40,6 +48,14 @@ const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
 uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int pos;
 int8_t *g_current_time_and_date;
+
+
+
+
+
+
+
+
 FATFS sdVolume;     // FatFs work area needed for each volume
 FIL logfile;        // File object needed for each open file
 uint16_t fp;        // Used for sizeof
@@ -63,6 +79,12 @@ void FloatToPrint(float floatValue, int32_t splitValue[2]) {
     splitValue[0] = i32IntegerPart;
     splitValue[1] = i32FractionPart;
 }
+
+
+
+
+
+
 
 void delay_ms(uint8_t v) {
     while (v--)
@@ -133,47 +155,52 @@ void Show_Calendar(uint8_t x, uint8_t y, uint8_t font_size) {
 }
 
 void Build_Status_Bar() {
-   // SSD1306_clear(oled_buf);
+    // SSD1306_clear(oled_buf);
     Show_Clock(0, 0, 12);
     Show_Calendar(50, 0, 12);
     SSD1306_bitmap(86, 2, Bat816, 16, 8, oled_buf);
     SSD1306_string(104, 0, "100%", 12, 0, oled_buf);
-    SSD1306_display(oled_buf);
+    // SSD1306_display(oled_buf);
 }
 
-void Build_Pages_Bar(uint8_t selected_screen) {
+void Build_Screen(uint8_t selected_screen) {
 
     uint8_t x = 0, y = 0;
-   SSD1306_clear(oled_buf);
-    if (selected_screen == 0) {
+    SSD1306_clear(oled_buf);
+    Build_Status_Bar();
+    if (selected_screen == HOME_SCREEN) {
+        //Show_Current_Baudrate();
         x = 53;
         y = 50;
         SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
         SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+
     }
-    else if (selected_screen == 1) {
+    else if (selected_screen == BAUDRATE_SCREEN) {
         x = 53;
         y = 50;
         SSD1306_string(x, y - 10, ".\0", 14, 0, oled_buf);
         SSD1306_bitmap(x + 8, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 15 , y - 10, "..", 14, 0, oled_buf);
+        SSD1306_string(x + 15, y - 10, "..", 14, 0, oled_buf);
     }
-    else if (selected_screen == 2) {
-          x = 53;
-          y = 50;
-          SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
-          SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
-          SSD1306_string(x + 23 , y - 10, ".\0", 14, 0, oled_buf);
-      }
-    else if (selected_screen == 3) {
-          x = 53;
-          y = 50;
-          SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
-          SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
+    else if (selected_screen == LOG_SETTINGS_SCREEN) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 23, y - 10, ".\0", 14, 0, oled_buf);
+    }
+    else if (selected_screen == TIME_AND_DATE_SCREEN) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
 
-      }
-    Build_Status_Bar();
+    }
+
     SSD1306_display(oled_buf);
+
+    Current_Screen = selected_screen;
 }
 
 void Show_Current_Baudrate() {
@@ -181,7 +208,6 @@ void Show_Current_Baudrate() {
     if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
         state = &Datalogger_States[DATALOGGER_IDLE_STATE][0];
 
-    uint32_t Current_Baudrate = 115200;
     char array[20] = { 0 };
     ltoa(Current_Baudrate, array, 10);
 
@@ -197,51 +223,112 @@ void Show_Current_Baudrate() {
 
     SSD1306_string(24, y + 18, state, 12, 0, oled_buf);
 
-    SSD1306_display(oled_buf);
+    // SSD1306_display(oled_buf);
     __no_operation();
 }
+/*
+ void Show_Baudrate_List(uint8_t) {
 
+ uint8_t x = 5;
+ uint8_t y = 15;
+ uint8_t step = 20;
+ uint8_t i = 0;
+ char array[20] = { 0 };
+
+ uint8_t len = strlen(Baudrate_List);
+
+ for (i = 0; i < len; i++)
+ SSD1306_char1616(x, y, Baudrate_List[i], oled_buf);
+
+ ltoa(Current_Baudrate, array, 10);
+
+ SSD1306_string(24, y + 18, state, 12, 0, oled_buf);
+
+ // SSD1306_display(oled_buf);
+ __no_operation();
+
+ }
+ */
 void Run_SFM() { //State Finite Machine
-    switch (Screen) {
+    switch (Current_Screen) {
 
-    case HOME_SCREEN: {
+        case HOME_SCREEN: {
 
+            Build_Screen(HOME_SCREEN);
 
-        Build_Pages_Bar(0);
-        Show_Current_Baudrate();
-        __no_operation();
+            __no_operation();
 
-        uint8_t adj_status = Rotary_Encoder_Push_Button();
-        static uint8_t i = 0;
-        do {
-          //  Build_Status_Bar();
-            Rotary_Encoder_Read();
+            uint8_t adj_status = Rotary_Encoder_Push_Button();
+            static uint8_t next_screen = HOME_SCREEN;
+            do {
 
-            if (Rotary_Encoder_Changed()) {
-                if (Rotary_Encoder_is_Clockwise()) {
-                    if (i < 3)
-                        i++;
-                    else
-                        i = 0;
+                Rotary_Encoder_Read();
 
-                    Build_Pages_Bar(i);
-                }
-                if (Rotary_Encoder_is_Counterclockwise()) {
-                    if (i > 0)
-                        i--;
-                    else
-                        i = 3;
-                    Build_Pages_Bar(i);
+                if (Rotary_Encoder_Changed()) {
+                    if (Rotary_Encoder_is_Clockwise()) {
+                        if (next_screen < TIME_AND_DATE_SCREEN)
+                            next_screen++;
+                        else
+                            next_screen = HOME_SCREEN;
+
+                        Build_Screen(next_screen);
+                    }
+                    if (Rotary_Encoder_is_Counterclockwise()) {
+                        if (next_screen > HOME_SCREEN)
+                            next_screen--;
+                        else
+                            next_screen = TIME_AND_DATE_SCREEN;
+                        Build_Screen(next_screen);
+                    }
+
                 }
 
             }
+            while (Current_Screen == HOME_SCREEN);
+
+            Current_Screen = next_screen;
+
+            break;
+        }
+
+        case BAUDRATE_SCREEN: {
+            Build_Screen(BAUDRATE_SCREEN);
+
+            __no_operation();
+
+            uint8_t adj_status = Rotary_Encoder_Push_Button();
+            static uint8_t next_screen = BAUDRATE_SCREEN;
+            do {
+
+                Rotary_Encoder_Read();
+
+                if (Rotary_Encoder_Changed()) {
+                    if (Rotary_Encoder_is_Clockwise()) {
+                        if (next_screen < TIME_AND_DATE_SCREEN)
+                            next_screen++;
+                        else
+                            next_screen = HOME_SCREEN;
+
+                        Build_Screen(next_screen);
+                    }
+                    if (Rotary_Encoder_is_Counterclockwise()) {
+                        if (next_screen > HOME_SCREEN)
+                            next_screen--;
+                        else
+                            next_screen = TIME_AND_DATE_SCREEN;
+                        Build_Screen(next_screen);
+                    }
+
+                }
+
+            }
+            while (Current_Screen == HOME_SCREEN);
+
+            Current_Screen = next_screen;
+
+            break;
 
         }
-        while (adj_status == Rotary_Encoder_Push_Button());
-
-        break;
-
-    }
     }
 }
 
@@ -257,146 +344,111 @@ int main(void) {
 
     __enable_interrupt();
 
-    //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
+    /*
+     //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
 
-    SSD1306_begin();
-    SSD1306_clear(oled_buf);
+     SSD1306_begin();
+     SSD1306_clear(oled_buf);
 
-    while (1) {
-        Run_SFM();
+     while (1) {
+     Run_SFM();
+     }
+     */
+
+
+    // Mount the SD Card
+
+
+
+
+    switch (f_mount(&sdVolume, "", 0)) {
+        __no_operation();
+    case FR_OK:
+        status = 42;
+        break;
+    case FR_INVALID_DRIVE:
+        status = 1;
+        break;
+    case FR_DISK_ERR:
+        status = 2;
+        break;
+    case FR_NOT_READY:
+        status = 3;
+        break;
+    case FR_NO_FILESYSTEM:
+        status = 4;
+        break;
+    default:
+        status = 5;
+        break;
     }
 
+    if (status != 42) {
+        // Error has occurred
+        //P4OUT |= BIT6;
+        while (1);
+    }
+
+
+
+    char filename[] = "LOG2_00.csv";
+    FILINFO fno;
+    FRESULT fr;
+    uint8_t i;
+    for (i = 0; i < 100; i++) {
+        filename[5] = i / 10 + '0';
+        filename[6] = i % 10 + '0';
+        fr = f_stat(filename, &fno);
+        __no_operation();
+        if (fr == FR_OK) {
+            __no_operation();
+            continue;
+        }
+        else if (fr == FR_NO_FILE) {
+            __no_operation();
+            break;
+        }
+        else {
+            __no_operation();
+            // Error occurred
+            //P4OUT |= BIT6;
+            //  P1OUT |= BIT0;
+            while (1);
+        }
+    }
+
+    // Initialize result variable
+    UINT bw = 0;
+
+    FloatToPrint(testFloat, printValue);
+
+    // Open & write
+    if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
+        f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
+        for (i = 0; i < 10; i++) {
+            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+        }
+        f_sync(&logfile);
+        testFloat += 1205.57;
+        FloatToPrint(testFloat, printValue);
+        for (i = 0; i < 10; i++) {
+            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+        }
+        f_close(&logfile);                          // Close the file
+        if (bw == 11) {
+            __no_operation();
+            //    P1OUT |= BIT0;
+        }
+    }
+
+    //   P1OUT |= BIT0;
     __no_operation();
 
-    SSD1306_string(0, 52, "MUSIC", 12, 0, oled_buf);
-    SSD1306_string(52, 52, "MENU", 12, 0, oled_buf);
-    SSD1306_string(98, 52, "PHONE", 12, 0, oled_buf);
-
-    SSD1306_char3216(0, 16, '1', oled_buf);
-    SSD1306_char3216(16, 16, '2', oled_buf);
-    SSD1306_char3216(32, 16, ':', oled_buf);
-    SSD1306_char3216(48, 16, '3', oled_buf);
-    SSD1306_char3216(64, 16, '4', oled_buf);
-    SSD1306_char3216(80, 16, ':', oled_buf);
-    SSD1306_char3216(96, 16, '5', oled_buf);
-    SSD1306_char3216(112, 16, '6', oled_buf);
-
-    SSD1306_display(oled_buf);
-
-    static i = 0;
+    while (1)
+           ;
 
 
 
-    while (1) {
-        /*
-         memset(array_temp, '\0', 10);
-         memset(clock, '\0', 20);
-
-         g_current_time_and_date = Get_Current_Time_and_Date();
-         temp = Get_Temperature();
-         sprintf(array_temp, "%.2f", temp);
-
-         sec = *(g_current_time_and_date + 0);
-         min = *(g_current_time_and_date + 1);
-         hr = *(g_current_time_and_date + 2);
-
-         sprintf(clock, "%d:%d:%d", hr, min, sec);
-
-         fill_display(DISPLAY_PIXELS_WIDTH, DISPLAY_PIXELS_HEIGHT, 0x00);
-
-         string_typer(0, 0, array_temp, 2, 1000);
-         string_typer(0, 4, clock, 2, 1000);
-         _delay_cycles(10000);
-         __no_operation();
-         */
-    }
-
-    /*
-     //SD CARD Test
-     // Mount the SD Card
-     switch (f_mount(&sdVolume, "", 0)) {
-     __no_operation();
-     case FR_OK:
-     status = 42;
-     break;
-     case FR_INVALID_DRIVE:
-     status = 1;
-     break;
-     case FR_DISK_ERR:
-     status = 2;
-     break;
-     case FR_NOT_READY:
-     status = 3;
-     break;
-     case FR_NO_FILESYSTEM:
-     status = 4;
-     break;
-     default:
-     status = 5;
-     break;
-     }
-
-     if (status != 42) {
-     // Error has occurred
-     P4OUT |= BIT6;
-     while (1);
-     }
-
-     //  DS3231GetCurrentTime();
-
-     char filename[] = "LOG2_00.csv";
-     FILINFO fno;
-     FRESULT fr;
-     uint8_t i;
-     for (i = 0; i < 100; i++) {
-     filename[5] = i / 10 + '0';
-     filename[6] = i % 10 + '0';
-     fr = f_stat(filename, &fno);
-     __no_operation();
-     if (fr == FR_OK) {
-     __no_operation();
-     continue;
-     }
-     else if (fr == FR_NO_FILE) {
-     __no_operation();
-     break;
-     }
-     else {
-     __no_operation();
-     // Error occurred
-     P4OUT |= BIT6;
-     //  P1OUT |= BIT0;
-     while (1);
-     }
-     }
-
-     // Initialize result variable
-     UINT bw = 0;
-
-     FloatToPrint(testFloat, printValue);
-
-     // Open & write
-     if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
-     f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
-     for (i = 0; i < 10; i++) {
-     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-     }
-     f_sync(&logfile);
-     testFloat += 1205.57;
-     FloatToPrint(testFloat, printValue);
-     for (i = 0; i < 10; i++) {
-     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-     }
-     f_close(&logfile);                          // Close the file
-     if (bw == 11) {
-     __no_operation();
-     //    P1OUT |= BIT0;
-     }
-     }
-
-     //   P1OUT |= BIT0;
-     __no_operation();
-     */
 }
 
 //EXTERNAL INPUT EDGE DETECT

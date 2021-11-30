@@ -11,7 +11,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <msp430.h>
-#include "diskio.h"		/* FatFs lower layer API */
+#include "./SDCARD/diskio.h"		/* FatFs lower layer API */
+#include <./HAL_BOARD/HAL_BOARD.h>
 
 // Defines -------------------------------------------------------------------------------------------
 
@@ -38,10 +39,10 @@
 // Peripheral definitions for DK-TM4C123G board
 
 //Pins from MSP430 connected to the SD Card
-#define SPI_SOMI        BIT5	// P1.5
-#define SPI_SIMO        BIT4	// P1.4
-#define SPI_CLK         BIT6	// P1.6
-#define SD_CS           BIT0	// P1.0
+#define SPI_SOMI        SPI_UCA0_SOMI	// P1.5
+#define SPI_SIMO        SPI_UCA0_SIMO	// P1.4
+#define SPI_CLK         SPI_UCA0_CLK	// P1.6
+#define SD_CS           SPI_SDCARD_CS	// P1.7
 
 //Ports
 #define SPI_SEL         P1SEL0
