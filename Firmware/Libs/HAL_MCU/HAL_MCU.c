@@ -77,17 +77,17 @@ void GPIOs_Init() {
     P1SEL0 |= ADC_BATTERY_VOLTAGE;                          //Battery Voltage Monitor (ADC)
     P1SEL1 |= ADC_BATTERY_VOLTAGE;
 
-    P2SEL0 |= UART_UCA1_RX;                                 //Data logger (UART)
+    P2SEL0 |= UART_DATALOGGER_RX;                                 //Data logger (UART)
 
     //SYSCFG3 |= USCIA0RMP;                       			 //Set the remapping source
-    P1SEL0 |= SPI_UCA0_SIMO | SPI_UCA0_SOMI | SPI_UCA0_CLK; //SD Card (SPI)
+    P1SEL0 |= SPI_SDCARD_SIMO | SPI_SDCARD_SOMI | SPI_SDCARD_CLK; //SD Card (SPI)
 
     SYSCFG3 |= USCIB0RMP;                       			 //Set the remapping source
-    P1SEL0 |= I2C_UCB0_SDA | I2C_UCB0_SCL;                  //RTC (I2C)
+    P1SEL0 |= I2C_RTC_SDA | I2C_RTC_SCL;                  //RTC (I2C)
 
     SYSCFG3 |= USCIB1RMP;                       			 //Set the remapping source
-    P4SEL0 |= SPI_UCB1_SIMO | SPI_UCB1_SOMI; //OLED Display (SPI)
-    P5SEL0 |= SPI_UCB1_CLK;
+    P4SEL0 |= SPI_DISPLAY_SIMO | SPI_DISPLAY_SOMI; //OLED Display (SPI)
+    P5SEL0 |= SPI_DISPLAY_CLK;
 
     PM5CTL0 &= ~LOCKLPM5; // GPIO High-Impedance OFF
 }

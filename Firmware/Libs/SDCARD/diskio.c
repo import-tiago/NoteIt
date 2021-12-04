@@ -39,10 +39,10 @@
 // Peripheral definitions for DK-TM4C123G board
 
 //Pins from MSP430 connected to the SD Card
-#define SPI_SOMI        SPI_UCA0_SOMI	// P1.5
-#define SPI_SIMO        SPI_UCA0_SIMO	// P1.4
-#define SPI_CLK         SPI_UCA0_CLK	// P1.6
-#define SD_CS           SPI_SDCARD_CS	// P1.7
+#define SPI_SDCARD_SOMI        SPI_UCA0_SOMI	// P1.5
+#define SPI_SDCARD_SIMO        SPI_UCA0_SIMO	// P1.4
+#define SPI_SDCARD_CLK         SPI_UCA0_CLK	// P1.6
+#define SPI_SDCARD_CS           SPI_SDCARD_CS	// P1.7
 
 //Ports
 #define SPI_SEL         P1SEL0
@@ -58,12 +58,12 @@
 
 // Asserts the CS pin to the card (Platform dependent)
 static void SELECT(void) {
-    SD_CS_OUT &= ~SD_CS;
+    SD_CS_OUT &= ~SPI_SDCARD_CS;
 }
 
 // De-asserts (set high) the CS pin to the card (Platform dependent)
 static void DESELECT(void) {
-    SD_CS_OUT |= SD_CS;
+    SD_CS_OUT |= SPI_SDCARD_CS;
 }
 
 static volatile DSTATUS Stat = STA_NOINIT;    	// Disk status
@@ -145,14 +145,14 @@ static void power_on(void) {
      */
 
     //Port initialization for SD Card operation
-    SPI_SEL |= SPI_CLK | SPI_SOMI | SPI_SIMO;
-    SPI_DIR |= SPI_CLK | SPI_SIMO;
-    SD_CS_SEL &= ~SD_CS;
-    SD_CS_OUT |= SD_CS;
-    SD_CS_DIR |= SD_CS;
+    SPI_SEL |= SPI_SDCARD_CLK | SPI_SDCARD_SOMI | SPI_SDCARD_SIMO;
+    SPI_DIR |= SPI_SDCARD_CLK | SPI_SDCARD_SIMO;
+    SD_CS_SEL &= ~SPI_SDCARD_CS;
+    SD_CS_OUT |= SPI_SDCARD_CS;
+    SD_CS_DIR |= SPI_SDCARD_CS;
 
-    SPI_REN |= SPI_SOMI | SPI_SIMO;
-    SPI_OUT |= SPI_SOMI | SPI_SIMO;
+    SPI_REN |= SPI_SDCARD_SOMI | SPI_SDCARD_SIMO;
+    SPI_OUT |= SPI_SDCARD_SOMI | SPI_SDCARD_SIMO;
 
     //Initialize USCI_A1 for SPI Master operation
     UCA0CTLW0 = UCSWRST;                            //Put state machine in reset

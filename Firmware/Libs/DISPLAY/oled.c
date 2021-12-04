@@ -2318,7 +2318,7 @@ void command(uint8_t cmd) {
 
 void SPIWrite(uint8_t *buffer, int bufferLength) {
     int i;
-    P5OUT &= ~SPI_OLED_CS;			// Select SPI target slave
+    P5OUT &= ~SPI_DISPLAY_CS;			// Select SPI target slave
     for (i = 0; i < bufferLength; i++) {
         while (!(UCB1IFG & UCTXIFG));		// Checks if TX buffer is ready
         UCB1TXBUF = buffer[i];			    // Start transmission
@@ -2327,7 +2327,7 @@ void SPIWrite(uint8_t *buffer, int bufferLength) {
 
 void SSD1306_begin() {
 
-    P5OUT &= ~SPI_OLED_CS;			// Select SPI target slave
+    P5OUT &= ~SPI_DISPLAY_CS;			// Select SPI target slave
     P6OUT |= GPIO_OLED_RESET;
     delay(10);
     P6OUT &= ~GPIO_OLED_RESET;
