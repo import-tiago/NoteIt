@@ -15,7 +15,7 @@
 
 #define GPIO_USB_DETECT 				BIT5    //P4.5
 #define GPIO_SDCARD_DETECT 			    BIT6    //P4.6
-#define GPIO_EXTERNAL_SUPPLY_DETECT 	BIT7    //P4.7
+#define GPIO_BATTERY_CHARGING_STATUS 	BIT7    //P4.7
 
 
 /*******************************************************
