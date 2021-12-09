@@ -522,7 +522,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <description>&lt;b&gt;https://componentsearchengine.com&lt;/b&gt;&lt;p&gt;
 &lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
 <packages>
-<package name="SOT95P275X135-6N">
+<package name="SOT95P275X135-6N" urn="urn:adsk.eagle:footprint:32843333/1">
 <description>&lt;b&gt;SOT-23-6&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-1.25" y="0.95" dx="1.2" dy="0.6" layer="1"/>
@@ -548,7 +548,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="-0.3" y1="-1.45" x2="-0.3" y2="1.45" width="0.2" layer="21"/>
 <wire x1="-1.85" y1="1.6" x2="-0.65" y2="1.6" width="0.2" layer="21"/>
 </package>
-<package name="FTSH10501LDVKTR">
+<package name="FTSH10501LDVKTR" urn="urn:adsk.eagle:footprint:32845338/1">
 <description>&lt;b&gt;FTSH-105-01-L-DV-K-TR-3&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-2.54" y="-2.035" dx="2.79" dy="0.74" layer="1" rot="R90"/>
@@ -576,7 +576,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="-2.64" y1="-4" x2="-2.64" y2="-4" width="0.2" layer="21"/>
 <wire x1="-2.64" y1="-4" x2="-2.54" y2="-4" width="0.2" layer="21" curve="180"/>
 </package>
-<package name="SOP64P600X175-16N">
+<package name="SOP64P600X175-16N" urn="urn:adsk.eagle:footprint:32845306/1">
 <description>&lt;b&gt;SSOP-16 (150mil)&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-2.7" y="2.222" dx="1.5" dy="0.435" layer="1"/>
@@ -638,6 +638,26 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="-5" y1="8.4" x2="-5" y2="2" width="0.1" layer="21"/>
 </package>
 </packages>
+<packages3d>
+<package3d name="SOT95P275X135-6N" urn="urn:adsk.eagle:package:32843301/2" type="model">
+<description>&lt;b&gt;SOT-23-6&lt;/b&gt;&lt;br&gt;</description>
+<packageinstances>
+<packageinstance name="SOT95P275X135-6N"/>
+</packageinstances>
+</package3d>
+<package3d name="SOP64P600X175-16N" urn="urn:adsk.eagle:package:32845305/2" type="model">
+<description>&lt;b&gt;SSOP-16 (150mil)&lt;/b&gt;&lt;br&gt;</description>
+<packageinstances>
+<packageinstance name="SOP64P600X175-16N"/>
+</packageinstances>
+</package3d>
+<package3d name="FTSH10501LDVKTR" urn="urn:adsk.eagle:package:32845337/2" type="model">
+<description>&lt;b&gt;FTSH-105-01-L-DV-K-TR-3&lt;/b&gt;&lt;br&gt;</description>
+<packageinstances>
+<packageinstance name="FTSH10501LDVKTR"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="S-8261ACMMD-G4MT2U">
 <wire x1="-19.05" y1="11.43" x2="16.51" y2="11.43" width="0.254" layer="94"/>
@@ -726,6 +746,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/S-8261ACMMD-G
 <connect gate="G$1" pin="VM" pad="2"/>
 <connect gate="G$1" pin="VSS" pad="6"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32843301/2"/>
+</package3dinstances>
 <technologies>
 <technology name="">
 <attribute name="DESCRIPTION" value="Battery Battery Protection IC Lithium Ion/Polymer SOT-23-6" constant="no"/>
@@ -759,6 +782,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/2/FTSH-105-01-L
 <connect gate="G$1" pin="8" pad="8"/>
 <connect gate="G$1" pin="9" pad="9"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32845337/2"/>
+</package3dinstances>
 <technologies>
 <technology name="">
 <attribute name="DESCRIPTION" value="Conn Unshrouded Header HDR 10 POS 1.27mm Solder ST Top Entry SMD T/R" constant="no"/>
@@ -798,6 +824,9 @@ Source: &lt;a href="http://www.electrodragon.com/w/images/c/cb/GL823K.pdf"&gt; D
 <connect gate="G$1" pin="VSS_1" pad="1"/>
 <connect gate="G$1" pin="VSS_2" pad="14"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32845305/2"/>
+</package3dinstances>
 <technologies>
 <technology name="">
 <attribute name="ARROW_PART_NUMBER" value="" constant="no"/>
@@ -1084,7 +1113,7 @@ package type OT</description>
 <packageinstance name="SOT23-5L"/>
 </packageinstances>
 </package3d>
-<package3d name="SO16W" urn="urn:adsk.eagle:package:6240754/1" type="box">
+<package3d name="SO16W" urn="urn:adsk.eagle:package:32845204/2" type="model">
 <description>&lt;b&gt;SMALL OUTLINE INTEGRATED CIRCUIT&lt;/b&gt;&lt;p&gt;
 wide body 7.5 mm/JEDEC MS-013AA</description>
 <packageinstances>
@@ -1172,206 +1201,10 @@ http://www.ladyada.net/library/pcb/eaglelibrary.html</description>
 <connect gate="G$1" pin="VDD" pad="2"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:6240754/1"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32845204/2"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="Battery">
-<packages>
-<package name="+">
-<pad name="VDD" x="0" y="-14" drill="1" diameter="2" shape="square"/>
-<text x="0.0254" y="-17.907" size="2.54" layer="21" align="center">+</text>
-<pad name="GND" x="0" y="21.76" drill="1" diameter="2" shape="square"/>
-<text x="-2.5908" y="25.2133" size="5.08" layer="21" rot="R180" align="center">-</text>
-<circle x="-2.5654" y="24.638" radius="1.58419375" width="0.127" layer="21"/>
-<circle x="0.0508" y="-17.9578" radius="1.58419375" width="0.127" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="BATTERY">
-<pin name="VDD" x="0" y="5.08" visible="off" length="middle" direction="pwr" rot="R270"/>
-<pin name="GND" x="0" y="-6.35" visible="off" length="middle" direction="pwr" rot="R90"/>
-<wire x1="-3.81" y1="0" x2="3.81" y2="0" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="-1.27" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-1.27" x2="1.905" y2="-1.27" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="-1.27" x2="-1.905" y2="-1.27" width="0.254" layer="94"/>
-<text x="-12.7" y="0" size="1.778" layer="95">&gt;NAME</text>
-<text x="-12.7" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="BATERIA" prefix="BT">
-<gates>
-<gate name="G$1" symbol="BATTERY" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="+">
-<connects>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="VDD" pad="VDD"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="TLV75530PDBVR">
-<packages>
-<package name="SOT95P280X145-5N">
-<circle x="-2.41" y="1.05" radius="0.1" width="0.2" layer="21"/>
-<circle x="-2.41" y="1.05" radius="0.1" width="0.2" layer="51"/>
-<text x="-2.6" y="2" size="1.016" layer="25">&gt;NAME</text>
-<text x="-2.6" y="-2" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
-<wire x1="-0.33" y1="1.45" x2="0.33" y2="1.45" width="0.127" layer="21"/>
-<wire x1="0.8" y1="0.335" x2="0.8" y2="-0.335" width="0.127" layer="21"/>
-<wire x1="0.33" y1="-1.45" x2="-0.33" y2="-1.45" width="0.127" layer="21"/>
-<wire x1="-0.8" y1="-1.45" x2="-0.8" y2="1.45" width="0.127" layer="51"/>
-<wire x1="0.8" y1="1.45" x2="0.8" y2="-1.45" width="0.127" layer="51"/>
-<wire x1="-0.8" y1="1.45" x2="0.8" y2="1.45" width="0.127" layer="51"/>
-<wire x1="0.8" y1="-1.45" x2="-0.8" y2="-1.45" width="0.127" layer="51"/>
-<wire x1="-2.11" y1="1.7" x2="2.11" y2="1.7" width="0.05" layer="39"/>
-<wire x1="2.11" y1="1.7" x2="2.11" y2="-1.7" width="0.05" layer="39"/>
-<wire x1="2.11" y1="-1.7" x2="-2.11" y2="-1.7" width="0.05" layer="39"/>
-<wire x1="-2.11" y1="-1.7" x2="-2.11" y2="1.7" width="0.05" layer="39"/>
-<smd name="1" x="-1.255" y="0.95" dx="1.21" dy="0.59" layer="1" roundness="50"/>
-<smd name="2" x="-1.255" y="0" dx="1.21" dy="0.59" layer="1" roundness="50"/>
-<smd name="3" x="-1.255" y="-0.95" dx="1.21" dy="0.59" layer="1" roundness="50"/>
-<smd name="4" x="1.255" y="-0.95" dx="1.21" dy="0.59" layer="1" roundness="50"/>
-<smd name="5" x="1.255" y="0.95" dx="1.21" dy="0.59" layer="1" roundness="50"/>
-</package>
-</packages>
-<symbols>
-<symbol name="TLV75530PDBVR">
-<wire x1="-12.7" y1="7.62" x2="12.7" y2="7.62" width="0.41" layer="94"/>
-<wire x1="12.7" y1="7.62" x2="12.7" y2="-7.62" width="0.41" layer="94"/>
-<wire x1="12.7" y1="-7.62" x2="-12.7" y2="-7.62" width="0.41" layer="94"/>
-<wire x1="-12.7" y1="-7.62" x2="-12.7" y2="7.62" width="0.41" layer="94"/>
-<text x="-12.7" y="11.16" size="2.0828" layer="95" ratio="10" rot="SR0">&gt;NAME</text>
-<text x="-12.7" y="8.7" size="2.0828" layer="96" ratio="10" rot="SR0">&gt;VALUE</text>
-<pin name="IN" x="-17.78" y="5.08" length="middle" direction="in"/>
-<pin name="EN" x="-17.78" y="0" length="middle"/>
-<pin name="OUT" x="17.78" y="5.08" length="middle" direction="out" rot="R180"/>
-<pin name="GND" x="0" y="-12.7" length="middle" direction="pwr" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="TLV75530PDBVR" prefix="U">
-<description> &lt;a href="https://pricing.snapeda.com/parts/TLV75530PDBVR/Texas%20Instruments/view-part?ref=eda"&gt;Check prices&lt;/a&gt;</description>
-<gates>
-<gate name="G$1" symbol="TLV75530PDBVR" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SOT95P280X145-5N">
-<connects>
-<connect gate="G$1" pin="EN" pad="3"/>
-<connect gate="G$1" pin="GND" pad="2"/>
-<connect gate="G$1" pin="IN" pad="1"/>
-<connect gate="G$1" pin="OUT" pad="5"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="AVAILABILITY" value="In Stock"/>
-<attribute name="DESCRIPTION" value=" 500-mA, high-PSRR, low-IQ, low-dropout voltage regulator with enable 5-SOT-23 -40 to 125 "/>
-<attribute name="MF" value="Texas Instruments"/>
-<attribute name="MP" value="TLV75530PDBVR"/>
-<attribute name="PACKAGE" value="SOT-23-5 Texas Instruments"/>
-<attribute name="PRICE" value="None"/>
-<attribute name="PURCHASE-URL" value="https://pricing.snapeda.com/search/part/TLV75530PDBVR/?ref=eda"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="SI2374DS">
-<packages>
-<package name="SOT-23(TO-236)">
-<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
-<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
-<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
-<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
-<text x="-1.90628125" y="1.90628125" size="1.27085" layer="25">&gt;NAME</text>
-<text x="-1.90641875" y="-3.17736875" size="1.27095" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.228634375" y1="0.711309375" x2="0.2286" y2="1.2954" layer="51"/>
-<rectangle x1="0.71258125" y1="-1.297909375" x2="1.1684" y2="-0.7112" layer="51"/>
-<rectangle x1="-1.169859375" y1="-1.29701875" x2="-0.7112" y2="-0.7112" layer="51"/>
-<smd name="3" x="0" y="1.306" dx="1" dy="1.4" layer="1"/>
-<smd name="2" x="0.95" y="-1.306" dx="1" dy="1.4" layer="1"/>
-<smd name="1" x="-0.95" y="-1.306" dx="1" dy="1.4" layer="1"/>
-</package>
-</packages>
-<symbols>
-<symbol name="MOSFET_N">
-<wire x1="-3.556" y1="2.54" x2="-3.556" y2="-2.54" width="0.2032" layer="94"/>
-<wire x1="-3.556" y1="-2.54" x2="-5.08" y2="-2.54" width="0.2032" layer="94"/>
-<wire x1="0" y1="-2.54" x2="0" y2="-2.159" width="0.2032" layer="94"/>
-<wire x1="-2.032" y1="2.159" x2="0" y2="2.159" width="0.2032" layer="94"/>
-<wire x1="0" y1="2.159" x2="0" y2="2.54" width="0.2032" layer="94"/>
-<wire x1="-2.159" y1="0" x2="0" y2="0" width="0.2032" layer="94"/>
-<wire x1="1.27" y1="-2.159" x2="0" y2="-2.159" width="0.2032" layer="94"/>
-<wire x1="0" y1="-2.159" x2="-2.0066" y2="-2.159" width="0.2032" layer="94"/>
-<wire x1="1.27" y1="-0.508" x2="1.27" y2="-2.159" width="0.2032" layer="94"/>
-<wire x1="1.27" y1="2.159" x2="1.27" y2="0.127" width="0.2032" layer="94"/>
-<wire x1="1.27" y1="2.159" x2="0" y2="2.159" width="0.2032" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="-2.159" width="0.2032" layer="94"/>
-<circle x="0" y="-2.159" radius="0.127" width="0.4064" layer="94"/>
-<circle x="0" y="2.159" radius="0.127" width="0.4064" layer="94"/>
-<text x="2.80003125" y="1.02001875" size="1.780809375" layer="95">&gt;NAME</text>
-<text x="2.796309375" y="-1.524" size="1.77908125" layer="96">&gt;VALUE</text>
-<text x="-1.143940625" y="4.321559375" size="0.813471875" layer="93" rot="MR180">D</text>
-<text x="-1.14463125" y="-3.56106875" size="0.813959375" layer="93" rot="MR180">S</text>
-<text x="-4.82896875" y="-1.1437" size="0.8133" layer="93" rot="MR180">G</text>
-<rectangle x1="-2.7954875" y1="1.27" x2="-2.032" y2="2.7954875" layer="94"/>
-<rectangle x1="-2.79920625" y1="-2.794" x2="-2.032" y2="-1.27236875" layer="94"/>
-<rectangle x1="-2.79468125" y1="-0.889" x2="-2.032" y2="0.8892125" layer="94"/>
-<pin name="G" x="-5.08" y="-2.54" visible="off" length="point" direction="pas"/>
-<pin name="S" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="D" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-<polygon width="0.1524" layer="94">
-<vertex x="-2.032" y="0"/>
-<vertex x="-0.762" y="-0.508"/>
-<vertex x="-0.762" y="0.508"/>
-</polygon>
-<wire x1="1.778" y1="0.254" x2="0.762" y2="0.254" width="0.2032" layer="94"/>
-<polygon width="0.1524" layer="94">
-<vertex x="1.27" y="0.254"/>
-<vertex x="1.778" y="-0.508"/>
-<vertex x="0.762" y="-0.508"/>
-</polygon>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="SI2374DS" prefix="Q">
-<description>HEXFET P-Channel Power MOSFET</description>
-<gates>
-<gate name="G$1" symbol="MOSFET_N" x="0" y="0"/>
-</gates>
-<devices>
-<device name="TRPBF" package="SOT-23(TO-236)">
-<connects>
-<connect gate="G$1" pin="D" pad="3"/>
-<connect gate="G$1" pin="G" pad="1"/>
-<connect gate="G$1" pin="S" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="AVAILABILITY" value="Unavailable"/>
-<attribute name="DESCRIPTION" value=" "/>
-<attribute name="MF" value="Infineon Technologies"/>
-<attribute name="MP" value="IRLML6402"/>
-<attribute name="PACKAGE" value="SC-59 Infineon Technologies"/>
-<attribute name="PRICE" value="None"/>
-</technology>
 </technologies>
 </device>
 </devices>
@@ -4857,7 +4690,7 @@ Copyright: Geyer-Electronic</description>
 </library>
 <library name="TS3A27518EPWR">
 <packages>
-<package name="SOP65P640X120-24N">
+<package name="SOP65P640X120-24N" urn="urn:adsk.eagle:footprint:32845176/1">
 <circle x="-4.44" y="3.985" radius="0.1" width="0.2" layer="21"/>
 <circle x="-4.44" y="3.985" radius="0.1" width="0.2" layer="51"/>
 <wire x1="-2.2" y1="3.9" x2="2.2" y2="3.9" width="0.127" layer="51"/>
@@ -4898,6 +4731,13 @@ Copyright: Geyer-Electronic</description>
 <smd name="24" x="2.87" y="3.575" dx="1.57" dy="0.41" layer="1" roundness="25"/>
 </package>
 </packages>
+<packages3d>
+<package3d name="SOP65P640X120-24N" urn="urn:adsk.eagle:package:32845175/2" type="model">
+<packageinstances>
+<packageinstance name="SOP65P640X120-24N"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="TS3A27518EPWR">
 <text x="-10.16" y="31.48" size="1.778" layer="95" ratio="10" rot="SR0">&gt;NAME</text>
@@ -4972,6 +4812,9 @@ Copyright: Geyer-Electronic</description>
 <connect gate="G$1" pin="NO6" pad="16"/>
 <connect gate="G$1" pin="VCC" pad="8"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32845175/2"/>
+</package3dinstances>
 <technologies>
 <technology name="">
 <attribute name="AVAILABILITY" value="In Stock"/>
@@ -5011,15 +4854,51 @@ Copyright: Geyer-Electronic</description>
 <smd name="4" x="0.735" y="-0.5" dx="0.66" dy="0.3" layer="1" roundness="25"/>
 <smd name="5" x="0.735" y="0.5" dx="0.66" dy="0.3" layer="1" roundness="25"/>
 </package>
+<package name="SOT23-5" urn="urn:adsk.eagle:footprint:6240078/1" locally_modified="yes">
+<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;&lt;p&gt;
+package type OT</description>
+<wire x1="1.422" y1="0.81" x2="1.422" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.422" y1="-0.81" x2="-1.422" y2="-0.81" width="0.1524" layer="51"/>
+<wire x1="-1.422" y1="-0.81" x2="-1.422" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-1.422" y1="0.81" x2="1.422" y2="0.81" width="0.1524" layer="51"/>
+<wire x1="-0.522" y1="0.81" x2="0.522" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-0.428" y1="-0.81" x2="-0.522" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="0.522" y1="-0.81" x2="0.428" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="-1.328" y1="-0.81" x2="-1.422" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.422" y1="-0.81" x2="1.328" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.328" y1="0.81" x2="1.422" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-1.422" y1="0.81" x2="-1.328" y2="0.81" width="0.1524" layer="21"/>
+<smd name="1" x="-0.95" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="2" x="0" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="3" x="0.95" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="4" x="0.95" y="1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="5" x="-0.95" y="1.3" dx="0.55" dy="1.2" layer="1"/>
+<text x="-1.905" y="1.905" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.905" y="-3.429" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-1.2" y1="-1.5" x2="-0.7" y2="-0.85" layer="51"/>
+<rectangle x1="-0.25" y1="-1.5" x2="0.25" y2="-0.85" layer="51"/>
+<rectangle x1="0.7" y1="-1.5" x2="1.2" y2="-0.85" layer="51"/>
+<rectangle x1="0.7" y1="0.85" x2="1.2" y2="1.5" layer="51"/>
+<rectangle x1="-1.2" y1="0.85" x2="-0.7" y2="1.5" layer="51"/>
+</package>
 </packages>
+<packages3d>
+<package3d name="SOT23-5L" urn="urn:adsk.eagle:package:32842001/2" type="model">
+<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;&lt;p&gt;
+package type OT</description>
+<packageinstances>
+<packageinstance name="SOT23-5"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="BUFFER">
 <description>Single Bus Buffer Gate With 3-State Output</description>
 <wire x1="-2.54" y1="5.08" x2="-2.54" y2="-5.08" width="0.1524" layer="94"/>
 <wire x1="-2.54" y1="-5.08" x2="5.08" y2="0" width="0.1524" layer="94"/>
 <wire x1="5.08" y1="0" x2="-2.54" y2="5.08" width="0.1524" layer="94"/>
-<pin name="A" x="-7.62" y="0" visible="pad" length="middle"/>
-<pin name="Y" x="7.62" y="0" visible="pad" length="short" rot="R180"/>
+<pin name="IN" x="-7.62" y="0" visible="pad" length="middle"/>
+<pin name="OUT" x="7.62" y="0" visible="pad" length="short" rot="R180"/>
 <pin name="GND" x="0" y="-7.62" visible="pad" length="short" rot="R90"/>
 <pin name="!OE" x="2.54" y="-7.62" visible="pad" length="short" rot="R90"/>
 <pin name="VDD" x="0" y="7.62" visible="pad" length="short" rot="R270"/>
@@ -5040,11 +4919,26 @@ Copyright: Geyer-Electronic</description>
 <device name="" package="SOT-553">
 <connects>
 <connect gate="G$1" pin="!OE" pad="1"/>
-<connect gate="G$1" pin="A" pad="2"/>
 <connect gate="G$1" pin="GND" pad="3"/>
+<connect gate="G$1" pin="IN" pad="2"/>
+<connect gate="G$1" pin="OUT" pad="4"/>
 <connect gate="G$1" pin="VDD" pad="5"/>
-<connect gate="G$1" pin="Y" pad="4"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="DBV" package="SOT23-5">
+<connects>
+<connect gate="G$1" pin="!OE" pad="1"/>
+<connect gate="G$1" pin="GND" pad="3"/>
+<connect gate="G$1" pin="IN" pad="2"/>
+<connect gate="G$1" pin="OUT" pad="4"/>
+<connect gate="G$1" pin="VDD" pad="5"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32842001/2"/>
+</package3dinstances>
 <technologies>
 <technology name=""/>
 </technologies>
@@ -5764,6 +5658,269 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="Battery">
+<packages>
+<package name="+">
+<pad name="VDD" x="0" y="-14" drill="1" diameter="2" shape="square"/>
+<text x="0.0254" y="-17.907" size="2.54" layer="21" align="center">+</text>
+<pad name="GND" x="0" y="21.76" drill="1" diameter="2" shape="square"/>
+<text x="-2.5908" y="25.2133" size="5.08" layer="21" rot="R180" align="center">-</text>
+<circle x="-2.5654" y="24.638" radius="1.58419375" width="0.127" layer="21"/>
+<circle x="0.0508" y="-17.9578" radius="1.58419375" width="0.127" layer="21"/>
+</package>
+<package name="JST-PH-2-SMT-RA" urn="urn:adsk.eagle:footprint:6240046/1">
+<description>2-Pin JST PH Series Right-Angle Connector (+/- for batteries)</description>
+<wire x1="-4" y1="3" x2="4" y2="3" width="0.2032" layer="51"/>
+<wire x1="4" y1="3" x2="4" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="-4" y1="-4.5" x2="-4" y2="3" width="0.2032" layer="51"/>
+<wire x1="3.2" y1="-2" x2="-3.2" y2="-2" width="0.2032" layer="51"/>
+<wire x1="-3.2" y1="-2" x2="-3.2" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="-3.2" y1="-4.5" x2="-4" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="4" y1="-4.5" x2="3.2" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="3.2" y1="-4.5" x2="3.2" y2="-2" width="0.2032" layer="51"/>
+<wire x1="-2.25" y1="3" x2="2.25" y2="3" width="0.127" layer="21"/>
+<wire x1="4" y1="-0.5" x2="4" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="4" y1="-4.5" x2="3.15" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="3.15" y1="-4.5" x2="3.15" y2="-2" width="0.127" layer="21"/>
+<wire x1="3.15" y1="-2" x2="1.75" y2="-2" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="-2" x2="-3.15" y2="-2" width="0.127" layer="21"/>
+<wire x1="-3.15" y1="-2" x2="-3.15" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-3.15" y1="-4.5" x2="-4" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-4" y1="-4.5" x2="-4" y2="-0.5" width="0.127" layer="21"/>
+<smd name="2" x="-1" y="-3.7" dx="1" dy="4.6" layer="1"/>
+<smd name="1" x="1" y="-3.7" dx="1" dy="4.6" layer="1"/>
+<smd name="NC1" x="-3.4" y="1.5" dx="3.4" dy="1.6" layer="1" rot="R90"/>
+<smd name="NC2" x="3.4" y="1.5" dx="3.4" dy="1.6" layer="1" rot="R90"/>
+<text x="-2.54" y="3.81" size="1.27" layer="25" font="vector">&gt;Name</text>
+<text x="-2.54" y="-7.62" size="1.27" layer="27" font="vector">&gt;Value</text>
+<text x="2.286" y="-6.096" size="1.4224" layer="21" ratio="12">+</text>
+<text x="-3.429" y="-6.096" size="1.4224" layer="21" ratio="12">-</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="JST-PH-2-SMT-RA" urn="urn:adsk.eagle:package:32835973/2" type="model">
+<description>2-Pin JST PH Series Right-Angle Connector (+/- for batteries)</description>
+<packageinstances>
+<packageinstance name="JST-PH-2-SMT-RA"/>
+</packageinstances>
+</package3d>
+</packages3d>
+<symbols>
+<symbol name="SINGLE-CELL">
+<pin name="VDD" x="0" y="5.08" visible="off" length="middle" direction="pwr" rot="R270"/>
+<pin name="GND" x="0" y="-6.35" visible="off" length="middle" direction="pwr" rot="R90"/>
+<wire x1="-3.81" y1="0" x2="3.81" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-1.27" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="1.905" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-1.27" x2="-1.905" y2="-1.27" width="0.254" layer="94"/>
+<text x="-12.7" y="0" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BATTERY" prefix="CN">
+<gates>
+<gate name="G$1" symbol="SINGLE-CELL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="+">
+<connects>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="VDD" pad="VDD"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="JST-2" package="JST-PH-2-SMT-RA">
+<connects>
+<connect gate="G$1" pin="GND" pad="2"/>
+<connect gate="G$1" pin="VDD" pad="1"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32835973/2"/>
+</package3dinstances>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="SI2374DS">
+<packages>
+<package name="SOT-23(TO-236)" urn="urn:adsk.eagle:footprint:32844853/1">
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<text x="-1.90628125" y="1.90628125" size="1.27085" layer="25">&gt;NAME</text>
+<text x="-1.90641875" y="-3.17736875" size="1.27095" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.228634375" y1="0.711309375" x2="0.2286" y2="1.2954" layer="51"/>
+<rectangle x1="0.71258125" y1="-1.297909375" x2="1.1684" y2="-0.7112" layer="51"/>
+<rectangle x1="-1.169859375" y1="-1.29701875" x2="-0.7112" y2="-0.7112" layer="51"/>
+<smd name="3" x="0" y="1.306" dx="1" dy="1.4" layer="1"/>
+<smd name="2" x="0.95" y="-1.306" dx="1" dy="1.4" layer="1"/>
+<smd name="1" x="-0.95" y="-1.306" dx="1" dy="1.4" layer="1"/>
+</package>
+</packages>
+<packages3d>
+<package3d name="SOT-23(TO-236)" urn="urn:adsk.eagle:package:32844852/2" type="model">
+<packageinstances>
+<packageinstance name="SOT-23(TO-236)"/>
+</packageinstances>
+</package3d>
+</packages3d>
+<symbols>
+<symbol name="N-CHANNEL">
+<pin name="G" x="-3.81" y="-2.54" visible="off" length="short" direction="pas"/>
+<pin name="D" x="2.54" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
+<pin name="S" x="2.54" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
+<text x="1.397" y="3.556" size="0.8128" layer="93">D</text>
+<text x="1.397" y="-4.318" size="0.8128" layer="93">S</text>
+<text x="-2.286" y="-1.778" size="0.8128" layer="93">G</text>
+<wire x1="-1.27" y1="2.54" x2="-1.27" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="2.54" x2="2.54" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="0.508" y1="-2.159" x2="2.54" y2="-2.159" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.159" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="3.302" y1="0.508" x2="3.81" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="0.508" x2="4.318" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="2.159" x2="2.54" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="2.159" x2="0.5334" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="0.508" x2="3.81" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="-2.159" x2="3.81" y2="-0.127" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="-2.159" x2="2.54" y2="-2.159" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="0" x2="2.54" y2="-2.159" width="0.1524" layer="94"/>
+<circle x="2.54" y="2.159" radius="0.127" width="0.4064" layer="94"/>
+<circle x="2.54" y="-2.159" radius="0.127" width="0.4064" layer="94"/>
+<text x="5.588" y="0.762" size="1.778" layer="95">&gt;NAME</text>
+<text x="5.588" y="-1.778" size="1.778" layer="96">&gt;VALUE</text>
+<text x="1.397" y="3.556" size="0.8128" layer="93">D</text>
+<text x="1.397" y="-4.318" size="0.8128" layer="93">S</text>
+<text x="-2.286" y="-1.778" size="0.8128" layer="93">G</text>
+<rectangle x1="-0.254" y1="-2.794" x2="0.508" y2="-1.27" layer="94"/>
+<rectangle x1="-0.254" y1="1.27" x2="0.508" y2="2.794" layer="94"/>
+<rectangle x1="-0.254" y1="-0.889" x2="0.508" y2="0.889" layer="94"/>
+<polygon width="0.1524" layer="94">
+<vertex x="3.81" y="0.508"/>
+<vertex x="3.302" y="-0.254"/>
+<vertex x="4.318" y="-0.254"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="0.635" y="0"/>
+<vertex x="1.905" y="-0.508"/>
+<vertex x="1.905" y="0.508"/>
+</polygon>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SI2374DS" prefix="Q">
+<description> &lt;a href="https://snapeda.com/parts/AO3400/Alpha%20%26/view-part/?ref=eda"&gt;Check prices&lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="N-CHANNEL" x="-5.08" y="0"/>
+</gates>
+<devices>
+<device name="SOT23" package="SOT-23(TO-236)">
+<connects>
+<connect gate="G$1" pin="D" pad="3"/>
+<connect gate="G$1" pin="G" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32844852/2"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="SI2374DS" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="TLV75530PDBVR">
+<description>Generated from &lt;b&gt;NoteIt.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="SOT23-5L" urn="urn:adsk.eagle:footprint:6240078/1">
+<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;&lt;p&gt;
+package type OT</description>
+<wire x1="1.422" y1="0.81" x2="1.422" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.422" y1="-0.81" x2="-1.422" y2="-0.81" width="0.1524" layer="51"/>
+<wire x1="-1.422" y1="-0.81" x2="-1.422" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-1.422" y1="0.81" x2="1.422" y2="0.81" width="0.1524" layer="51"/>
+<wire x1="-0.522" y1="0.81" x2="0.522" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-0.428" y1="-0.81" x2="-0.522" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="0.522" y1="-0.81" x2="0.428" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="-1.328" y1="-0.81" x2="-1.422" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.422" y1="-0.81" x2="1.328" y2="-0.81" width="0.1524" layer="21"/>
+<wire x1="1.328" y1="0.81" x2="1.422" y2="0.81" width="0.1524" layer="21"/>
+<wire x1="-1.422" y1="0.81" x2="-1.328" y2="0.81" width="0.1524" layer="21"/>
+<smd name="1" x="-0.95" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="2" x="0" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="3" x="0.95" y="-1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="4" x="0.95" y="1.3" dx="0.55" dy="1.2" layer="1"/>
+<smd name="5" x="-0.95" y="1.3" dx="0.55" dy="1.2" layer="1"/>
+<text x="-1.905" y="1.905" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.905" y="-3.429" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-1.2" y1="-1.5" x2="-0.7" y2="-0.85" layer="51"/>
+<rectangle x1="-0.25" y1="-1.5" x2="0.25" y2="-0.85" layer="51"/>
+<rectangle x1="0.7" y1="-1.5" x2="1.2" y2="-0.85" layer="51"/>
+<rectangle x1="0.7" y1="0.85" x2="1.2" y2="1.5" layer="51"/>
+<rectangle x1="-1.2" y1="0.85" x2="-0.7" y2="1.5" layer="51"/>
+</package>
+</packages>
+<packages3d>
+<package3d name="SOT23-5L" urn="urn:adsk.eagle:package:32842001/2" type="model">
+<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;&lt;p&gt;
+package type OT</description>
+<packageinstances>
+<packageinstance name="SOT23-5L"/>
+</packageinstances>
+</package3d>
+</packages3d>
+<symbols>
+<symbol name="LDO-ENABLE">
+<wire x1="-12.7" y1="7.62" x2="12.7" y2="7.62" width="0.41" layer="94"/>
+<wire x1="12.7" y1="7.62" x2="12.7" y2="-7.62" width="0.41" layer="94"/>
+<wire x1="12.7" y1="-7.62" x2="-12.7" y2="-7.62" width="0.41" layer="94"/>
+<wire x1="-12.7" y1="-7.62" x2="-12.7" y2="7.62" width="0.41" layer="94"/>
+<pin name="EN" x="-17.78" y="0" length="middle"/>
+<pin name="GND" x="0" y="-12.7" length="middle" direction="pwr" rot="R90"/>
+<pin name="IN" x="-17.78" y="5.08" length="middle" direction="in"/>
+<pin name="OUT" x="17.78" y="5.08" length="middle" direction="out" rot="R180"/>
+<text x="-12.7" y="11.16" size="2.0828" layer="95" ratio="10" rot="SR0">&gt;NAME</text>
+<text x="-12.7" y="8.7" size="2.0828" layer="96" ratio="10" rot="SR0">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="TLV75530PDBVR" prefix="U">
+<description>&lt;a href="https://pricing.snapeda.com/parts/TLV75530PDBVR/Texas%20Instruments/view-part?ref=eda"&gt;Check prices&lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="LDO-ENABLE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23-5L">
+<connects>
+<connect gate="G$1" pin="EN" pad="3"/>
+<connect gate="G$1" pin="GND" pad="2"/>
+<connect gate="G$1" pin="IN" pad="1"/>
+<connect gate="G$1" pin="OUT" pad="5"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32842001/2"/>
+</package3dinstances>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5792,14 +5949,12 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 </groups>
 <parts>
 <part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/2" override_package_urn="urn:adsk.eagle:footprint:25763183/1"/>
-<part name="IC2" library="adafruit" deviceset="MCP73831" device="/OT" package3d_urn="urn:adsk.eagle:package:6240724/1" value=""/>
-<part name="BT2" library="Battery" deviceset="BATERIA" device="" value="LiPO "/>
+<part name="IC2" library="adafruit" deviceset="MCP73831" device="/OT" package3d_urn="urn:adsk.eagle:package:6240724/1" override_package3d_urn="urn:adsk.eagle:package:32842001/2" override_package_urn="urn:adsk.eagle:footprint:6240078/1" value=""/>
 <part name="R12" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
-<part name="IC5" library="SamacSys_Parts" deviceset="S-8261ACMMD-G4MT2U" device="" value=""/>
+<part name="IC5" library="SamacSys_Parts" deviceset="S-8261ACMMD-G4MT2U" device="" package3d_urn="urn:adsk.eagle:package:32843301/2" value="S-8261ACMMD-G4MT2U"/>
 <part name="R13" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="R22" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="C8" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
-<part name="U5" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" value=""/>
 <part name="C9" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="C19" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="C24" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
@@ -5809,8 +5964,6 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <part name="SUPPLY14" library="My-Supply" deviceset="0V" device=""/>
 <part name="R41" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="R42" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
-<part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="TRPBF" value=""/>
-<part name="Q3" library="SI2374DS" deviceset="SI2374DS" device="TRPBF" value=""/>
 <part name="R11" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="Q4" library="transistor-npn" library_urn="urn:adsk.eagle:library:398" deviceset="BC817*" device="SMD" package3d_urn="urn:adsk.eagle:package:28748/2" technology="-16LT1" value=""/>
 <part name="R14" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
@@ -5843,7 +5996,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <attribute name="PN" value="CM7V-T1A-32.768k-9pF-20PPM-TA-QA T3"/>
 </part>
 <part name="SUPPLY1" library="My-Supply" deviceset="0V" device=""/>
-<part name="U4" library="TS3A27518EPWR" deviceset="TS3A27518EPWR" device="" value=""/>
+<part name="U4" library="TS3A27518EPWR" deviceset="TS3A27518EPWR" device="" package3d_urn="urn:adsk.eagle:package:32845175/2" value="TS3A27518EPWR"/>
 <part name="SUPPLY2" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY3" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY4" library="My-Supply" deviceset="0V" device=""/>
@@ -5854,7 +6007,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <part name="C4" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="SUPPLY23" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY26" library="My-Supply" deviceset="0V" device=""/>
-<part name="U1" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="" value=""/>
+<part name="U1" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:32842001/2" value="SN74AHC1G125DBV"/>
 <part name="SUPPLY28" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY29" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="CN2" library="con-ptr500" deviceset="AK500/2-H" device="" package3d_urn="urn:adsk.eagle:package:9901/1" override_package3d_urn="urn:adsk.eagle:package:32815263/2" override_package_urn="urn:adsk.eagle:footprint:9865/1"/>
@@ -5869,7 +6022,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <part name="C1" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="SUPPLY37" library="My-Supply" deviceset="0V" device=""/>
 <part name="R5" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
-<part name="CN4" library="SamacSys_Parts" deviceset="FTSH-105-01-L-DV-K-TR" device="" value=""/>
+<part name="CN4" library="SamacSys_Parts" deviceset="FTSH-105-01-L-DV-K-TR" device="" package3d_urn="urn:adsk.eagle:package:32845337/2" value="FTSH-105-01-L-DV-K-TR"/>
 <part name="SUPPLY40" library="My-Supply" deviceset="0V" device=""/>
 <part name="R6" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2">
 <attribute name="PN" value="RC0603JR-1047KL"/>
@@ -5881,7 +6034,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <part name="SUPPLY42" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY43" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="C14" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
-<part name="U8" library="adafruit" deviceset="DS3231" device="/SO" package3d_urn="urn:adsk.eagle:package:6240754/1" value=""/>
+<part name="U8" library="adafruit" deviceset="DS3231" device="/SO" package3d_urn="urn:adsk.eagle:package:32845204/2" override_package3d_urn="urn:adsk.eagle:package:32845134/2" override_package_urn="urn:adsk.eagle:footprint:6240108/1" value="DS3231/SO"/>
 <part name="SUPPLY15" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY44" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY6" library="My-Supply" deviceset="0V" device=""/>
@@ -5913,11 +6066,15 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 <part name="SUPPLY16" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY19" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY20" library="My-Supply" deviceset="0V" device=""/>
-<part name="U2" library="SamacSys_Parts" deviceset="GL823K" device=""/>
+<part name="U2" library="SamacSys_Parts" deviceset="GL823K" device="" package3d_urn="urn:adsk.eagle:package:32845305/2"/>
 <part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle"/>
 <part name="SUPPLY12" library="My-Supply" deviceset="0V" device=""/>
 <part name="CN3" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card"/>
 <part name="BAT1" library="SamacSys_Parts" deviceset="CR1220" device=""/>
+<part name="CN6" library="Battery" deviceset="BATTERY" device="JST-2" package3d_urn="urn:adsk.eagle:package:32835973/2" value="Lithium Ion Polymer"/>
+<part name="Q1" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
+<part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
+<part name="U3" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" package3d_urn="urn:adsk.eagle:package:32842001/2"/>
 </parts>
 <sheets>
 <sheet>
@@ -6013,9 +6170,6 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="77.47" y="387.985" size="1.778" layer="95"/>
 <attribute name="VALUE" x="77.47" y="385.445" size="1.778" layer="96"/>
 </instance>
-<instance part="BT2" gate="G$1" x="215.265" y="364.49" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
-<attribute name="NAME" x="223.393" y="366.903" size="1.778" layer="95"/>
-</instance>
 <instance part="R12" gate="G$1" x="62.23" y="334.01" smashed="yes" rot="R90" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">
 <attribute name="NAME" x="60.7314" y="331.47" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="65.532" y="331.47" size="1.778" layer="96" rot="R90"/>
@@ -6035,10 +6189,6 @@ from SIMO (MOSI) pin.</text>
 <instance part="C8" gate="G$1" x="184.15" y="365.76" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
 <attribute name="NAME" x="185.674" y="366.141" size="1.778" layer="95"/>
 <attribute name="VALUE" x="185.674" y="361.061" size="1.778" layer="96"/>
-</instance>
-<instance part="U5" gate="G$1" x="332.74" y="376.555" smashed="yes" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY">
-<attribute name="NAME" x="320.675" y="388.35" size="2.0828" layer="95" ratio="10" rot="SR0"/>
-<attribute name="VALUE" x="320.675" y="385.255" size="2.0828" layer="96" ratio="10" rot="SR0"/>
 </instance>
 <instance part="C9" gate="G$1" x="294.005" y="351.155" smashed="yes" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY">
 <attribute name="NAME" x="291.084" y="346.964" size="1.778" layer="95" rot="R90"/>
@@ -6070,14 +6220,6 @@ from SIMO (MOSI) pin.</text>
 <instance part="R42" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_MONITOR">
 <attribute name="NAME" x="244.2464" y="340.36" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="249.047" y="340.36" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="Q2" gate="G$1" x="215.265" y="331.47" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
-<attribute name="NAME" x="218.06503125" y="332.49001875" size="1.780809375" layer="95"/>
-<attribute name="VALUE" x="218.061309375" y="329.946" size="1.77908125" layer="96"/>
-</instance>
-<instance part="Q3" gate="G$1" x="215.265" y="344.17" smashed="yes" rot="MR180" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
-<attribute name="NAME" x="218.06503125" y="343.14998125" size="1.780809375" layer="95" rot="MR180"/>
-<attribute name="VALUE" x="218.061309375" y="345.694" size="1.77908125" layer="96" rot="MR180"/>
 </instance>
 <instance part="R11" gate="G$1" x="212.725" y="264.16" smashed="yes" rot="R90" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="211.2264" y="261.62" size="1.778" layer="95" rot="R90"/>
@@ -6337,6 +6479,22 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="346.964" y="51.943" size="1.778" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="354.965" y="52.197" size="1.778" layer="96" rot="R90" align="center"/>
 </instance>
+<instance part="CN6" gate="G$1" x="215.265" y="364.49" smashed="yes">
+<attribute name="NAME" x="205.867" y="362.712" size="1.778" layer="95"/>
+<attribute name="VALUE" x="218.44" y="366.395" size="1.27" layer="96"/>
+</instance>
+<instance part="Q1" gate="G$1" x="212.725" y="344.17" smashed="yes" rot="MR180">
+<attribute name="NAME" x="217.678" y="346.583" size="1.778" layer="95" rot="MR180"/>
+<attribute name="VALUE" x="217.678" y="344.043" size="1.778" layer="96" rot="MR180"/>
+</instance>
+<instance part="Q2" gate="G$1" x="212.725" y="331.47" smashed="yes">
+<attribute name="NAME" x="218.313" y="332.232" size="1.778" layer="95"/>
+<attribute name="VALUE" x="218.313" y="329.692" size="1.778" layer="96"/>
+</instance>
+<instance part="U3" gate="G$1" x="332.74" y="376.555" smashed="yes">
+<attribute name="NAME" x="320.04" y="387.715" size="2.0828" layer="95" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="320.04" y="385.255" size="2.0828" layer="96" ratio="10" rot="SR0"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -6355,7 +6513,6 @@ from SIMO (MOSI) pin.</text>
 <junction x="88.9" y="313.69" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
 <wire x1="215.265" y1="326.39" x2="215.265" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <wire x1="215.265" y1="313.69" x2="123.19" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
-<pinref part="U5" gate="G$1" pin="GND"/>
 <wire x1="332.74" y1="363.855" x2="332.74" y2="313.69" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <wire x1="332.74" y1="313.69" x2="311.785" y2="313.69" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="215.265" y="313.69" grouprefs="POWER_SUPPLY"/>
@@ -6382,10 +6539,11 @@ from SIMO (MOSI) pin.</text>
 <pinref part="R42" gate="G$1" pin="1"/>
 <wire x1="245.745" y1="337.82" x2="245.745" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
 <junction x="245.745" y="313.69" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<pinref part="Q2" gate="G$1" pin="S"/>
 <pinref part="SUPPLY1" gate="G$1" pin="0V"/>
 <wire x1="62.23" y1="308.61" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <junction x="62.23" y="313.69" grouprefs="POWER_SUPPLY"/>
+<pinref part="Q2" gate="G$1" pin="S"/>
+<pinref part="U3" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C25" gate="G$1" pin="2"/>
@@ -6639,13 +6797,13 @@ from SIMO (MOSI) pin.</text>
 <wire x1="363.855" y1="353.695" x2="363.855" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="C39" gate="G$1" pin="1"/>
 <wire x1="380.365" y1="353.695" x2="380.365" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
-<pinref part="U5" gate="G$1" pin="OUT"/>
 <wire x1="350.52" y1="381.635" x2="363.855" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="363.855" y="381.635" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <wire x1="363.855" y1="381.635" x2="380.365" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="SUPPLY13" gate="G$1" pin="3.3V"/>
 <wire x1="380.365" y1="402.59" x2="380.365" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <junction x="380.365" y="381.635" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
+<pinref part="U3" gate="G$1" pin="OUT"/>
 </segment>
 <segment>
 <wire x1="81.915" y1="118.745" x2="25.4" y2="118.745" width="0.1524" layer="91" grouprefs="MICROCONTROLLER"/>
@@ -6795,26 +6953,26 @@ from SIMO (MOSI) pin.</text>
 <pinref part="IC5" gate="G$1" pin="VSS"/>
 <wire x1="184.15" y1="360.68" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <wire x1="184.15" y1="355.6" x2="174.625" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<pinref part="BT2" gate="G$1" pin="GND"/>
 <wire x1="215.265" y1="358.14" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <wire x1="215.265" y1="355.6" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <junction x="184.15" y="355.6" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <wire x1="215.265" y1="349.25" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <junction x="215.265" y="355.6" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<pinref part="Q3" gate="G$1" pin="S"/>
+<pinref part="CN6" gate="G$1" pin="GND"/>
+<pinref part="Q1" gate="G$1" pin="S"/>
 </segment>
 </net>
 <net name="N$1" class="0">
 <segment>
 <pinref part="IC5" gate="G$1" pin="DO"/>
-<wire x1="210.185" y1="346.71" x2="174.625" y2="346.71" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<pinref part="Q3" gate="G$1" pin="G"/>
+<wire x1="208.915" y1="346.71" x2="174.625" y2="346.71" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<pinref part="Q1" gate="G$1" pin="G"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
 <pinref part="IC5" gate="G$1" pin="CO"/>
-<wire x1="210.185" y1="328.93" x2="174.625" y2="328.93" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="208.915" y1="328.93" x2="174.625" y2="328.93" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <pinref part="Q2" gate="G$1" pin="G"/>
 </segment>
 </net>
@@ -6822,13 +6980,11 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="R22" gate="G$1" pin="1"/>
 <wire x1="215.265" y1="372.11" x2="204.47" y2="372.11" width="0.15" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<pinref part="BT2" gate="G$1" pin="VDD"/>
 <wire x1="215.265" y1="369.57" x2="215.265" y2="372.11" width="0.15" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <pinref part="IC2" gate="G$1" pin="VBAT"/>
 <wire x1="104.14" y1="381.635" x2="215.265" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <wire x1="215.265" y1="381.635" x2="215.265" y2="372.11" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <junction x="215.265" y="372.11" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<pinref part="U5" gate="G$1" pin="IN"/>
 <wire x1="314.96" y1="381.635" x2="311.785" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="215.265" y="381.635" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <wire x1="311.785" y1="381.635" x2="294.005" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
@@ -6842,19 +6998,21 @@ from SIMO (MOSI) pin.</text>
 <wire x1="311.785" y1="353.695" x2="311.785" y2="376.555" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="311.785" y="381.635" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <wire x1="311.785" y1="376.555" x2="311.785" y2="381.635" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
-<pinref part="U5" gate="G$1" pin="EN"/>
 <wire x1="314.96" y1="376.555" x2="311.785" y2="376.555" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="311.785" y="376.555" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="R41" gate="G$1" pin="2"/>
 <wire x1="245.745" y1="363.22" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
 <junction x="245.745" y="381.635" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<pinref part="CN6" gate="G$1" pin="VDD"/>
+<pinref part="U3" gate="G$1" pin="EN"/>
+<pinref part="U3" gate="G$1" pin="IN"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="Q3" gate="G$1" pin="D"/>
-<pinref part="Q2" gate="G$1" pin="D"/>
 <wire x1="215.265" y1="339.09" x2="215.265" y2="336.55" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<pinref part="Q1" gate="G$1" pin="D"/>
+<pinref part="Q2" gate="G$1" pin="D"/>
 </segment>
 </net>
 <net name="USB_DAT0" class="0">
@@ -7025,7 +7183,7 @@ from SIMO (MOSI) pin.</text>
 <label x="180.975" y="70.485" size="1.27" layer="95" xref="yes" grouprefs="MICROCONTROLLER"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="Y"/>
+<pinref part="U1" gate="G$1" pin="OUT"/>
 <wire x1="295.91" y1="57.15" x2="298.45" y2="57.15" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
 <label x="298.45" y="57.15" size="1.27" layer="95" xref="yes" grouprefs="DATALOGGER_INPUT"/>
 </segment>
@@ -7236,7 +7394,7 @@ from SIMO (MOSI) pin.</text>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="U1" gate="G$1" pin="A"/>
+<pinref part="U1" gate="G$1" pin="IN"/>
 <wire x1="278.765" y1="57.15" x2="280.67" y2="57.15" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
 <pinref part="CN2" gate="-1" pin="KL"/>
 </segment>
@@ -7384,9 +7542,6 @@ from SIMO (MOSI) pin.</text>
 <approved hash="102,1,25.4,128.27,+4.1V,3.3V,,,,"/>
 <approved hash="104,1,88.9,342.265,IC2,VSS,0V,,,"/>
 <approved hash="104,1,72.39,381.635,IC2,VDD,VUSB,,,"/>
-<approved hash="104,1,215.265,369.57,BT2,VDD,N$33,,,"/>
-<approved hash="104,1,215.265,358.14,BT2,GND,N$32,,,"/>
-<approved hash="104,1,332.74,363.855,U5,GND,0V,,,"/>
 <approved hash="104,1,537.21,102.87,DS1,GND,0V,,,"/>
 <approved hash="104,1,537.21,125.73,DS1,VCC,3.3V,,,"/>
 <approved hash="104,1,302.895,240.03,U4,VCC,3.3V,,,"/>
@@ -7398,8 +7553,8 @@ from SIMO (MOSI) pin.</text>
 <approved hash="104,1,73.025,184.15,CN1,GND_A,0V,,,"/>
 <approved hash="104,1,73.025,207.01,CN1,VBUS_A,VUSB,,,"/>
 <approved hash="104,1,108.585,184.15,CN1,GND_B,0V,,,"/>
-<approved hash="208,1,350.52,381.635,3.3V,out,,,,"/>
 <approved hash="208,1,380.365,402.59,3.3V,sup,,,,"/>
+<approved hash="208,1,350.52,381.635,3.3V,out,,,,"/>
 <approved hash="208,1,25.4,128.27,3.3V,sup,,,,"/>
 <approved hash="208,1,542.29,128.905,3.3V,sup,,,,"/>
 <approved hash="208,1,302.895,271.145,3.3V,sup,,,,"/>
