@@ -612,6 +612,31 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="-1.6" y1="-2.45" x2="-1.6" y2="2.45" width="0.2" layer="21"/>
 <wire x1="-3.45" y1="2.79" x2="-1.95" y2="2.79" width="0.2" layer="21"/>
 </package>
+<package name="1072">
+<description>&lt;b&gt;1072-2&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="+" x="0" y="-7.4" dx="2" dy="1.5" layer="1" rot="R90"/>
+<smd name="-" x="0" y="7.4" dx="2" dy="1.5" layer="1" rot="R90"/>
+<pad name="MH1" x="4" y="0" drill="0.7" diameter="1.2" rot="R90"/>
+<pad name="MH2" x="-4" y="0" drill="1.1" diameter="1.65" rot="R90"/>
+<text x="-7.62" y="0" size="1.27" layer="25" rot="R90" align="center">&gt;NAME</text>
+<text x="7.62" y="0" size="1.27" layer="27" rot="R90" align="center">&gt;VALUE</text>
+<wire x1="-5" y1="-8.4" x2="-5" y2="8.4" width="0.2" layer="51"/>
+<wire x1="-5" y1="8.4" x2="5" y2="8.4" width="0.2" layer="51"/>
+<wire x1="5" y1="8.4" x2="5" y2="-8.4" width="0.2" layer="51"/>
+<wire x1="5" y1="-8.4" x2="-5" y2="-8.4" width="0.2" layer="51"/>
+<wire x1="-6" y1="-9.4" x2="-6" y2="9.4" width="0.1" layer="51"/>
+<wire x1="-6" y1="9.4" x2="6" y2="9.4" width="0.1" layer="51"/>
+<wire x1="6" y1="9.4" x2="6" y2="-9.4" width="0.1" layer="51"/>
+<wire x1="6" y1="-9.4" x2="-6" y2="-9.4" width="0.1" layer="51"/>
+<wire x1="-5" y1="-3" x2="-5" y2="-8.4" width="0.1" layer="21"/>
+<wire x1="-5" y1="-8.4" x2="-2" y2="-8.4" width="0.1" layer="21"/>
+<wire x1="2" y1="-8.4" x2="5" y2="-8.4" width="0.1" layer="21"/>
+<wire x1="5" y1="-8.4" x2="5" y2="8.4" width="0.1" layer="21"/>
+<wire x1="5" y1="8.4" x2="2" y2="8.4" width="0.1" layer="21"/>
+<wire x1="-2" y1="8.4" x2="-5" y2="8.4" width="0.1" layer="21"/>
+<wire x1="-5" y1="8.4" x2="-5" y2="2" width="0.1" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="S-8261ACMMD-G4MT2U">
@@ -670,6 +695,18 @@ In this library the device names are the same as the pin names of the symbols, t
 <pin name="GPIO" x="15.24" y="-15.24" length="middle" rot="R180"/>
 <pin name="5V" x="-15.24" y="15.24" length="middle"/>
 <pin name="VDD" x="15.24" y="0" length="middle" rot="R180"/>
+</symbol>
+<symbol name="1072">
+<wire x1="-0.635" y1="-0.635" x2="0" y2="-0.635" width="0.4064" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="-0.635" width="0.1524" layer="94"/>
+<wire x1="0" y1="-0.635" x2="0.635" y2="-0.635" width="0.4064" layer="94"/>
+<wire x1="-2.54" y1="0.635" x2="0" y2="0.635" width="0.4064" layer="94"/>
+<wire x1="0" y1="0.635" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="0.635" x2="2.54" y2="0.635" width="0.4064" layer="94"/>
+<text x="-4.191" y="0.508" size="1.778" layer="95" rot="R90" align="center">&gt;NAME</text>
+<text x="3.81" y="0.762" size="1.778" layer="96" rot="R90" align="center">&gt;VALUE</text>
+<pin name="+" x="0" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
+<pin name="-" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -776,6 +813,31 @@ Source: &lt;a href="http://www.electrodragon.com/w/images/c/cb/GL823K.pdf"&gt; D
 </device>
 </devices>
 </deviceset>
+<deviceset name="CR1220" prefix="BAT">
+<description>&lt;b&gt;Coin Cell Battery Holders BATTERY HOLDER FOR CR1220 / 1225 Tape and Reel&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="http://www.keystoneelectronics.net/ENG._DEPT/WEB_ORACLE/PDF/PDF CAT NO DRAWINGS/1000-1999/1072.PDF"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="1072" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="1072">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DESCRIPTION" value="Coin Cell Battery Holders BATTERY HOLDER FOR CR1220 / 1225 Tape and Reel" constant="no"/>
+<attribute name="HEIGHT" value="3.95mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="Keystone Electronics" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="1072" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="534-1072" constant="no"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.co.uk/ProductDetail/Keystone-Electronics/1072?qs=u16ybLDytRbC8B3DEARGaw%3D%3D" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="diy-modules">
@@ -796,20 +858,13 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 &lt;a href="http://diymodules.org/eagle"&gt;&lt;img src="http://www.diymodules.org/img/diymodules-lbr-image.php?v=1.8.0" alt="DIYmodules.org"&gt;&lt;/a&gt;
 &lt;/center&gt;</description>
 <packages>
-<package name="DISPLAY-OLED-128X64">
+<package name="DISPLAY-OLED-128X64" urn="urn:adsk.eagle:footprint:32761924/1">
 <description>&lt;b&gt;128x64 Dot Matrix OLED Module&lt;/b&gt;&lt;br /&gt;
 Variant with SPI interface</description>
 <wire x1="-13.716" y1="13.97" x2="13.716" y2="13.97" width="0.127" layer="21"/>
 <wire x1="13.716" y1="13.97" x2="13.716" y2="-13.97" width="0.127" layer="21"/>
 <wire x1="13.716" y1="-13.97" x2="-13.716" y2="-13.97" width="0.127" layer="21"/>
 <wire x1="-13.716" y1="-13.97" x2="-13.716" y2="13.97" width="0.127" layer="21"/>
-<pad name="1" x="-7.62" y="12.7" drill="1" shape="square"/>
-<pad name="2" x="-5.08" y="12.7" drill="1"/>
-<pad name="3" x="-2.54" y="12.7" drill="1"/>
-<pad name="4" x="0" y="12.7" drill="1"/>
-<pad name="5" x="2.54" y="12.7" drill="1"/>
-<pad name="6" x="5.08" y="12.7" drill="1"/>
-<pad name="7" x="7.62" y="12.7" drill="1"/>
 <wire x1="-8.89" y1="13.335" x2="-8.255" y2="13.97" width="0.127" layer="21"/>
 <wire x1="-6.985" y1="13.97" x2="-6.35" y2="13.335" width="0.127" layer="21"/>
 <wire x1="-6.35" y1="13.335" x2="-5.715" y2="13.97" width="0.127" layer="21"/>
@@ -846,19 +901,35 @@ Variant with SPI interface</description>
 <wire x1="-6.985" y1="11.43" x2="-8.255" y2="11.43" width="0.127" layer="21"/>
 <wire x1="-8.255" y1="11.43" x2="-8.89" y2="12.065" width="0.127" layer="21"/>
 <wire x1="-8.89" y1="12.065" x2="-8.89" y2="13.335" width="0.127" layer="21"/>
-<hole x="-11.684" y="11.938" drill="2"/>
 <wire x1="-11.43" y1="8.128" x2="11.43" y2="8.128" width="0.127" layer="21"/>
 <wire x1="11.43" y1="8.128" x2="11.43" y2="-5.588" width="0.127" layer="21"/>
 <wire x1="11.43" y1="-5.588" x2="-11.43" y2="-5.588" width="0.127" layer="21"/>
 <wire x1="-11.43" y1="-5.588" x2="-11.43" y2="8.128" width="0.127" layer="21"/>
-<text x="0" y="15.24" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-15.24" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
+<wire x1="8.89" y1="13.335" x2="8.89" y2="12.065" width="0.127" layer="21"/>
+<pad name="1" x="-7.62" y="12.7" drill="1" shape="square"/>
+<pad name="2" x="-5.08" y="12.7" drill="1"/>
+<pad name="3" x="-2.54" y="12.7" drill="1"/>
+<pad name="4" x="0" y="12.7" drill="1"/>
+<pad name="5" x="2.54" y="12.7" drill="1"/>
+<pad name="6" x="5.08" y="12.7" drill="1"/>
+<pad name="7" x="7.62" y="12.7" drill="1"/>
+<hole x="-11.684" y="11.938" drill="2"/>
 <hole x="11.684" y="11.938" drill="2"/>
 <hole x="11.684" y="-11.938" drill="2"/>
 <hole x="-11.684" y="-11.938" drill="2"/>
-<wire x1="8.89" y1="13.335" x2="8.89" y2="12.065" width="0.127" layer="21"/>
+<text x="0" y="15.24" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
+<text x="0" y="-15.24" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
 </package>
 </packages>
+<packages3d>
+<package3d name="DISPLAY-OLED-128X64" urn="urn:adsk.eagle:package:32761919/2" type="model">
+<description>&lt;b&gt;128x64 Dot Matrix OLED Module&lt;/b&gt;&lt;br /&gt;
+Variant with SPI interface</description>
+<packageinstances>
+<packageinstance name="DISPLAY-OLED-128X64"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="DISPLAY-OLED-128X64">
 <description>&lt;b&gt;128x64 Dot Matrix OLED Module&lt;/b&gt;</description>
@@ -915,6 +986,9 @@ Variant with &lt;b&gt;SPI interface&lt;/b&gt;
 <connect gate="G$1" pin="SCLK" pad="3"/>
 <connect gate="G$1" pin="VCC" pad="2"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32761919/2"/>
+</package3dinstances>
 <technologies>
 <technology name=""/>
 </technologies>
@@ -5181,117 +5255,6 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="battery" urn="urn:adsk.eagle:library:109">
-<description>&lt;b&gt;Lithium Batteries and NC Accus&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="CH291-1220LF" urn="urn:adsk.eagle:footprint:4566/1" library_version="1">
-<description>&lt;b&gt;Battery Holder, SMT, 12mm&lt;/b&gt;&lt;p&gt;
-multicomp PART NO. CH291-1220LF&lt;br&gt;
-Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data sheet &lt;/a&gt;</description>
-<smd name="-" x="0" y="14.1458" dx="2.3" dy="4.3" layer="1"/>
-<smd name="+" x="0" y="-2.2955" dx="2.3" dy="3.66" layer="1"/>
-<hole x="0" y="2" drill="1.3"/>
-<hole x="0" y="9.5" drill="1"/>
-<wire x1="-6.4239" y1="1.995" x2="-1.5375" y2="13.6375" width="0.2" layer="21" curve="-111.250047"/>
-<wire x1="1.5375" y1="13.6375" x2="6.4239" y2="1.995" width="0.2" layer="21" curve="-111.445767"/>
-<wire x1="-6.4239" y1="1.995" x2="6.4239" y2="1.995" width="0.2" layer="51" curve="-245.830438"/>
-<wire x1="-6.4239" y1="1.995" x2="-6.9825" y2="0.9975" width="0.2" layer="21" curve="-124.211808"/>
-<wire x1="-6.9825" y1="0.9975" x2="-7.4214" y2="0.5586" width="0.2" layer="21" curve="92.702019"/>
-<wire x1="-7.4214" y1="0.5586" x2="-7.4214" y2="-0.2394" width="0.2" layer="21"/>
-<wire x1="-7.4214" y1="-0.2394" x2="-6.8628" y2="-0.7581" width="0.2" layer="21" curve="94.242193"/>
-<wire x1="-6.8628" y1="-0.7581" x2="-4.5885" y2="-0.7581" width="0.2" layer="21"/>
-<wire x1="-4.5885" y1="-0.7581" x2="-1.5215" y2="-1.4364" width="0.2" layer="21"/>
-<wire x1="-1.5215" y1="-1.4364" x2="-1.5215" y2="0.1596" width="0.2" layer="21"/>
-<wire x1="6.4239" y1="1.995" x2="6.9825" y2="0.9975" width="0.2" layer="21" curve="124.211808"/>
-<wire x1="6.9825" y1="0.9975" x2="7.4214" y2="0.5586" width="0.2" layer="21" curve="-92.702019"/>
-<wire x1="7.4214" y1="0.5586" x2="7.4214" y2="-0.2394" width="0.2" layer="21"/>
-<wire x1="7.4214" y1="-0.2394" x2="6.8628" y2="-0.7581" width="0.2" layer="21" curve="-94.242193"/>
-<wire x1="6.8628" y1="-0.7581" x2="4.5885" y2="-0.7581" width="0.2" layer="21"/>
-<wire x1="4.5885" y1="-0.7581" x2="1.5215" y2="-1.4364" width="0.2" layer="21"/>
-<wire x1="1.5215" y1="-1.4364" x2="1.5215" y2="0.1596" width="0.2" layer="21"/>
-<wire x1="-6.5" y1="0.1596" x2="6.5" y2="0.1596" width="0.2" layer="51"/>
-<wire x1="-3.3117" y1="0.6783" x2="-1.8354" y2="12.2892" width="0.2" layer="21" curve="-131.708908"/>
-<wire x1="1.7955" y1="12.2892" x2="3.3117" y2="0.6783" width="0.2" layer="21" curve="-132.206586"/>
-<wire x1="1.5215" y1="0.1596" x2="6.5" y2="0.1596" width="0.2" layer="21"/>
-<wire x1="-6.5" y1="0.1596" x2="-1.5215" y2="0.1596" width="0.2" layer="21"/>
-<wire x1="-3.3117" y1="0.6783" x2="-3.5125" y2="0.1625" width="0.2" layer="21" curve="-159.758355"/>
-<wire x1="3.3117" y1="0.6783" x2="3.5" y2="0.1625" width="0.2" layer="21" curve="157.437467"/>
-<wire x1="-3" y1="11.75" x2="-2.5" y2="11" width="0.2" layer="21"/>
-<wire x1="-2.5" y1="11" x2="-3.5" y2="10.25" width="0.2" layer="21"/>
-<wire x1="-3.5" y1="10.25" x2="-4.125" y2="10.8875" width="0.2" layer="21"/>
-<wire x1="3" y1="11.75" x2="2.5" y2="11" width="0.2" layer="21"/>
-<wire x1="2.5" y1="11" x2="3.5" y2="10.25" width="0.2" layer="21"/>
-<wire x1="3.5" y1="10.25" x2="4.125" y2="10.8875" width="0.2" layer="21"/>
-<wire x1="-1.5" y1="10" x2="-1.5" y2="3" width="0.2" layer="21"/>
-<wire x1="-1.5" y1="3" x2="1.5" y2="3" width="0.2" layer="21"/>
-<wire x1="1.5" y1="3" x2="1.5" y2="10" width="0.2" layer="21"/>
-<wire x1="1.5" y1="10" x2="1" y2="10" width="0.2" layer="21"/>
-<wire x1="1" y1="10" x2="1" y2="3.75" width="0.2" layer="21"/>
-<wire x1="1" y1="3.75" x2="0.25" y2="3.75" width="0.2" layer="21"/>
-<wire x1="0.25" y1="3.75" x2="0.25" y2="5.5" width="0.2" layer="21"/>
-<wire x1="0.25" y1="5.5" x2="-0.25" y2="5.5" width="0.2" layer="21"/>
-<wire x1="-0.25" y1="5.5" x2="-0.25" y2="3.75" width="0.2" layer="21"/>
-<wire x1="-0.25" y1="3.75" x2="-1" y2="3.75" width="0.2" layer="21"/>
-<wire x1="-1" y1="3.75" x2="-1" y2="10" width="0.2" layer="21"/>
-<wire x1="-1" y1="10" x2="-1.5" y2="10" width="0.2" layer="21"/>
-<text x="2" y="14" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<text x="1.75" y="-3.5" size="1.27" layer="27" font="vector">&gt;VALUE</text>
-<rectangle x1="-0.9" y1="12" x2="0.9" y2="15.825" layer="51"/>
-<rectangle x1="-0.9" y1="-3.625" x2="0.9" y2="-0.5" layer="51"/>
-</package>
-</packages>
-<packages3d>
-<package3d name="CH291-1220LF" urn="urn:adsk.eagle:package:4617/1" type="box" library_version="1">
-<description>Battery Holder, SMT, 12mm
-multicomp PART NO. CH291-1220LF
-Source:  Data sheet </description>
-<packageinstances>
-<packageinstance name="CH291-1220LF"/>
-</packageinstances>
-</package3d>
-</packages3d>
-<symbols>
-<symbol name="1V2" urn="urn:adsk.eagle:symbol:4515/1" library_version="1">
-<wire x1="-0.635" y1="0.635" x2="-0.635" y2="0" width="0.4064" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-0.635" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.635" y1="0" x2="-0.635" y2="-0.635" width="0.4064" layer="94"/>
-<wire x1="0.635" y1="2.54" x2="0.635" y2="0" width="0.4064" layer="94"/>
-<wire x1="0.635" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="0.635" y1="0" x2="0.635" y2="-2.54" width="0.4064" layer="94"/>
-<text x="-1.27" y="3.175" size="1.778" layer="95">&gt;NAME</text>
-<text x="-1.27" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="+" x="5.08" y="0" visible="pad" length="short" direction="pas" rot="R180"/>
-<pin name="-" x="-5.08" y="0" visible="pad" length="short" direction="pas"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="CH291-1220LF" urn="urn:adsk.eagle:component:4678/2" prefix="G" library_version="3">
-<description>&lt;b&gt;Battery Holder, SMT, 12mm&lt;/b&gt;&lt;p&gt;
-multicomp PART NO. CH291-1220LF&lt;br&gt;
-Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data sheet &lt;/a&gt;</description>
-<gates>
-<gate name="G1" symbol="1V2" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="CH291-1220LF">
-<connects>
-<connect gate="G1" pin="+" pad="+"/>
-<connect gate="G1" pin="-" pad="-"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:4617/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="POPULARITY" value="1" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="USB C CONNECOTR">
 <packages>
 <package name="GCT_USB4080-03-A_REVA" urn="urn:adsk.eagle:footprint:32764402/1">
@@ -5866,7 +5829,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data shee
 <part name="C21" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2">
 <attribute name="PN" value="GRM188R61A106ME69D"/>
 </part>
-<part name="DS1" library="diy-modules" deviceset="DISPLAY-OLED-128X64" device="" value=""/>
+<part name="DS1" library="diy-modules" deviceset="DISPLAY-OLED-128X64" device="" package3d_urn="urn:adsk.eagle:package:32761919/2" value="DISPLAY-OLED-128X64"/>
 <part name="SUPPLY24" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="C25" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="SUPPLY25" library="My-Supply" deviceset="0V" device=""/>
@@ -5894,7 +5857,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data shee
 <part name="U1" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="" value=""/>
 <part name="SUPPLY28" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY29" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="CN2" library="con-ptr500" deviceset="AK500/2-H" device="" package3d_urn="urn:adsk.eagle:package:9901/1"/>
+<part name="CN2" library="con-ptr500" deviceset="AK500/2-H" device="" package3d_urn="urn:adsk.eagle:package:9901/1" override_package3d_urn="urn:adsk.eagle:package:32815263/2" override_package_urn="urn:adsk.eagle:footprint:9865/1"/>
 <part name="SUPPLY32" library="My-Supply" deviceset="0V" device=""/>
 <part name="R1" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="R2" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
@@ -5917,7 +5880,6 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data shee
 <part name="SUPPLY41" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY42" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY43" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="G1" library="battery" library_urn="urn:adsk.eagle:library:109" deviceset="CH291-1220LF" device="" package3d_urn="urn:adsk.eagle:package:4617/1" value=""/>
 <part name="C14" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2"/>
 <part name="U8" library="adafruit" deviceset="DS3231" device="/SO" package3d_urn="urn:adsk.eagle:package:6240754/1" value=""/>
 <part name="SUPPLY15" library="My-Supply" deviceset="0V" device=""/>
@@ -5955,6 +5917,7 @@ Source: &lt;a href="http://www.farnell.com/datasheets/1505860.pdf"&gt; Data shee
 <part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle"/>
 <part name="SUPPLY12" library="My-Supply" deviceset="0V" device=""/>
 <part name="CN3" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card"/>
+<part name="BAT1" library="SamacSys_Parts" deviceset="CR1220" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5991,12 +5954,12 @@ at 500mA</text>
 <wire x1="335.915" y1="360.045" x2="335.28" y2="358.775" width="0.1524" layer="208" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <text x="226.06" y="363.22" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">3.7V ~ 4.2V
 230mAh</text>
-<wire x1="247.65" y1="379.73" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<wire x1="247.65" y1="373.38" x2="247.015" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<wire x1="247.015" y1="374.65" x2="248.285" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<wire x1="248.285" y1="374.65" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<text x="253.111" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY">2.1μA max.</text>
-<text x="262.89" y="395.605" size="0.254" layer="201" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY"> </text>
+<wire x1="247.65" y1="379.73" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="247.65" y1="373.38" x2="247.015" y2="374.65" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="247.015" y1="374.65" x2="248.285" y2="374.65" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="248.285" y1="374.65" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<text x="253.111" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR">2.1μA max.</text>
+<text x="262.89" y="395.605" size="0.254" layer="201" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR"> </text>
 <text x="182.88" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"> </text>
 <text x="44.45" y="395.605" size="0.254" layer="91" align="center" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"> </text>
 <wire x1="249.555" y1="236.855" x2="278.765" y2="236.855" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -6100,11 +6063,11 @@ from SIMO (MOSI) pin.</text>
 <attribute name="VALUE" x="380.3904" y="408.94" size="1.778" layer="96" align="center"/>
 </instance>
 <instance part="SUPPLY14" gate="G$1" x="380.365" y="306.07" smashed="yes" grouprefs="POWER_SUPPLY"/>
-<instance part="R41" gate="G$1" x="245.745" y="358.14" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
+<instance part="R41" gate="G$1" x="245.745" y="358.14" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_MONITOR">
 <attribute name="NAME" x="244.2464" y="355.6" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="249.047" y="355.6" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R42" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
+<instance part="R42" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_MONITOR">
 <attribute name="NAME" x="244.2464" y="340.36" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="249.047" y="340.36" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -6283,10 +6246,6 @@ from SIMO (MOSI) pin.</text>
 <instance part="SUPPLY43" gate="G$1" x="301.625" y="125.73" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)">
 <attribute name="VALUE" x="301.6504" y="129.54" size="1.778" layer="96" align="center"/>
 </instance>
-<instance part="G1" gate="G1" x="351.155" y="51.435" smashed="yes" rot="R90" grouprefs="REAL_TIME_CLOCK">
-<attribute name="NAME" x="347.345" y="50.165" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="356.235" y="46.99" size="1.778" layer="96" rot="R90"/>
-</instance>
 <instance part="C14" gate="G$1" x="339.725" y="52.07" smashed="yes" rot="R180" grouprefs="REAL_TIME_CLOCK">
 <attribute name="NAME" x="331.724" y="52.705" size="1.778" layer="95"/>
 <attribute name="VALUE" x="344.424" y="49.784" size="1.778" layer="96" rot="R90"/>
@@ -6374,6 +6333,10 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="342.265" y="231.648" size="1.778" layer="95"/>
 <attribute name="VALUE" x="342.265" y="228.854" size="1.778" layer="96"/>
 </instance>
+<instance part="BAT1" gate="G$1" x="351.155" y="51.435" smashed="yes">
+<attribute name="NAME" x="346.964" y="51.943" size="1.778" layer="95" rot="R90" align="center"/>
+<attribute name="VALUE" x="354.965" y="52.197" size="1.778" layer="96" rot="R90" align="center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -6417,8 +6380,8 @@ from SIMO (MOSI) pin.</text>
 <junction x="380.365" y="313.69" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="SUPPLY14" gate="G$1" pin="0V"/>
 <pinref part="R42" gate="G$1" pin="1"/>
-<wire x1="245.745" y1="337.82" x2="245.745" y2="313.69" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<junction x="245.745" y="313.69" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="245.745" y1="337.82" x2="245.745" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<junction x="245.745" y="313.69" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
 <pinref part="Q2" gate="G$1" pin="S"/>
 <pinref part="SUPPLY1" gate="G$1" pin="0V"/>
 <wire x1="62.23" y1="308.61" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
@@ -6545,12 +6508,12 @@ from SIMO (MOSI) pin.</text>
 <wire x1="339.725" y1="45.085" x2="339.725" y2="38.735" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <wire x1="362.585" y1="45.085" x2="351.155" y2="45.085" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <junction x="339.725" y="45.085" grouprefs="REAL_TIME_CLOCK"/>
-<pinref part="G1" gate="G1" pin="-"/>
 <wire x1="351.155" y1="45.085" x2="339.725" y2="45.085" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <wire x1="351.155" y1="46.355" x2="351.155" y2="45.085" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <junction x="351.155" y="45.085" grouprefs="REAL_TIME_CLOCK"/>
 <pinref part="U8" gate="G$1" pin="GND"/>
 <pinref part="SUPPLY15" gate="G$1" pin="0V"/>
+<pinref part="BAT1" gate="G$1" pin="-"/>
 </segment>
 <segment>
 <pinref part="SW1" gate="G$1" pin="SW2"/>
@@ -6883,8 +6846,8 @@ from SIMO (MOSI) pin.</text>
 <wire x1="314.96" y1="376.555" x2="311.785" y2="376.555" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="311.785" y="376.555" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="R41" gate="G$1" pin="2"/>
-<wire x1="245.745" y1="363.22" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<junction x="245.745" y="381.635" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="245.745" y1="363.22" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<junction x="245.745" y="381.635" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -7048,11 +7011,11 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="R41" gate="G$1" pin="1"/>
 <pinref part="R42" gate="G$1" pin="2"/>
-<wire x1="245.745" y1="347.98" x2="245.745" y2="350.52" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<wire x1="245.745" y1="350.52" x2="245.745" y2="353.06" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<wire x1="245.745" y1="350.52" x2="253.365" y2="350.52" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<junction x="245.745" y="350.52" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
-<label x="253.365" y="350.52" size="1.27" layer="95" xref="yes" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="245.745" y1="347.98" x2="245.745" y2="350.52" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="245.745" y1="350.52" x2="245.745" y2="353.06" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="245.745" y1="350.52" x2="253.365" y2="350.52" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<junction x="245.745" y="350.52" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<label x="253.365" y="350.52" size="1.27" layer="95" xref="yes" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
 </segment>
 </net>
 <net name="UART_DATALOGGER_RX" class="0">
@@ -7334,10 +7297,10 @@ from SIMO (MOSI) pin.</text>
 </net>
 <net name="N$22" class="0">
 <segment>
-<pinref part="G1" gate="G1" pin="+"/>
 <wire x1="362.585" y1="57.785" x2="351.155" y2="57.785" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <wire x1="351.155" y1="57.785" x2="351.155" y2="56.515" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <pinref part="U8" gate="G$1" pin="VBAT"/>
+<pinref part="BAT1" gate="G$1" pin="+"/>
 </segment>
 </net>
 <net name="GPIO_BATTERY_CHARGING_STATUS" class="0">
