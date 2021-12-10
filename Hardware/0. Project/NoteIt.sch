@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.025" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -612,7 +612,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="-1.6" y1="-2.45" x2="-1.6" y2="2.45" width="0.2" layer="21"/>
 <wire x1="-3.45" y1="2.79" x2="-1.95" y2="2.79" width="0.2" layer="21"/>
 </package>
-<package name="1072">
+<package name="1072" urn="urn:adsk.eagle:footprint:32858609/1">
 <description>&lt;b&gt;1072-2&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="+" x="0" y="-7.4" dx="2" dy="1.5" layer="1" rot="R90"/>
@@ -655,6 +655,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <description>&lt;b&gt;FTSH-105-01-L-DV-K-TR-3&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="FTSH10501LDVKTR"/>
+</packageinstances>
+</package3d>
+<package3d name="1072" urn="urn:adsk.eagle:package:32858608/4" type="model">
+<description>&lt;b&gt;1072-2&lt;/b&gt;&lt;br&gt;</description>
+<packageinstances>
+<packageinstance name="1072"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -854,6 +860,9 @@ Source: &lt;a href="http://www.keystoneelectronics.net/ENG._DEPT/WEB_ORACLE/PDF/
 <connect gate="G$1" pin="+" pad="+"/>
 <connect gate="G$1" pin="-" pad="-"/>
 </connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:32858608/4"/>
+</package3dinstances>
 <technologies>
 <technology name="">
 <attribute name="DESCRIPTION" value="Coin Cell Battery Holders BATTERY HOLDER FOR CR1220 / 1225 Tape and Reel" constant="no"/>
@@ -3545,26 +3554,6 @@ Source: &lt;a href="http://www.ti.com/lit/gpn/MSP430FR2476"&gt; Datasheet &lt;/a
 &lt;p&gt;&lt;author&gt;THIS LIBRARY IS PROVIDED AS IS AND WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED.&lt;br&gt;Copyright (C) 2007, Bob Starr&lt;br&gt; http://www.bobstarr.net&lt;br&gt;
 &lt;/author&gt;</description>
 <packages>
-<package name="R0402" urn="urn:adsk.eagle:footprint:25419999/1">
-<description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0402</description>
-<wire x1="-0.245" y1="0.174" x2="0.245" y2="0.174" width="0.1016" layer="51"/>
-<wire x1="0.245" y1="-0.174" x2="-0.245" y2="-0.174" width="0.1016" layer="51"/>
-<wire x1="-1.1555" y1="0.483" x2="1.1555" y2="0.483" width="0.0508" layer="39"/>
-<wire x1="1.1555" y1="0.483" x2="1.1555" y2="-0.483" width="0.0508" layer="39"/>
-<wire x1="1.1555" y1="-0.483" x2="-1.1555" y2="-0.483" width="0.0508" layer="39"/>
-<wire x1="-1.1555" y1="-0.483" x2="-1.1555" y2="0.483" width="0.0508" layer="39"/>
-<wire x1="-1.016" y1="0.508" x2="1.016" y2="0.508" width="0.2032" layer="21"/>
-<wire x1="1.016" y1="0.508" x2="1.016" y2="-0.508" width="0.2032" layer="21"/>
-<wire x1="1.016" y1="-0.508" x2="-1.016" y2="-0.508" width="0.2032" layer="21"/>
-<wire x1="-1.016" y1="-0.508" x2="-1.016" y2="0.508" width="0.2032" layer="21"/>
-<smd name="1" x="-0.508" y="0" dx="0.5" dy="0.5" layer="1"/>
-<smd name="2" x="0.508" y="0" dx="0.5" dy="0.5" layer="1"/>
-<text x="-1.016" y="0.762" size="0.8128" layer="25" ratio="18">&gt;NAME</text>
-<text x="-1.016" y="-1.27" size="0.6096" layer="27" ratio="10">&gt;VALUE</text>
-<rectangle x1="-0.5" y1="-0.25" x2="-0.254" y2="0.25" layer="51"/>
-<rectangle x1="0.2588" y1="-0.25" x2="0.5" y2="0.25" layer="51"/>
-<rectangle x1="-0.1" y1="-0.2" x2="0.1" y2="0.2" layer="35"/>
-</package>
 <package name="R0603" urn="urn:adsk.eagle:footprint:23494031/1">
 <description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0603</description>
 <wire x1="-0.432" y1="-0.306" x2="0.432" y2="-0.306" width="0.1016" layer="51"/>
@@ -4198,14 +4187,28 @@ Metric Code Size 5664</description>
 <rectangle x1="1.4" y1="-1.1" x2="2.3" y2="1.1" layer="51"/>
 <rectangle x1="-0.3175" y1="-0.7" x2="0.3175" y2="0.7" layer="35"/>
 </package>
+<package name="R0402" urn="urn:adsk.eagle:footprint:25419999/1">
+<description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0402</description>
+<wire x1="-0.245" y1="0.174" x2="0.245" y2="0.174" width="0.1016" layer="51"/>
+<wire x1="0.245" y1="-0.174" x2="-0.245" y2="-0.174" width="0.1016" layer="51"/>
+<wire x1="-1.1555" y1="0.483" x2="1.1555" y2="0.483" width="0.0508" layer="39"/>
+<wire x1="1.1555" y1="0.483" x2="1.1555" y2="-0.483" width="0.0508" layer="39"/>
+<wire x1="1.1555" y1="-0.483" x2="-1.1555" y2="-0.483" width="0.0508" layer="39"/>
+<wire x1="-1.1555" y1="-0.483" x2="-1.1555" y2="0.483" width="0.0508" layer="39"/>
+<wire x1="-1.016" y1="0.508" x2="1.016" y2="0.508" width="0.2032" layer="21"/>
+<wire x1="1.016" y1="0.508" x2="1.016" y2="-0.508" width="0.2032" layer="21"/>
+<wire x1="1.016" y1="-0.508" x2="-1.016" y2="-0.508" width="0.2032" layer="21"/>
+<wire x1="-1.016" y1="-0.508" x2="-1.016" y2="0.508" width="0.2032" layer="21"/>
+<smd name="1" x="-0.508" y="0" dx="0.5" dy="0.5" layer="1"/>
+<smd name="2" x="0.508" y="0" dx="0.5" dy="0.5" layer="1"/>
+<text x="-1.016" y="0.762" size="0.8128" layer="25" ratio="18">&gt;NAME</text>
+<text x="-1.016" y="-1.27" size="0.6096" layer="27" ratio="10">&gt;VALUE</text>
+<rectangle x1="-0.5" y1="-0.25" x2="-0.254" y2="0.25" layer="51"/>
+<rectangle x1="0.2588" y1="-0.25" x2="0.5" y2="0.25" layer="51"/>
+<rectangle x1="-0.1" y1="-0.2" x2="0.1" y2="0.2" layer="35"/>
+</package>
 </packages>
 <packages3d>
-<package3d name="R0402" urn="urn:adsk.eagle:package:25419998/2" type="model">
-<description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0402</description>
-<packageinstances>
-<packageinstance name="R0402"/>
-</packageinstances>
-</package3d>
 <package3d name="R0603" urn="urn:adsk.eagle:package:23494030/2" type="model">
 <description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0603</description>
 <packageinstances>
@@ -4234,6 +4237,12 @@ Metric Code Size 5664</description>
 <description>&lt;b&gt;SMD CHIP CAP&lt;/b&gt; - 1206</description>
 <packageinstances>
 <packageinstance name="C1206"/>
+</packageinstances>
+</package3d>
+<package3d name="R0402" urn="urn:adsk.eagle:package:25419998/2" type="model">
+<description>&lt;b&gt;SMD RESISTOR&lt;/b&gt; - 0402</description>
+<packageinstances>
+<packageinstance name="R0402"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -4941,208 +4950,6 @@ package type OT</description>
 </package3dinstances>
 <technologies>
 <technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="con-ptr500">
-<description>&lt;b&gt;PTR Connectors&lt;/b&gt;&lt;p&gt;
-Aug. 2004 / PTR Meßtechnik:&lt;br&gt;
-Die Bezeichnung der Serie AK505 wurde geändert.&lt;br&gt;
-Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
-&lt;TABLE BORDER=0 CELLSPACING=1 CELLPADDING=2&gt;
-  &lt;TR&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;FONT SIZE=4 FACE=ARIAL&gt;&lt;B&gt;Alte Bezeichnung&lt;/B&gt;&lt;/FONT&gt;
-    &lt;/TD&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;FONT SIZE=4 FACE=ARIAL&gt;&lt;B&gt;Neue Bezeichnung&lt;/B&gt;&lt;/FONT&gt;
-    &lt;/TD&gt;
-  &lt;/TR&gt;
-  &lt;TR&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#FF0000"&gt;AK505/2,grau&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#0000FF"&gt;AK500/2-5.0-H-GRAU&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-  &lt;/TR&gt;
-  &lt;TR&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#FF0000"&gt;AK505/2DS,grau&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#0000FF"&gt;AK500/2DS-5.0-H-GRAU&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-  &lt;/TR&gt;
-  &lt;TR&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#FF0000"&gt;AKZ505/2,grau&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-    &lt;TD ALIGN=LEFT&gt;
-      &lt;B&gt;
-      &lt;FONT SIZE=3 FACE=ARIAL color="#0000FF"&gt;AKZ500/2-5.08-H-GRAU&lt;/FONT&gt;
-      &lt;/B&gt;
-    &lt;/TD&gt;
-  &lt;/TABLE&gt;
-
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="AK500/2-H" urn="urn:adsk.eagle:footprint:9865/1">
-<description>&lt;b&gt;CONNECTOR&lt;/b&gt;&lt;p&gt;
-Aug. 2004 / PTR Meßtechnik:&lt;br&gt;
-Die Bezeichnung der Serie AK505 wurde geändert.&lt;br&gt;
-Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
-<wire x1="-5.08" y1="-7.239" x2="-5.08" y2="-3.81" width="0.1524" layer="21"/>
-<wire x1="5.08" y1="2.794" x2="-5.08" y2="2.794" width="0.1524" layer="21"/>
-<wire x1="-5.08" y1="-7.239" x2="-4.318" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="5.08" y1="2.794" x2="5.08" y2="-3.429" width="0.1524" layer="21"/>
-<wire x1="-5.08" y1="-3.429" x2="5.08" y2="-3.429" width="0.1524" layer="21"/>
-<wire x1="-5.08" y1="-3.429" x2="-5.08" y2="2.794" width="0.1524" layer="21"/>
-<wire x1="5.08" y1="-3.429" x2="5.08" y2="-3.81" width="0.1524" layer="21"/>
-<wire x1="5.461" y1="2.794" x2="5.461" y2="-3.429" width="0.1524" layer="21"/>
-<wire x1="5.461" y1="-3.429" x2="5.08" y2="-3.429" width="0.1524" layer="21"/>
-<wire x1="5.461" y1="2.794" x2="5.08" y2="2.794" width="0.1524" layer="21"/>
-<wire x1="-0.4826" y1="2.159" x2="-0.4826" y2="-2.794" width="0.1524" layer="21"/>
-<wire x1="-4.5466" y1="-2.794" x2="-0.4826" y2="-2.794" width="0.1524" layer="21"/>
-<wire x1="-4.5466" y1="-2.794" x2="-4.5466" y2="2.159" width="0.1524" layer="21"/>
-<wire x1="-0.4826" y1="2.159" x2="-4.5466" y2="2.159" width="0.1524" layer="21"/>
-<wire x1="0.4826" y1="2.159" x2="0.4826" y2="-2.794" width="0.1524" layer="21"/>
-<wire x1="0.4826" y1="-2.794" x2="4.5466" y2="-2.794" width="0.1524" layer="21"/>
-<wire x1="4.5466" y1="-2.794" x2="4.5466" y2="2.159" width="0.1524" layer="21"/>
-<wire x1="4.5466" y1="2.159" x2="0.4826" y2="2.159" width="0.1524" layer="21"/>
-<wire x1="4.8006" y1="-3.048" x2="0.2286" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="4.8006" y1="-3.048" x2="4.8006" y2="2.413" width="0.0508" layer="21"/>
-<wire x1="0.2286" y1="2.413" x2="4.8006" y2="2.413" width="0.0508" layer="21"/>
-<wire x1="0.2286" y1="2.413" x2="0.2286" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="-0.2286" y1="2.413" x2="-0.2286" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="-4.8006" y1="2.413" x2="-0.2286" y2="2.413" width="0.0508" layer="21"/>
-<wire x1="-4.8006" y1="2.413" x2="-4.8006" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="-0.2286" y1="-3.048" x2="-4.8006" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="-4.5466" y1="0" x2="-0.4826" y2="0" width="0.1524" layer="21" curve="-180"/>
-<wire x1="-4.5466" y1="-2.413" x2="-4.2926" y2="-2.667" width="0.1524" layer="21" curve="90"/>
-<wire x1="-0.7366" y1="-2.667" x2="-0.4826" y2="-2.413" width="0.1524" layer="21" curve="90"/>
-<wire x1="-0.7366" y1="-2.667" x2="-4.2926" y2="-2.667" width="0.1524" layer="21"/>
-<wire x1="-1.3716" y1="-2.413" x2="-1.1176" y2="-2.667" width="0.1524" layer="21" curve="90"/>
-<wire x1="-3.9116" y1="-2.667" x2="-3.6576" y2="-2.413" width="0.1524" layer="21" curve="90"/>
-<wire x1="-3.6576" y1="-0.127" x2="-3.6576" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="-3.6576" y1="-0.127" x2="-1.3716" y2="-0.127" width="0.1524" layer="51"/>
-<wire x1="-1.3716" y1="-0.127" x2="-1.3716" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="-3.6576" y1="-0.762" x2="-1.3716" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="-3.6576" y1="-0.762" x2="-3.6576" y2="-2.413" width="0.1524" layer="21"/>
-<wire x1="-1.3716" y1="-0.762" x2="-1.3716" y2="-2.413" width="0.1524" layer="21"/>
-<wire x1="5.08" y1="-3.81" x2="-5.08" y2="-3.81" width="0.0508" layer="21"/>
-<wire x1="-5.08" y1="-3.81" x2="-5.08" y2="-3.429" width="0.1524" layer="21"/>
-<wire x1="5.08" y1="-3.81" x2="5.08" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="0.4826" y1="0" x2="4.5466" y2="0" width="0.1524" layer="21" curve="-180"/>
-<wire x1="1.3716" y1="-0.127" x2="3.6576" y2="-0.127" width="0.1524" layer="51"/>
-<wire x1="1.3716" y1="-0.127" x2="1.3716" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="1.3716" y1="-0.762" x2="3.6576" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="1.3716" y1="-0.762" x2="1.3716" y2="-2.413" width="0.1524" layer="21"/>
-<wire x1="3.6576" y1="-0.762" x2="3.6576" y2="-2.413" width="0.1524" layer="21"/>
-<wire x1="3.6576" y1="-0.127" x2="3.6576" y2="-0.762" width="0.1524" layer="51"/>
-<wire x1="1.1176" y1="-2.667" x2="1.3716" y2="-2.413" width="0.1524" layer="21" curve="90"/>
-<wire x1="3.6576" y1="-2.413" x2="3.9116" y2="-2.667" width="0.1524" layer="21" curve="90"/>
-<wire x1="4.2926" y1="-2.667" x2="0.7366" y2="-2.667" width="0.1524" layer="21"/>
-<wire x1="4.2926" y1="-2.667" x2="4.5466" y2="-2.413" width="0.1524" layer="21" curve="90"/>
-<wire x1="0.4826" y1="-2.413" x2="0.7366" y2="-2.667" width="0.1524" layer="21" curve="90"/>
-<wire x1="-0.762" y1="-7.366" x2="-0.762" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-0.762" y1="-7.239" x2="0.762" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-4.318" y1="-7.366" x2="-4.318" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-4.318" y1="-7.239" x2="-2.794" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-4.318" y1="-7.366" x2="-2.794" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="-2.794" y1="-7.239" x2="-2.794" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="-2.794" y1="-7.239" x2="-2.286" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-2.286" y1="-7.239" x2="-0.762" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-2.286" y1="-7.366" x2="-2.286" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="-2.286" y1="-7.366" x2="-0.762" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="2.286" y1="-7.239" x2="2.286" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="2.286" y1="-7.239" x2="2.794" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="0.762" y1="-7.366" x2="2.286" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="2.794" y1="-7.366" x2="2.794" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="2.794" y1="-7.239" x2="4.318" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="2.794" y1="-7.366" x2="4.318" y2="-7.366" width="0.1524" layer="21"/>
-<wire x1="4.318" y1="-7.366" x2="4.318" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="4.318" y1="-7.239" x2="5.08" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="0.762" y1="-7.366" x2="0.762" y2="-7.239" width="0.1524" layer="21"/>
-<wire x1="0.762" y1="-7.239" x2="2.286" y2="-7.239" width="0.1524" layer="21"/>
-<circle x="-2.5146" y="0" radius="1.397" width="0.1524" layer="51"/>
-<circle x="2.5146" y="0" radius="1.397" width="0.1524" layer="51"/>
-<pad name="1" x="-2.5146" y="0" drill="1.3208" shape="long" rot="R90"/>
-<pad name="2" x="2.5146" y="0" drill="1.3208" shape="long" rot="R90"/>
-<text x="-5.08" y="3.556" size="1.778" layer="25" ratio="10">&gt;NAME</text>
-<text x="-5.08" y="-9.525" size="1.778" layer="27" ratio="10">&gt;VALUE</text>
-<text x="-3.175" y="-5.715" size="1.27" layer="21" ratio="10">1</text>
-<text x="1.905" y="-5.715" size="1.27" layer="21" ratio="10">2</text>
-<rectangle x1="-3.6576" y1="-1.524" x2="-1.3716" y2="-0.762" layer="51"/>
-<rectangle x1="1.3716" y1="-1.524" x2="3.6576" y2="-0.762" layer="51"/>
-<rectangle x1="-3.6576" y1="-2.667" x2="-1.3716" y2="-1.524" layer="21"/>
-<rectangle x1="1.3716" y1="-2.667" x2="3.6576" y2="-1.524" layer="21"/>
-</package>
-</packages>
-<packages3d>
-<package3d name="AK500/2-H" urn="urn:adsk.eagle:package:9901/1" type="box">
-<description>CONNECTOR
-Aug. 2004 / PTR Meßtechnik:
-Die Bezeichnung der Serie AK505 wurde geändert.
-Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
-<packageinstances>
-<packageinstance name="AK500/2-H"/>
-</packageinstances>
-</package3d>
-</packages3d>
-<symbols>
-<symbol name="KL">
-<circle x="1.27" y="0" radius="1.27" width="0.254" layer="94"/>
-<text x="-1.27" y="0.889" size="1.778" layer="95" rot="R180">&gt;NAME</text>
-<pin name="KL" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
-</symbol>
-<symbol name="KLV">
-<circle x="1.27" y="0" radius="1.27" width="0.254" layer="94"/>
-<text x="-1.27" y="0.889" size="1.778" layer="95" rot="R180">&gt;NAME</text>
-<text x="-3.81" y="-3.683" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="KL" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="AK500/2-H" prefix="CN" uservalue="yes">
-<description>&lt;b&gt;CONNECTOR&lt;/b&gt;&lt;p&gt;
-Aug. 2004 / PTR Meßtechnik:&lt;br&gt;
-Die Bezeichnung der Serie AK505 wurde geändert.&lt;br&gt;
-Es handelt sich hierbei um AK500 in horizontaler Ausführung.</description>
-<gates>
-<gate name="-1" symbol="KL" x="0" y="5.08" addlevel="always"/>
-<gate name="-2" symbol="KLV" x="0" y="0" addlevel="always"/>
-</gates>
-<devices>
-<device name="" package="AK500/2-H">
-<connects>
-<connect gate="-1" pin="KL" pad="1"/>
-<connect gate="-2" pin="KL" pad="2"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:9901/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="" constant="no"/>
-<attribute name="OC_FARNELL" value="unknown" constant="no"/>
-<attribute name="OC_NEWARK" value="unknown" constant="no"/>
-<attribute name="POPULARITY" value="3" constant="no"/>
-</technology>
 </technologies>
 </device>
 </devices>
@@ -5921,6 +5728,67 @@ package type OT</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="Terminal Block 2P 3.5pitch">
+<packages>
+<package name="OST_OSTTE020104">
+<wire x1="-4.05" y1="3.4" x2="4.05" y2="3.4" width="0.127" layer="21"/>
+<wire x1="4.05" y1="3.4" x2="4.05" y2="-3.6" width="0.127" layer="21"/>
+<wire x1="4.05" y1="-3.6" x2="-4.05" y2="-3.6" width="0.127" layer="21"/>
+<wire x1="-4.05" y1="-3.6" x2="-4.05" y2="3.4" width="0.127" layer="21"/>
+<wire x1="-4.3" y1="3.65" x2="4.3" y2="3.65" width="0.05" layer="39"/>
+<wire x1="4.3" y1="3.65" x2="4.3" y2="-3.85" width="0.05" layer="39"/>
+<wire x1="4.3" y1="-3.85" x2="-4.3" y2="-3.85" width="0.05" layer="39"/>
+<wire x1="-4.3" y1="-3.85" x2="-4.3" y2="3.65" width="0.05" layer="39"/>
+<text x="-4.30251875" y="3.70216875" size="1.27075" layer="25">&gt;NAME</text>
+<text x="-4.30326875" y="-5.203959375" size="1.27096875" layer="27">&gt;VALUE</text>
+<pad name="1" x="-1.75" y="0" drill="1.2" shape="square"/>
+<pad name="2" x="1.75" y="0" drill="1.2"/>
+</package>
+</packages>
+<symbols>
+<symbol name="OSTTE020104">
+<wire x1="0" y1="2.54" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-5.08" x2="5.08" y2="2.54" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="0" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="2.54" y2="0" width="0.762" layer="94"/>
+<wire x1="0" y1="-2.54" x2="2.54" y2="-2.54" width="0.762" layer="94"/>
+<text x="0" y="2.54271875" size="1.271359375" layer="95">&gt;NAME</text>
+<text x="0" y="-6.357790625" size="1.271559375" layer="96">&gt;VALUE</text>
+<pin name="1" x="-5.08" y="0" length="middle" direction="pas"/>
+<pin name="2" x="-5.08" y="-2.54" length="middle" direction="pas"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="OSTTE020104" prefix="P">
+<description>Terminal Block 3.5mm 2pos Pcb &lt;a href="https://pricing.snapeda.com/parts/OSTTE020104/On%20Shore/view-part?ref=eda"&gt;Check prices&lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="OSTTE020104" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="OST_OSTTE020104">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="AVAILABILITY" value="In Stock"/>
+<attribute name="DESCRIPTION" value=" 2 Position Wire to Board Terminal Block Horizontal with Board 0.138 (3.50mm) Through Hole "/>
+<attribute name="MF" value="On Shore"/>
+<attribute name="MP" value="OSTTE020104"/>
+<attribute name="PACKAGE" value="None"/>
+<attribute name="PRICE" value="None"/>
+<attribute name="PURCHASE-URL" value="https://pricing.snapeda.com/search/part/OSTTE020104/?ref=eda"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -6010,7 +5878,6 @@ package type OT</description>
 <part name="U1" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:32842001/2" value="SN74AHC1G125DBV"/>
 <part name="SUPPLY28" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY29" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="CN2" library="con-ptr500" deviceset="AK500/2-H" device="" package3d_urn="urn:adsk.eagle:package:9901/1" override_package3d_urn="urn:adsk.eagle:package:32815263/2" override_package_urn="urn:adsk.eagle:footprint:9865/1"/>
 <part name="SUPPLY32" library="My-Supply" deviceset="0V" device=""/>
 <part name="R1" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="R2" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
@@ -6070,11 +5937,12 @@ package type OT</description>
 <part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle"/>
 <part name="SUPPLY12" library="My-Supply" deviceset="0V" device=""/>
 <part name="CN3" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card"/>
-<part name="BAT1" library="SamacSys_Parts" deviceset="CR1220" device=""/>
+<part name="BAT1" library="SamacSys_Parts" deviceset="CR1220" device="" package3d_urn="urn:adsk.eagle:package:32858608/4"/>
 <part name="CN6" library="Battery" deviceset="BATTERY" device="JST-2" package3d_urn="urn:adsk.eagle:package:32835973/2" value="Lithium Ion Polymer"/>
 <part name="Q1" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
 <part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
 <part name="U3" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" package3d_urn="urn:adsk.eagle:package:32842001/2"/>
+<part name="P1" library="Terminal Block 2P 3.5pitch" deviceset="OSTTE020104" device="" override_package3d_urn="urn:adsk.eagle:package:32867978/2" override_package_urn="urn:adsk.eagle:footprint:32867979/1"/>
 </parts>
 <sheets>
 <sheet>
@@ -6333,13 +6201,6 @@ from SIMO (MOSI) pin.</text>
 <instance part="SUPPLY29" gate="G$1" x="288.29" y="72.39" smashed="yes" grouprefs="DATALOGGER_INPUT">
 <attribute name="VALUE" x="288.3154" y="76.2" size="1.778" layer="96" align="center"/>
 </instance>
-<instance part="CN2" gate="-1" x="273.685" y="57.15" smashed="yes" grouprefs="DATALOGGER_INPUT">
-<attribute name="NAME" x="272.415" y="58.039" size="1.778" layer="95" rot="R180"/>
-</instance>
-<instance part="CN2" gate="-2" x="273.685" y="43.18" smashed="yes" grouprefs="DATALOGGER_INPUT">
-<attribute name="NAME" x="272.415" y="44.069" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="269.875" y="39.497" size="1.778" layer="96"/>
-</instance>
 <instance part="SUPPLY32" gate="G$1" x="55.245" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="R1" gate="G$1" x="55.245" y="191.77" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="53.7464" y="189.23" size="1.778" layer="95" rot="R90"/>
@@ -6495,6 +6356,10 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="320.04" y="387.715" size="2.0828" layer="95" ratio="10" rot="SR0"/>
 <attribute name="VALUE" x="320.04" y="385.255" size="2.0828" layer="96" ratio="10" rot="SR0"/>
 </instance>
+<instance part="P1" gate="G$1" x="273.685" y="57.15" smashed="yes" rot="MR0" grouprefs="DATALOGGER_INPUT">
+<attribute name="NAME" x="273.685" y="59.69271875" size="1.271359375" layer="95" rot="MR0"/>
+<attribute name="VALUE" x="271.137209375" y="39.37" size="1.271559375" layer="96" rot="MR90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -6599,9 +6464,10 @@ from SIMO (MOSI) pin.</text>
 <pinref part="U1" gate="G$1" pin="GND"/>
 <wire x1="288.29" y1="49.53" x2="288.29" y2="43.18" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
 <junction x="288.29" y="43.18" grouprefs="DATALOGGER_INPUT"/>
-<pinref part="CN2" gate="-2" pin="KL"/>
 <pinref part="SUPPLY28" gate="G$1" pin="0V"/>
 <wire x1="288.29" y1="38.735" x2="288.29" y2="43.18" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
+<pinref part="P1" gate="G$1" pin="2"/>
+<wire x1="278.765" y1="54.61" x2="278.765" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY32" gate="G$1" pin="0V"/>
@@ -7396,7 +7262,7 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="U1" gate="G$1" pin="IN"/>
 <wire x1="278.765" y1="57.15" x2="280.67" y2="57.15" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
-<pinref part="CN2" gate="-1" pin="KL"/>
+<pinref part="P1" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="USB_N" class="0">
