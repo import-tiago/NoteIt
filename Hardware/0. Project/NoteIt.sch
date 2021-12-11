@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.025" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -848,7 +848,7 @@ Source: &lt;a href="http://www.electrodragon.com/w/images/c/cb/GL823K.pdf"&gt; D
 </device>
 </devices>
 </deviceset>
-<deviceset name="CR1220" prefix="BAT">
+<deviceset name="CR1220" prefix="CN">
 <description>&lt;b&gt;Coin Cell Battery Holders BATTERY HOLDER FOR CR1220 / 1225 Tape and Reel&lt;/b&gt;&lt;p&gt;
 Source: &lt;a href="http://www.keystoneelectronics.net/ENG._DEPT/WEB_ORACLE/PDF/PDF CAT NO DRAWINGS/1000-1999/1072.PDF"&gt; Datasheet &lt;/a&gt;</description>
 <gates>
@@ -896,13 +896,13 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 &lt;a href="http://diymodules.org/eagle"&gt;&lt;img src="http://www.diymodules.org/img/diymodules-lbr-image.php?v=1.8.0" alt="DIYmodules.org"&gt;&lt;/a&gt;
 &lt;/center&gt;</description>
 <packages>
-<package name="DISPLAY-OLED-128X64" urn="urn:adsk.eagle:footprint:32761924/1">
+<package name="DISPLAY-OLED-128X64" urn="urn:adsk.eagle:footprint:32761924/1" locally_modified="yes">
 <description>&lt;b&gt;128x64 Dot Matrix OLED Module&lt;/b&gt;&lt;br /&gt;
 Variant with SPI interface</description>
-<wire x1="-13.716" y1="13.97" x2="13.716" y2="13.97" width="0.127" layer="21"/>
-<wire x1="13.716" y1="13.97" x2="13.716" y2="-13.97" width="0.127" layer="21"/>
-<wire x1="13.716" y1="-13.97" x2="-13.716" y2="-13.97" width="0.127" layer="21"/>
-<wire x1="-13.716" y1="-13.97" x2="-13.716" y2="13.97" width="0.127" layer="21"/>
+<wire x1="-13.716" y1="13.97" x2="13.716" y2="13.97" width="0.127" layer="49"/>
+<wire x1="13.716" y1="13.97" x2="13.716" y2="-13.97" width="0.127" layer="49"/>
+<wire x1="13.716" y1="-13.97" x2="-13.716" y2="-13.97" width="0.127" layer="49"/>
+<wire x1="-13.716" y1="-13.97" x2="-13.716" y2="13.97" width="0.127" layer="49"/>
 <wire x1="-8.89" y1="13.335" x2="-8.255" y2="13.97" width="0.127" layer="21"/>
 <wire x1="-6.985" y1="13.97" x2="-6.35" y2="13.335" width="0.127" layer="21"/>
 <wire x1="-6.35" y1="13.335" x2="-5.715" y2="13.97" width="0.127" layer="21"/>
@@ -939,10 +939,10 @@ Variant with SPI interface</description>
 <wire x1="-6.985" y1="11.43" x2="-8.255" y2="11.43" width="0.127" layer="21"/>
 <wire x1="-8.255" y1="11.43" x2="-8.89" y2="12.065" width="0.127" layer="21"/>
 <wire x1="-8.89" y1="12.065" x2="-8.89" y2="13.335" width="0.127" layer="21"/>
-<wire x1="-11.43" y1="8.128" x2="11.43" y2="8.128" width="0.127" layer="21"/>
-<wire x1="11.43" y1="8.128" x2="11.43" y2="-5.588" width="0.127" layer="21"/>
-<wire x1="11.43" y1="-5.588" x2="-11.43" y2="-5.588" width="0.127" layer="21"/>
-<wire x1="-11.43" y1="-5.588" x2="-11.43" y2="8.128" width="0.127" layer="21"/>
+<wire x1="-11.43" y1="8.128" x2="11.43" y2="8.128" width="0.127" layer="49"/>
+<wire x1="11.43" y1="8.128" x2="11.43" y2="-5.588" width="0.127" layer="49"/>
+<wire x1="11.43" y1="-5.588" x2="-11.43" y2="-5.588" width="0.127" layer="49"/>
+<wire x1="-11.43" y1="-5.588" x2="-11.43" y2="8.128" width="0.127" layer="49"/>
 <wire x1="8.89" y1="13.335" x2="8.89" y2="12.065" width="0.127" layer="21"/>
 <pad name="1" x="-7.62" y="12.7" drill="1" shape="square"/>
 <pad name="2" x="-5.08" y="12.7" drill="1"/>
@@ -957,6 +957,13 @@ Variant with SPI interface</description>
 <hole x="-11.684" y="-11.938" drill="2"/>
 <text x="0" y="15.24" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
 <text x="0" y="-15.24" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
+<wire x1="-6.985" y1="13.97" x2="-8.255" y2="13.97" width="0.127" layer="21"/>
+<wire x1="-4.445" y1="13.97" x2="-5.715" y2="13.97" width="0.127" layer="21"/>
+<wire x1="-1.905" y1="13.97" x2="-3.175" y2="13.97" width="0.127" layer="21"/>
+<wire x1="0.635" y1="13.97" x2="-0.635" y2="13.97" width="0.127" layer="21"/>
+<wire x1="3.175" y1="13.97" x2="1.905" y2="13.97" width="0.127" layer="21"/>
+<wire x1="5.715" y1="13.97" x2="4.445" y2="13.97" width="0.127" layer="21"/>
+<wire x1="8.255" y1="13.97" x2="6.985" y2="13.97" width="0.127" layer="21"/>
 </package>
 </packages>
 <packages3d>
@@ -4699,9 +4706,7 @@ Copyright: Geyer-Electronic</description>
 </library>
 <library name="TS3A27518EPWR">
 <packages>
-<package name="SOP65P640X120-24N" urn="urn:adsk.eagle:footprint:32845176/1">
-<circle x="-4.44" y="3.985" radius="0.1" width="0.2" layer="21"/>
-<circle x="-4.44" y="3.985" radius="0.1" width="0.2" layer="51"/>
+<package name="SOP65P640X120-24N" urn="urn:adsk.eagle:footprint:32845176/1" locally_modified="yes">
 <wire x1="-2.2" y1="3.9" x2="2.2" y2="3.9" width="0.127" layer="51"/>
 <wire x1="-2.2" y1="-3.9" x2="2.2" y2="-3.9" width="0.127" layer="51"/>
 <wire x1="-2.2" y1="4.1" x2="2.2" y2="4.1" width="0.127" layer="21"/>
@@ -4738,6 +4743,7 @@ Copyright: Geyer-Electronic</description>
 <smd name="22" x="2.87" y="2.275" dx="1.57" dy="0.41" layer="1" roundness="25"/>
 <smd name="23" x="2.87" y="2.925" dx="1.57" dy="0.41" layer="1" roundness="25"/>
 <smd name="24" x="2.87" y="3.575" dx="1.57" dy="0.41" layer="1" roundness="25"/>
+<wire x1="-3.683" y1="4.2672" x2="-2.3368" y2="4.2672" width="0.127" layer="21"/>
 </package>
 </packages>
 <packages3d>
@@ -5762,7 +5768,7 @@ package type OT</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="OSTTE020104" prefix="P">
+<deviceset name="OSTTE020104" prefix="CN">
 <description>Terminal Block 3.5mm 2pos Pcb &lt;a href="https://pricing.snapeda.com/parts/OSTTE020104/On%20Shore/view-part?ref=eda"&gt;Check prices&lt;/a&gt;</description>
 <gates>
 <gate name="G$1" symbol="OSTTE020104" x="0" y="0"/>
@@ -5816,7 +5822,7 @@ package type OT</description>
 <schematic_group name="DATALOGGER_INPUT" titleSize="3.81"/>
 </groups>
 <parts>
-<part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/2" override_package_urn="urn:adsk.eagle:footprint:25763183/1"/>
+<part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/3" override_package_urn="urn:adsk.eagle:footprint:25763183/1"/>
 <part name="IC2" library="adafruit" deviceset="MCP73831" device="/OT" package3d_urn="urn:adsk.eagle:package:6240724/1" override_package3d_urn="urn:adsk.eagle:package:32842001/2" override_package_urn="urn:adsk.eagle:footprint:6240078/1" value=""/>
 <part name="R12" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2"/>
 <part name="IC5" library="SamacSys_Parts" deviceset="S-8261ACMMD-G4MT2U" device="" package3d_urn="urn:adsk.eagle:package:32843301/2" value="S-8261ACMMD-G4MT2U"/>
@@ -5937,12 +5943,28 @@ package type OT</description>
 <part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle"/>
 <part name="SUPPLY12" library="My-Supply" deviceset="0V" device=""/>
 <part name="CN3" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card"/>
-<part name="BAT1" library="SamacSys_Parts" deviceset="CR1220" device="" package3d_urn="urn:adsk.eagle:package:32858608/4"/>
+<part name="CN11" library="SamacSys_Parts" deviceset="CR1220" device="" package3d_urn="urn:adsk.eagle:package:32858608/4"/>
 <part name="CN6" library="Battery" deviceset="BATTERY" device="JST-2" package3d_urn="urn:adsk.eagle:package:32835973/2" value="Lithium Ion Polymer"/>
 <part name="Q1" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
 <part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
 <part name="U3" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" package3d_urn="urn:adsk.eagle:package:32842001/2"/>
-<part name="P1" library="Terminal Block 2P 3.5pitch" deviceset="OSTTE020104" device="" override_package3d_urn="urn:adsk.eagle:package:32867978/2" override_package_urn="urn:adsk.eagle:footprint:32867979/1"/>
+<part name="CN14" library="Terminal Block 2P 3.5pitch" deviceset="OSTTE020104" device="" override_package3d_urn="urn:adsk.eagle:package:32867978/2" override_package_urn="urn:adsk.eagle:footprint:32867979/1" value="OSTTE020104"/>
+<part name="C12" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2">
+<attribute name="PN" value="C0603C102M5RACTU"/>
+</part>
+<part name="SUPPLY21" library="My-Supply" deviceset="0V" device=""/>
+<part name="R16" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2">
+<attribute name="PN" value="RC0603JR-1047KL"/>
+</part>
+<part name="SUPPLY31" library="My-Supply" deviceset="3.3V" device=""/>
+<part name="R19" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2">
+<attribute name="PN" value="RC0603JR-1047KL"/>
+</part>
+<part name="SUPPLY33" library="My-Supply" deviceset="3.3V" device=""/>
+<part name="R20" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2">
+<attribute name="PN" value="RC0603JR-1047KL"/>
+</part>
+<part name="SUPPLY34" library="My-Supply" deviceset="3.3V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5951,9 +5973,9 @@ package type OT</description>
 <text x="487.172" y="22.225" size="2.413" layer="94" align="center">github.com/TiagoPaulaSilva/NoteIt</text>
 <text x="544.195" y="1.27" size="2.54" layer="94" ratio="5">1.0</text>
 <text x="473.075" y="6.35" size="2.54" layer="94" ratio="5">Complete Schematic</text>
-<text x="356.235" y="127.635" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
-<text x="412.115" y="127" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
-<text x="412.115" y="116.84" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
+<text x="432.435" y="183.515" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
+<text x="499.11" y="182.88" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
+<text x="499.11" y="173.355" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
 <text x="305.435" y="-50.8" size="2.1844" layer="152" align="center"></text>
 <text x="151.765" y="322.58" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">Overcharge = 4.325V</text>
 <text x="151.765" y="318.77" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">Overdischarge = 3.000V</text>
@@ -5979,12 +6001,12 @@ at 500mA</text>
 <wire x1="335.915" y1="360.045" x2="335.28" y2="358.775" width="0.1524" layer="208" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <text x="226.06" y="363.22" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">3.7V ~ 4.2V
 230mAh</text>
-<wire x1="247.65" y1="379.73" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<wire x1="247.65" y1="373.38" x2="247.015" y2="374.65" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<wire x1="247.015" y1="374.65" x2="248.285" y2="374.65" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<wire x1="248.285" y1="374.65" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<text x="253.111" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR">2.1μA max.</text>
-<text x="262.89" y="395.605" size="0.254" layer="201" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR"> </text>
+<wire x1="247.65" y1="379.73" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="247.65" y1="373.38" x2="247.015" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="247.015" y1="374.65" x2="248.285" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="248.285" y1="374.65" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<text x="253.111" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY">2.1μA max.</text>
+<text x="262.89" y="395.605" size="0.254" layer="201" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY"> </text>
 <text x="182.88" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"> </text>
 <text x="44.45" y="395.605" size="0.254" layer="91" align="center" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"> </text>
 <wire x1="249.555" y1="236.855" x2="278.765" y2="236.855" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -6027,12 +6049,11 @@ to receive a DATA instruction
 or a COMMAND instruction
 from SIMO (MOSI) pin.</text>
 <text x="451.612" y="97.536" size="2.54" layer="200" align="center-left">*</text>
-<text x="264.16" y="29.845" size="2.54" layer="91">TODO: Add pins to an externsion board with MAX232 connect</text>
 </plain>
 <instances>
-<instance part="SW1" gate="G$1" x="383.54" y="119.38" smashed="yes" grouprefs="ROTARY_ENCODER">
-<attribute name="NAME" x="373.38" y="134.62" size="1.27" layer="95"/>
-<attribute name="VALUE" x="373.38" y="132.461" size="1.27" layer="96"/>
+<instance part="SW1" gate="G$1" x="463.55" y="175.26" smashed="yes" grouprefs="ROTARY_ENCODER">
+<attribute name="NAME" x="453.39" y="190.5" size="1.27" layer="95"/>
+<attribute name="VALUE" x="453.39" y="188.341" size="1.27" layer="96"/>
 </instance>
 <instance part="IC2" gate="G$1" x="85.09" y="376.555" smashed="yes" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">
 <attribute name="NAME" x="77.47" y="387.985" size="1.778" layer="95"/>
@@ -6081,11 +6102,11 @@ from SIMO (MOSI) pin.</text>
 <attribute name="VALUE" x="380.3904" y="408.94" size="1.778" layer="96" align="center"/>
 </instance>
 <instance part="SUPPLY14" gate="G$1" x="380.365" y="306.07" smashed="yes" grouprefs="POWER_SUPPLY"/>
-<instance part="R41" gate="G$1" x="245.745" y="358.14" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_MONITOR">
+<instance part="R41" gate="G$1" x="245.745" y="358.14" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
 <attribute name="NAME" x="244.2464" y="355.6" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="249.047" y="355.6" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R42" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_MONITOR">
+<instance part="R42" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
 <attribute name="NAME" x="244.2464" y="340.36" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="249.047" y="340.36" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -6257,8 +6278,8 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="367.919" y="65.913" size="1.778" layer="95"/>
 </instance>
 <instance part="SUPPLY15" gate="G$1" x="339.725" y="36.195" smashed="yes" grouprefs="REAL_TIME_CLOCK"/>
-<instance part="SUPPLY44" gate="G$1" x="384.81" y="92.075" smashed="yes" grouprefs="ROTARY_ENCODER"/>
-<instance part="SUPPLY6" gate="G$1" x="365.125" y="92.075" smashed="yes" grouprefs="ROTARY_ENCODER"/>
+<instance part="SUPPLY44" gate="G$1" x="464.82" y="151.765" smashed="yes" grouprefs="ROTARY_ENCODER"/>
+<instance part="SUPPLY6" gate="G$1" x="445.135" y="151.765" smashed="yes" grouprefs="ROTARY_ENCODER"/>
 <instance part="SUPPLY7" gate="G$1" x="38.1" y="36.83" smashed="yes" grouprefs="MICROCONTROLLER"/>
 <instance part="SUPPLY45" gate="G$1" x="25.4" y="36.83" smashed="yes" grouprefs="MICROCONTROLLER"/>
 <instance part="SUPPLY46" gate="G$1" x="229.87" y="35.56" smashed="yes" grouprefs="MICROCONTROLLER"/>
@@ -6336,12 +6357,12 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="342.265" y="231.648" size="1.778" layer="95"/>
 <attribute name="VALUE" x="342.265" y="228.854" size="1.778" layer="96"/>
 </instance>
-<instance part="BAT1" gate="G$1" x="351.155" y="51.435" smashed="yes">
+<instance part="CN11" gate="G$1" x="351.155" y="51.435" smashed="yes">
 <attribute name="NAME" x="346.964" y="51.943" size="1.778" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="354.965" y="52.197" size="1.778" layer="96" rot="R90" align="center"/>
 </instance>
 <instance part="CN6" gate="G$1" x="215.265" y="364.49" smashed="yes">
-<attribute name="NAME" x="205.867" y="362.712" size="1.778" layer="95"/>
+<attribute name="NAME" x="204.597" y="363.347" size="1.778" layer="95"/>
 <attribute name="VALUE" x="218.44" y="366.395" size="1.27" layer="96"/>
 </instance>
 <instance part="Q1" gate="G$1" x="212.725" y="344.17" smashed="yes" rot="MR180">
@@ -6356,9 +6377,39 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="320.04" y="387.715" size="2.0828" layer="95" ratio="10" rot="SR0"/>
 <attribute name="VALUE" x="320.04" y="385.255" size="2.0828" layer="96" ratio="10" rot="SR0"/>
 </instance>
-<instance part="P1" gate="G$1" x="273.685" y="57.15" smashed="yes" rot="MR0" grouprefs="DATALOGGER_INPUT">
-<attribute name="NAME" x="273.685" y="59.69271875" size="1.271359375" layer="95" rot="MR0"/>
+<instance part="CN14" gate="G$1" x="273.685" y="57.15" smashed="yes" rot="MR0" grouprefs="DATALOGGER_INPUT">
+<attribute name="NAME" x="272.415" y="61.59771875" size="1.271359375" layer="95" rot="MR0"/>
 <attribute name="VALUE" x="271.137209375" y="39.37" size="1.271559375" layer="96" rot="MR90"/>
+</instance>
+<instance part="C12" gate="G$1" x="295.275" y="67.31" smashed="yes" rot="R90">
+<attribute name="NAME" x="298.704" y="71.755" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="300.736" y="73.914" size="1.27" layer="96" rot="R180"/>
+<attribute name="PN" x="295.275" y="67.31" size="1.27" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="SUPPLY21" gate="G$1" x="304.165" y="63.5" smashed="yes"/>
+<instance part="R16" gate="G$1" x="444.5" y="187.96" smashed="yes" rot="MR270" grouprefs="ROTARY_ENCODER">
+<attribute name="NAME" x="442.8109" y="185.42" size="1.27" layer="95" rot="R90"/>
+<attribute name="VALUE" x="446.151" y="184.404" size="1.27" layer="96" rot="MR90"/>
+<attribute name="PN" x="444.5" y="187.96" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+</instance>
+<instance part="SUPPLY31" gate="G$1" x="444.5" y="197.485" smashed="yes" grouprefs="ROTARY_ENCODER">
+<attribute name="VALUE" x="444.5254" y="201.295" size="1.778" layer="96" align="center"/>
+</instance>
+<instance part="R19" gate="G$1" x="481.965" y="188.595" smashed="yes" rot="MR270" grouprefs="ROTARY_ENCODER">
+<attribute name="NAME" x="480.2759" y="186.055" size="1.27" layer="95" rot="R90"/>
+<attribute name="VALUE" x="483.616" y="185.039" size="1.27" layer="96" rot="MR90"/>
+<attribute name="PN" x="481.965" y="188.595" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+</instance>
+<instance part="SUPPLY33" gate="G$1" x="481.965" y="198.12" smashed="yes" grouprefs="ROTARY_ENCODER">
+<attribute name="VALUE" x="481.9904" y="201.93" size="1.778" layer="96" align="center"/>
+</instance>
+<instance part="R20" gate="G$1" x="488.315" y="188.595" smashed="yes" rot="MR270" grouprefs="ROTARY_ENCODER">
+<attribute name="NAME" x="486.6259" y="186.055" size="1.27" layer="95" rot="R90"/>
+<attribute name="VALUE" x="489.966" y="185.039" size="1.27" layer="96" rot="MR90"/>
+<attribute name="PN" x="488.315" y="188.595" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+</instance>
+<instance part="SUPPLY34" gate="G$1" x="488.315" y="198.12" smashed="yes" grouprefs="ROTARY_ENCODER">
+<attribute name="VALUE" x="488.3404" y="201.93" size="1.778" layer="96" align="center"/>
 </instance>
 </instances>
 <busses>
@@ -6402,8 +6453,8 @@ from SIMO (MOSI) pin.</text>
 <junction x="380.365" y="313.69" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="SUPPLY14" gate="G$1" pin="0V"/>
 <pinref part="R42" gate="G$1" pin="1"/>
-<wire x1="245.745" y1="337.82" x2="245.745" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<junction x="245.745" y="313.69" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="245.745" y1="337.82" x2="245.745" y2="313.69" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<junction x="245.745" y="313.69" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
 <pinref part="SUPPLY1" gate="G$1" pin="0V"/>
 <wire x1="62.23" y1="308.61" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <junction x="62.23" y="313.69" grouprefs="POWER_SUPPLY"/>
@@ -6466,7 +6517,7 @@ from SIMO (MOSI) pin.</text>
 <junction x="288.29" y="43.18" grouprefs="DATALOGGER_INPUT"/>
 <pinref part="SUPPLY28" gate="G$1" pin="0V"/>
 <wire x1="288.29" y1="38.735" x2="288.29" y2="43.18" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
-<pinref part="P1" gate="G$1" pin="2"/>
+<pinref part="CN14" gate="G$1" pin="2"/>
 <wire x1="278.765" y1="54.61" x2="278.765" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -6537,17 +6588,17 @@ from SIMO (MOSI) pin.</text>
 <junction x="351.155" y="45.085" grouprefs="REAL_TIME_CLOCK"/>
 <pinref part="U8" gate="G$1" pin="GND"/>
 <pinref part="SUPPLY15" gate="G$1" pin="0V"/>
-<pinref part="BAT1" gate="G$1" pin="-"/>
+<pinref part="CN11" gate="G$1" pin="-"/>
 </segment>
 <segment>
 <pinref part="SW1" gate="G$1" pin="SW2"/>
-<wire x1="368.3" y1="114.3" x2="365.125" y2="114.3" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
-<wire x1="365.125" y1="114.3" x2="365.125" y2="94.615" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="448.31" y1="170.18" x2="445.135" y2="170.18" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="445.135" y1="170.18" x2="445.135" y2="154.305" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
 <pinref part="SUPPLY6" gate="G$1" pin="0V"/>
 </segment>
 <segment>
 <pinref part="SW1" gate="G$1" pin="GND"/>
-<wire x1="384.81" y1="94.615" x2="384.81" y2="102.87" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="464.82" y1="154.305" x2="464.82" y2="158.75" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
 <pinref part="SUPPLY44" gate="G$1" pin="0V"/>
 </segment>
 <segment>
@@ -6620,12 +6671,22 @@ from SIMO (MOSI) pin.</text>
 <pinref part="CN1" gate="G$1" pin="GND_B"/>
 <pinref part="SUPPLY12" gate="G$1" pin="0V"/>
 </segment>
+<segment>
+<pinref part="SUPPLY21" gate="G$1" pin="0V"/>
+<pinref part="C12" gate="G$1" pin="2"/>
+<wire x1="304.165" y1="66.04" x2="304.165" y2="67.31" width="0.1524" layer="91"/>
+<wire x1="304.165" y1="67.31" x2="300.355" y2="67.31" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="GPIO_ROTARY_ENCODER_SIGNAL_A" class="0">
 <segment>
-<label x="403.225" y="124.46" size="1.27" layer="95" rot="MR180" xref="yes" grouprefs="ROTARY_ENCODER"/>
+<label x="491.49" y="180.34" size="1.27" layer="95" rot="MR180" xref="yes" grouprefs="ROTARY_ENCODER"/>
 <pinref part="SW1" gate="G$1" pin="A"/>
-<wire x1="400.685" y1="124.46" x2="403.225" y2="124.46" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="480.695" y1="180.34" x2="481.965" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="R19" gate="G$1" pin="2"/>
+<wire x1="481.965" y1="180.34" x2="491.49" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="481.965" y1="183.515" x2="481.965" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<junction x="481.965" y="180.34" grouprefs="ROTARY_ENCODER"/>
 </segment>
 <segment>
 <pinref part="U10" gate="G$1" pin="P4.1/TA3.0"/>
@@ -6635,9 +6696,13 @@ from SIMO (MOSI) pin.</text>
 </net>
 <net name="GPIO_ROTARY_ENCODER_SIGNAL_B" class="0">
 <segment>
-<label x="403.225" y="114.3" size="1.27" layer="95" rot="MR180" xref="yes" grouprefs="ROTARY_ENCODER"/>
+<label x="490.855" y="170.18" size="1.27" layer="95" rot="MR180" xref="yes" grouprefs="ROTARY_ENCODER"/>
 <pinref part="SW1" gate="G$1" pin="B"/>
-<wire x1="400.685" y1="114.3" x2="403.225" y2="114.3" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="480.695" y1="170.18" x2="488.315" y2="170.18" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="R20" gate="G$1" pin="2"/>
+<wire x1="488.315" y1="170.18" x2="490.855" y2="170.18" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="488.315" y1="183.515" x2="488.315" y2="170.18" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<junction x="488.315" y="170.18" grouprefs="ROTARY_ENCODER"/>
 </segment>
 <segment>
 <pinref part="U10" gate="G$1" pin="P4.2/TA3CLK"/>
@@ -6647,9 +6712,13 @@ from SIMO (MOSI) pin.</text>
 </net>
 <net name="GPIO_ROTARY_ENCODER_BUTTON" class="0">
 <segment>
-<label x="365.125" y="124.46" size="1.27" layer="95" rot="MR0" xref="yes" grouprefs="ROTARY_ENCODER"/>
+<label x="440.69" y="180.34" size="1.27" layer="95" rot="MR0" xref="yes" grouprefs="ROTARY_ENCODER"/>
 <pinref part="SW1" gate="G$1" pin="SW1"/>
-<wire x1="365.125" y1="124.46" x2="368.3" y2="124.46" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="440.69" y1="180.34" x2="444.5" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="R16" gate="G$1" pin="2"/>
+<wire x1="444.5" y1="180.34" x2="448.31" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<wire x1="444.5" y1="182.88" x2="444.5" y2="180.34" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<junction x="444.5" y="180.34" grouprefs="ROTARY_ENCODER"/>
 </segment>
 <segment>
 <pinref part="U10" gate="G$1" pin="P4.0/TA3.1"/>
@@ -6725,7 +6794,11 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="U1" gate="G$1" pin="VDD"/>
 <pinref part="SUPPLY29" gate="G$1" pin="3.3V"/>
-<wire x1="288.29" y1="69.85" x2="288.29" y2="64.77" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
+<wire x1="288.29" y1="69.85" x2="288.29" y2="67.31" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
+<pinref part="C12" gate="G$1" pin="1"/>
+<wire x1="288.29" y1="67.31" x2="288.29" y2="64.77" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
+<wire x1="292.735" y1="67.31" x2="288.29" y2="67.31" width="0.1524" layer="91"/>
+<junction x="288.29" y="67.31"/>
 </segment>
 <segment>
 <pinref part="CN4" gate="G$1" pin="1"/>
@@ -6756,6 +6829,21 @@ from SIMO (MOSI) pin.</text>
 <pinref part="R8" gate="G$1" pin="1"/>
 <wire x1="416.56" y1="70.485" x2="416.56" y2="66.04" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <pinref part="SUPPLY51" gate="G$1" pin="3.3V"/>
+</segment>
+<segment>
+<pinref part="R16" gate="G$1" pin="1"/>
+<wire x1="444.5" y1="194.945" x2="444.5" y2="193.04" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="SUPPLY31" gate="G$1" pin="3.3V"/>
+</segment>
+<segment>
+<pinref part="R19" gate="G$1" pin="1"/>
+<wire x1="481.965" y1="195.58" x2="481.965" y2="193.675" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="SUPPLY33" gate="G$1" pin="3.3V"/>
+</segment>
+<segment>
+<pinref part="R20" gate="G$1" pin="1"/>
+<wire x1="488.315" y1="195.58" x2="488.315" y2="193.675" width="0.1524" layer="91" grouprefs="ROTARY_ENCODER"/>
+<pinref part="SUPPLY34" gate="G$1" pin="3.3V"/>
 </segment>
 </net>
 <net name="!SDCARD_CARD_DETECT!" class="0">
@@ -6867,8 +6955,8 @@ from SIMO (MOSI) pin.</text>
 <wire x1="314.96" y1="376.555" x2="311.785" y2="376.555" width="0.1524" layer="91" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <junction x="311.785" y="376.555" grouprefs="VOLTAGE_REGULATOR POWER_SUPPLY"/>
 <pinref part="R41" gate="G$1" pin="2"/>
-<wire x1="245.745" y1="363.22" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<junction x="245.745" y="381.635" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="245.745" y1="363.22" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<junction x="245.745" y="381.635" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
 <pinref part="CN6" gate="G$1" pin="VDD"/>
 <pinref part="U3" gate="G$1" pin="EN"/>
 <pinref part="U3" gate="G$1" pin="IN"/>
@@ -7035,11 +7123,11 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="R41" gate="G$1" pin="1"/>
 <pinref part="R42" gate="G$1" pin="2"/>
-<wire x1="245.745" y1="347.98" x2="245.745" y2="350.52" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<wire x1="245.745" y1="350.52" x2="245.745" y2="353.06" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<wire x1="245.745" y1="350.52" x2="253.365" y2="350.52" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<junction x="245.745" y="350.52" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
-<label x="253.365" y="350.52" size="1.27" layer="95" xref="yes" grouprefs="POWER_SUPPLY BATTERY_MONITOR"/>
+<wire x1="245.745" y1="347.98" x2="245.745" y2="350.52" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="245.745" y1="350.52" x2="245.745" y2="353.06" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<wire x1="245.745" y1="350.52" x2="253.365" y2="350.52" width="0.1524" layer="91" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<junction x="245.745" y="350.52" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
+<label x="253.365" y="350.52" size="1.27" layer="95" xref="yes" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
 </segment>
 </net>
 <net name="UART_DATALOGGER_RX" class="0">
@@ -7262,7 +7350,7 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="U1" gate="G$1" pin="IN"/>
 <wire x1="278.765" y1="57.15" x2="280.67" y2="57.15" width="0.1524" layer="91" grouprefs="DATALOGGER_INPUT"/>
-<pinref part="P1" gate="G$1" pin="1"/>
+<pinref part="CN14" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="USB_N" class="0">
@@ -7324,7 +7412,7 @@ from SIMO (MOSI) pin.</text>
 <wire x1="362.585" y1="57.785" x2="351.155" y2="57.785" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <wire x1="351.155" y1="57.785" x2="351.155" y2="56.515" width="0.1524" layer="91" grouprefs="REAL_TIME_CLOCK"/>
 <pinref part="U8" gate="G$1" pin="VBAT"/>
-<pinref part="BAT1" gate="G$1" pin="+"/>
+<pinref part="CN11" gate="G$1" pin="+"/>
 </segment>
 </net>
 <net name="GPIO_BATTERY_CHARGING_STATUS" class="0">
