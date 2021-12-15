@@ -5,99 +5,75 @@
 #include <stdint.h>
 #include <stdint.h>
 
-
-typedef enum {
-	STATUS_BAR = 0,
-
-	CURRENT_BAUD_RATE,
-
-	CHANGE_SCREEN_BUTTON,
-} ScreenElements;
-
-StatesFSM1 stateFSM1 = STARTING;
-
-
-int HomeScreen = {
-					STATUS_BAR ,
-					}
-
+uint32_t Baudrate_List[] = {
+                            1200,
+                            2400,
+                            4800,
+                            9600,
+                            14400,
+                            19200,
+                            28800,
+                            38400,
+                            57600,
+                            115200,
+                            230400
+};
+#define BAUDRATE_LIST_LENGTH ((uint32_t)(sizeof(Baudrate_List) / sizeof(uint32_t)))
 
 
-
-
-
-
-struct _Available_TCs {
-	uint16_t Range[NUMBER_OF_TCs];
-} Struct_TC_Ranges;
-
-struct _Calibration_Points {
-	uint16_t Point[NUMBER_OF_CALIBRATION_POINTS];
-} Struct_Calibration_Points;
-
-struct CalibrationProcess {
-	struct _Available_TCs TC;
-	struct _Calibration_Points Calibration_Points;
-
-} Calibration;
-
-#define MINIMUM_MEASUREMENT_TIME    0
-
-
-//STATE FINITE MACHINE
-
-
-uint16_t Available_TCs[] = {
-							100,
-							250,
-							400,
-							600,
-							800
+enum ScreensList {
+    HOME_SCREEN,
+    BAUDRATE_SELECTION_SCREEN,
+    LOG_SETTINGS_SCREEN,
+    CLOCK_AND_DATE_SCREEN,
+    NUMBER_OF_SCREENS
 };
 
-uint16_t Calibration_Points[] = {
-											1,
-												5,
-												10,
-												15,
-												20,
-												//25,
-												30,
-												//35,
-												40,
-												//	45,
-												50,
-												//60,
-												//	70,
-												//	80,
-												//	90,
-												100,
-												//	110,
-												//	120,
-												//	130,
-												//	140,
-												150,
-												200,
-												250,
-												300,
-												350,
-												400,
-												450,
-												500,
-												550,
-												600,
-												650,
-												700,
-												750,
-												800
+enum ScreenElementsList {
+    STATUS_BAR,
+    CURRENT_BAUD_RATE,
+    CHANGE_SCREEN_BUTTON,
+    BAUD_RATE_SELECTION,
+    LOG_VARIABLES_SELECTION,
+    CLOCK_ADJUSTMENT,
+    CALENDAR_ADJUSTMENT,
+    NUMBER_SCREEN_ELEMENTS
 };
 
-#define NUMBER_OF_TCs					((uint16_t)(sizeof(Available_TCs) / sizeof(uint16_t)))
-#define NUMBER_OF_CALIBRATION_POINTS	((uint16_t)(sizeof(Calibration_Points) / sizeof(uint16_t)))
+//ScreenName[elements in screen][specific element name][number of navigable options in the specific element number]
+/*
+uint8_t HomeScreen[][2][1] = {
+                                 {{STATUS_BAR}, {0}},
+                                 {{CURRENT_BAUD_RATE}, {0}},
+                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+                              };
+*/
+#define HOME_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(HomeScreen) / sizeof(uint8_t)))
 
-#define NUMBER_OF_COEFFICIENTS	((uint16_t)2) // Linear and Angular, respectively
-#define LINEAR_COEFFICIENT	((uint16_t)0)
-#define ANGULAR_COEFFICIENT	((uint16_t)1)
+uint8_t Baudrate_Screen[][2][1] = {
+                                 {{STATUS_BAR}, {0}},
+                                 {{BAUD_RATE_SELECTION}, {BAUDRATE_LIST_LENGTH}},
+                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+                              };
+#define BAUDRATE_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(Baudrate_Screen) / sizeof(uint8_t)))
+
+uint8_t Log_Settings_Screen[][2][1] = {
+                                 {{STATUS_BAR}, {0}},
+                                 {{LOG_VARIABLES_SELECTION}, {0}},
+                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+                              };
+#define LOG_SETTINGS_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(Log_Settings_Screen) / sizeof(uint8_t)))
+
+uint8_t Clock_and_Calendar_Screen[][2][1] = {
+                                 {{STATUS_BAR}, {0}},
+                                 {{CLOCK_ADJUSTMENT}, {0}},
+                                 {{CALENDAR_ADJUSTMENT}, {0}},
+                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+                              };
+#define CLOCK_AND_CALENDAR_NUMBER_OF_ELEMENTS  ((uint8_t)(sizeof(Clock_and_Calendar_Screen) / sizeof(uint8_t)))
+
+
+
 
 
 

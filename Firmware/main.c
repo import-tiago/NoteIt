@@ -16,17 +16,20 @@
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
 #include <./DISPLAY/oled.h>
+#include <./DISPLAY/Screens/Screens.h>
 
+/*
 typedef enum {
     HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
 } Screens_List;
+*/
 
-uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
+//uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
 
 uint32_t Current_Baudrate = 115200;
 
-Screens_List Current_Screen = HOME_SCREEN;
-Screens_List next_screen;
+//Screens_List Current_Screen = HOME_SCREEN;
+//Screens_List next_screen;
 
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
@@ -147,7 +150,7 @@ void Build_Status_Bar() {
     SSD1306_string(104, 0, "100%", 12, 0, oled_buf);
     // SSD1306_display(oled_buf);
 }
-
+/*
 void Build_Screen(Screens_List selected_screen) {
 
     uint8_t x = 0, y = 0;
@@ -186,8 +189,9 @@ void Build_Screen(Screens_List selected_screen) {
     SSD1306_display(oled_buf);
 
     Current_Screen = selected_screen;
-}
 
+}
+*/
 void Show_Current_Baudrate() {
     char *state;
     if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
@@ -240,6 +244,7 @@ void Checks_if_Secreen_Changes() {
 }
 
 void Run_SFM() { //State Finite Machine
+    /*
     switch (Current_Screen) {
 
         case HOME_SCREEN: {
@@ -399,7 +404,55 @@ void Run_SFM() { //State Finite Machine
         }
 
     }
+    */
 }
+
+void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
+
+    while (n-- > 0) {
+        *dest = *origin;
+
+        dest++;
+        origin++;
+    }
+
+}
+
+
+
+struct ScreensStruct {
+    uint8_t HomeScreen[3][2][1];
+} Screens =  {
+     {{STATUS_BAR}, {0}},
+     {{CURRENT_BAUD_RATE}, {0}},
+     {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+  };
+
+
+
+struct point {
+    int x;
+    int y;
+} eh = { 1, 2 };
+
+
+
+
+/*
+struct _Available_TCs {
+    uint16_t Range[NUMBER_OF_TCs];
+} Struct_TC_Ranges;
+
+struct _Calibration_Points {
+    uint16_t Point[NUMBER_OF_CALIBRATION_POINTS];
+} Struct_Calibration_Points;
+
+struct CalibrationProcess {
+    struct _Available_TCs TC;
+    struct _Calibration_Points Calibration_Points;
+
+} Calibration;
+*/
 
 int main(void) {
 
@@ -412,6 +465,8 @@ int main(void) {
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
     __enable_interrupt();
+
+  //  Populate_Array((uint16_t*) &Calibration.TC.Range, (uint16_t*) &Available_TCs, NUMBER_OF_TCs);
 
     //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
 
