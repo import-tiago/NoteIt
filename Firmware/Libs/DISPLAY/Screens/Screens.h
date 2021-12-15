@@ -50,26 +50,13 @@ uint8_t HomeScreen[][2][1] = {
 */
 #define HOME_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(HomeScreen) / sizeof(uint8_t)))
 
-uint8_t Baudrate_Screen[][2][1] = {
-                                 {{STATUS_BAR}, {0}},
-                                 {{BAUD_RATE_SELECTION}, {BAUDRATE_LIST_LENGTH}},
-                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
-                              };
+
 #define BAUDRATE_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(Baudrate_Screen) / sizeof(uint8_t)))
 
-uint8_t Log_Settings_Screen[][2][1] = {
-                                 {{STATUS_BAR}, {0}},
-                                 {{LOG_VARIABLES_SELECTION}, {0}},
-                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
-                              };
+
 #define LOG_SETTINGS_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(Log_Settings_Screen) / sizeof(uint8_t)))
 
-uint8_t Clock_and_Calendar_Screen[][2][1] = {
-                                 {{STATUS_BAR}, {0}},
-                                 {{CLOCK_ADJUSTMENT}, {0}},
-                                 {{CALENDAR_ADJUSTMENT}, {0}},
-                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
-                              };
+
 #define CLOCK_AND_CALENDAR_NUMBER_OF_ELEMENTS  ((uint8_t)(sizeof(Clock_and_Calendar_Screen) / sizeof(uint8_t)))
 
 

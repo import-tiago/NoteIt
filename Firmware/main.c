@@ -422,18 +422,32 @@ void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
 
 struct ScreensStruct {
     uint8_t HomeScreen[3][2][1];
-} Screens =  {
-     {{STATUS_BAR}, {0}},
-     {{CURRENT_BAUD_RATE}, {0}},
-     {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
+    uint8_t Baudrate_Screen[3][2][1];
+    uint8_t Log_Settings_Screen[3][2][1];
+    uint8_t Clock_and_Calendar_Screen[4][2][1];
+} Screens = {
+    {{STATUS_BAR}, {0}},
+    {{CURRENT_BAUD_RATE}, {0}},
+    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
+
+    {{STATUS_BAR}, {0}},
+    {{BAUD_RATE_SELECTION}, {BAUDRATE_LIST_LENGTH}},
+    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
+
+    {{STATUS_BAR}, {0}},
+    {{LOG_VARIABLES_SELECTION}, {0}},
+    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
+
+    {{STATUS_BAR}, {0}},
+    {{CLOCK_ADJUSTMENT}, {0}},
+    {{CALENDAR_ADJUSTMENT}, {0}},
+    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
   };
 
 
 
-struct point {
-    int x;
-    int y;
-} eh = { 1, 2 };
+
+
 
 
 
