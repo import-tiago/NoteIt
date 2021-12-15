@@ -13,9 +13,6 @@
 #include <./SDCARD/ff.h>
 #include <./SDCARD/diskio.h>
 
-
-
-
 #include <./ROTARY_ENCODER/RotaryEncoder.h>
 
 #include <./DISPLAY/oled.h>
@@ -29,6 +26,7 @@ uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400,
 uint32_t Current_Baudrate = 115200;
 
 Screens_List Current_Screen = HOME_SCREEN;
+Screens_List next_screen;
 
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
@@ -48,13 +46,6 @@ const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
 uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int pos;
 int8_t *g_current_time_and_date;
-
-
-
-
-
-
-
 
 FATFS sdVolume;     // FatFs work area needed for each volume
 FIL logfile;        // File object needed for each open file
@@ -79,12 +70,6 @@ void FloatToPrint(float floatValue, int32_t splitValue[2]) {
     splitValue[0] = i32IntegerPart;
     splitValue[1] = i32FractionPart;
 }
-
-
-
-
-
-
 
 void delay_ms(uint8_t v) {
     while (v--)
@@ -163,7 +148,7 @@ void Build_Status_Bar() {
     // SSD1306_display(oled_buf);
 }
 
-void Build_Screen(uint8_t selected_screen) {
+void Build_Screen(Screens_List selected_screen) {
 
     uint8_t x = 0, y = 0;
     SSD1306_clear(oled_buf);
@@ -249,6 +234,11 @@ void Show_Current_Baudrate() {
 
  }
  */
+
+void Checks_if_Secreen_Changes() {
+
+}
+
 void Run_SFM() { //State Finite Machine
     switch (Current_Screen) {
 
@@ -259,7 +249,7 @@ void Run_SFM() { //State Finite Machine
             __no_operation();
 
             uint8_t adj_status = Rotary_Encoder_Push_Button();
-            static uint8_t next_screen = HOME_SCREEN;
+              next_screen = HOME_SCREEN;
             do {
 
                 Rotary_Encoder_Read();
@@ -297,7 +287,7 @@ void Run_SFM() { //State Finite Machine
             __no_operation();
 
             uint8_t adj_status = Rotary_Encoder_Push_Button();
-            static uint8_t next_screen = BAUDRATE_SCREEN;
+          next_screen = BAUDRATE_SCREEN;
             do {
 
                 Rotary_Encoder_Read();
@@ -322,13 +312,92 @@ void Run_SFM() { //State Finite Machine
                 }
 
             }
-            while (Current_Screen == HOME_SCREEN);
+            while (Current_Screen == BAUDRATE_SCREEN);
 
             Current_Screen = next_screen;
 
             break;
 
         }
+
+        case LOG_SETTINGS_SCREEN: {
+
+            Build_Screen(LOG_SETTINGS_SCREEN);
+
+            __no_operation();
+
+            uint8_t adj_status = Rotary_Encoder_Push_Button();
+         next_screen = LOG_SETTINGS_SCREEN;
+            do {
+
+                Rotary_Encoder_Read();
+
+                if (Rotary_Encoder_Changed()) {
+                    if (Rotary_Encoder_is_Clockwise()) {
+                        if (next_screen < TIME_AND_DATE_SCREEN)
+                            next_screen++;
+                        else
+                            next_screen = HOME_SCREEN;
+
+                        Build_Screen(next_screen);
+                    }
+                    if (Rotary_Encoder_is_Counterclockwise()) {
+                        if (next_screen > HOME_SCREEN)
+                            next_screen--;
+                        else
+                            next_screen = TIME_AND_DATE_SCREEN;
+                        Build_Screen(next_screen);
+                    }
+
+                }
+
+            }
+            while (Current_Screen == LOG_SETTINGS_SCREEN);
+
+            Current_Screen = next_screen;
+
+            break;
+        }
+
+        case TIME_AND_DATE_SCREEN: {
+
+            Build_Screen(TIME_AND_DATE_SCREEN);
+
+            __no_operation();
+
+            uint8_t adj_status = Rotary_Encoder_Push_Button();
+           next_screen = TIME_AND_DATE_SCREEN;
+            do {
+
+                Rotary_Encoder_Read();
+
+                if (Rotary_Encoder_Changed()) {
+                    if (Rotary_Encoder_is_Clockwise()) {
+                        if (next_screen < TIME_AND_DATE_SCREEN)
+                            next_screen++;
+                        else
+                            next_screen = HOME_SCREEN;
+
+                        Build_Screen(next_screen);
+                    }
+                    if (Rotary_Encoder_is_Counterclockwise()) {
+                        if (next_screen > HOME_SCREEN)
+                            next_screen--;
+                        else
+                            next_screen = TIME_AND_DATE_SCREEN;
+                        Build_Screen(next_screen);
+                    }
+
+                }
+
+            }
+            while (Current_Screen == TIME_AND_DATE_SCREEN);
+
+            Current_Screen = next_screen;
+
+            break;
+        }
+
     }
 }
 
@@ -344,22 +413,16 @@ int main(void) {
 
     __enable_interrupt();
 
-    /*
-     //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
+    //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
 
-     SSD1306_begin();
-     SSD1306_clear(oled_buf);
+    SSD1306_begin();
+    SSD1306_clear(oled_buf);
 
-     while (1) {
-     Run_SFM();
-     }
-     */
-
+    while (1) {
+        Run_SFM();
+    }
 
     // Mount the SD Card
-
-
-
 
     switch (f_mount(&sdVolume, "", 0)) {
         __no_operation();
@@ -388,8 +451,6 @@ int main(void) {
         //P4OUT |= BIT6;
         while (1);
     }
-
-
 
     char filename[] = "LOG2_00.csv";
     FILINFO fno;
@@ -444,10 +505,7 @@ int main(void) {
     //   P1OUT |= BIT0;
     __no_operation();
 
-    while (1)
-           ;
-
-
+    while (1);
 
 }
 
