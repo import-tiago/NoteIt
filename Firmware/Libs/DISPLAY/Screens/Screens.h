@@ -40,7 +40,7 @@ enum ScreenElementsList {
     NUMBER_SCREEN_ELEMENTS
 };
 
-//ScreenName[elements in screen][specific element name][number of navigable options in the specific element number]
+
 /*
 uint8_t HomeScreen[][2][1] = {
                                  {{STATUS_BAR}, {0}},

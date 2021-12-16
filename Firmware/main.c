@@ -418,8 +418,11 @@ void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
 
 }
 
-
-
+/*
+ * Struct to organize every screen in the current application
+ */
+//ScreenName[number of elements in screen]
+//[number of parameters in each element (element name and number )][number of navigable options in the specific element number]
 struct ScreensStruct {
     uint8_t HomeScreen[3][2][1];
     uint8_t Baudrate_Screen[3][2][1];
