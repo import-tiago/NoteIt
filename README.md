@@ -10,7 +10,7 @@ All settings can be easily configured via the OLED display and rotary encoder.
 
 The content stored on the memory card can be accessed by a computer using a USB type C cable connected directly to the NoteIt, without the needed for an external USB/SD-Card adapter.
 
-| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2001.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2003.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2002.png) |
+| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2001.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2003.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2002.jpg) |
 |--|--|--|
 
 This device was developed to be used in the simplest, carefree and agile way possible: just connect to the target device and know that the data is being saved.
@@ -20,7 +20,7 @@ This device was developed to be used in the simplest, carefree and agile way pos
 - Don't worry about the datalogger power supply: it has its own power supply and is ultra low consumption, you can use it for weeks without an external source. If you want, you can use an external 5V source via USB cable type C.
 
 ## Schematic Preview
-![image](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic%20Preview.png)
+![image](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic%20Preview.jpg)
 
 ### Contributing
 0. Give this project a :star:
