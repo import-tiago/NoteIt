@@ -145,53 +145,12 @@ void Show_Calendar(uint8_t x, uint8_t y, uint8_t font_size) {
 void Build_Status_Bar() {
     // SSD1306_clear(oled_buf);
     Show_Clock(0, 0, 12);
-    Show_Calendar(50, 0, 12);
-    SSD1306_bitmap(86, 2, Bat816, 16, 8, oled_buf);
-    SSD1306_string(104, 0, "100%", 12, 0, oled_buf);
+    Show_Calendar(48, 0, 12);
+    SSD1306_bitmap(84, 2, Bat816, 16, 8, oled_buf);
+    SSD1306_string(102, 0, "100%", 12, 0, oled_buf);
     // SSD1306_display(oled_buf);
 }
-/*
-void Build_Screen(Screens_List selected_screen) {
 
-    uint8_t x = 0, y = 0;
-    SSD1306_clear(oled_buf);
-    Build_Status_Bar();
-    if (selected_screen == HOME_SCREEN) {
-        //Show_Current_Baudrate();
-        x = 53;
-        y = 50;
-        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
-
-    }
-    else if (selected_screen == BAUDRATE_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, ".\0", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 8, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 15, y - 10, "..", 14, 0, oled_buf);
-    }
-    else if (selected_screen == LOG_SETTINGS_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 23, y - 10, ".\0", 14, 0, oled_buf);
-    }
-    else if (selected_screen == TIME_AND_DATE_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
-
-    }
-
-    SSD1306_display(oled_buf);
-
-    Current_Screen = selected_screen;
-
-}
-*/
 void Show_Current_Baudrate() {
     char *state;
     if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
@@ -423,36 +382,119 @@ void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
  */
 //ScreenName[number of elements in screen]
 //[number of parameters in each element (element name and number )][number of navigable options in the specific element number]
+
 struct ScreensStruct {
-    uint8_t HomeScreen[3][2][1];
-    uint8_t Baudrate_Screen[3][2][1];
-    uint8_t Log_Settings_Screen[3][2][1];
-    uint8_t Clock_and_Calendar_Screen[4][2][1];
+    uint8_t Home_Screen_Parameters[3][3][1];
+    uint8_t Log_Settings_Screen_Parameters[6][3][1];
+    uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
 } Screens = {
-    {{STATUS_BAR}, {0}},
-    {{CURRENT_BAUD_RATE}, {0}},
-    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
+   .Home_Screen_Parameters = {
+       {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
+       {{HOME_SCREEN},           {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+    },
 
-    {{STATUS_BAR}, {0}},
-    {{BAUD_RATE_SELECTION}, {BAUDRATE_LIST_LENGTH}},
-    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
+   .Log_Settings_Screen_Parameters = {
+       {{LOG_SETTINGS_SCREEN},   {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TIME},            {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_DATE},            {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_EPOCH_TIMESTAMP}, {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TEMPERATURE},     {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+   },
 
-    {{STATUS_BAR}, {0}},
-    {{LOG_VARIABLES_SELECTION}, {0}},
-    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}},
-
-    {{STATUS_BAR}, {0}},
-    {{CLOCK_ADJUSTMENT}, {0}},
-    {{CALENDAR_ADJUSTMENT}, {0}},
-    {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
-  };
-
-
-
-
-
+   .Clock_and_Calendar_Screen_Parameters = {
+       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+   }
+};
 
 
+void Build_Screen(uint8_t (*screen)[3][1]) {
+
+
+
+     int total = sizeof(screen);
+
+     // 'column' will be 7 = size of first row
+     int column = sizeof(screen[0]);
+
+     // 'row' will be 10 = 70 / 7
+     int row = total / column;
+
+
+    uint8_t x = 0, y = 0;
+    SSD1306_clear(oled_buf);
+    Build_Status_Bar();
+
+    if(screen == HOME_SCREEN){
+
+
+            //Show_Current_Baudrate();
+            x = 53;
+            y = 50;
+            SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
+            SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+
+
+    }
+
+
+    if(screen == LOG_SETTINGS_SCREEN)
+           __no_operation();
+
+    if(screen == CLOCK_AND_DATE_SCREEN)
+           __no_operation();
+
+
+    SSD1306_display(oled_buf);
+
+}
+
+/*
+void Build_Screen(Screens_List selected_screen) {
+
+    uint8_t x = 0, y = 0;
+    SSD1306_clear(oled_buf);
+    Build_Status_Bar();
+    if (selected_screen == HOME_SCREEN) {
+        //Show_Current_Baudrate();
+        x = 53;
+        y = 50;
+        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+
+    }
+    else if (selected_screen == BAUDRATE_SCREEN) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, ".\0", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 8, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 15, y - 10, "..", 14, 0, oled_buf);
+    }
+    else if (selected_screen == LOG_SETTINGS_SCREEN) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
+        SSD1306_string(x + 23, y - 10, ".\0", 14, 0, oled_buf);
+    }
+    else if (selected_screen == TIME_AND_DATE_SCREEN) {
+        x = 53;
+        y = 50;
+        SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
+        SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
+
+    }
+
+    SSD1306_display(oled_buf);
+
+    Current_Screen = selected_screen;
+
+}
+*/
 
 
 /*
@@ -489,6 +531,12 @@ int main(void) {
 
     SSD1306_begin();
     SSD1306_clear(oled_buf);
+
+    Build_Screen(&Screens.Log_Settings_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
+
+    Build_Screen(&Screens.Home_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
+
+    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
 
     while (1) {
         Run_SFM();

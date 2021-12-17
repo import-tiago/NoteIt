@@ -20,10 +20,12 @@ uint32_t Baudrate_List[] = {
 };
 #define BAUDRATE_LIST_LENGTH ((uint32_t)(sizeof(Baudrate_List) / sizeof(uint32_t)))
 
+#define SCREEN_ID 0
+#define SINGLE_POSITION 0
+
 
 enum ScreensList {
     HOME_SCREEN,
-    BAUDRATE_SELECTION_SCREEN,
     LOG_SETTINGS_SCREEN,
     CLOCK_AND_DATE_SCREEN,
     NUMBER_OF_SCREENS
@@ -34,10 +36,21 @@ enum ScreenElementsList {
     CURRENT_BAUD_RATE,
     CHANGE_SCREEN_BUTTON,
     BAUD_RATE_SELECTION,
-    LOG_VARIABLES_SELECTION,
+    LOG_INSERT_TEMPERATURE,
+    LOG_INSERT_TIME,
+    LOG_INSERT_DATE,
+    LOG_INSERT_EPOCH_TIMESTAMP,
     CLOCK_ADJUSTMENT,
     CALENDAR_ADJUSTMENT,
     NUMBER_SCREEN_ELEMENTS
+};
+
+enum Adjustments_Possibilities_in_Elements {
+    NO_ADJUSTMENTS_AVAILABLE,
+    TWO_OPTIONS,
+    THREE_OPTIONS,
+    FOUR_OPTIONS,
+    FIVE_OPTIONS
 };
 
 
