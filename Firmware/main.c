@@ -384,15 +384,25 @@ void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
 //[number of parameters in each element (element name and number )][number of navigable options in the specific element number]
 
 struct ScreensStruct {
-    uint8_t Home_Screen_Parameters[3][3][1];
+    uint8_t Home_Screen_Parameters[1][3][1];
     uint8_t Log_Settings_Screen_Parameters[6][3][1];
     uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
+    uint8_t test[1][3][1];
 } Screens = {
+
+             .Home_Screen_Parameters = {
+                 {{9},           {8},                 {7}},
+
+              },
+
+             /*
    .Home_Screen_Parameters = {
        {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
-       {{HOME_SCREEN},           {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+       {{HOME_SCREEN},           {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}},
+
     },
+    */
 
    .Log_Settings_Screen_Parameters = {
        {{LOG_SETTINGS_SCREEN},   {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
@@ -409,13 +419,54 @@ struct ScreensStruct {
        {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
        {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
    }
+
+   ,
+
+      .test = {
+          {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}}
+
+      }
 };
 
 
-void Build_Screen(uint8_t (*screen)[3][1]) {
+//void Build_Screen(uint8_t* *screens_list[3][1], uint8_t screen) {
+//void Build_Screen(struct ScreensStruct  *screens_list, uint8_t screen) {
+void Build_Screen(uint16_t  *screens_list, uint8_t screen) {
+
+    uint8_t a = *(screens_list);
+
+    a = *(screens_list + 1);
 
 
 
+
+
+/*
+    uint8_t a =  sizeof(screens_list[screen]);
+    uint8_t b =  sizeof(screens_list);
+    uint8_t c =  sizeof(*screens_list);
+    uint8_t d =  sizeof(*screens_list[0]);
+    uint8_t e =  sizeof(**screens_list[0]);
+    uint8_t f =  sizeof(screens_list[screen][0]);
+    */
+
+
+   // uint8_t i = screens_list[screen] ;
+        __no_operation();
+
+
+    //for(i = 0; i)
+
+
+
+
+
+    __no_operation();
+
+
+}
+
+    /*
      int total = sizeof(screen);
 
      // 'column' will be 7 = size of first row
@@ -423,7 +474,7 @@ void Build_Screen(uint8_t (*screen)[3][1]) {
 
      // 'row' will be 10 = 70 / 7
      int row = total / column;
-
+/*
 
     uint8_t x = 0, y = 0;
     SSD1306_clear(oled_buf);
@@ -532,16 +583,22 @@ int main(void) {
     SSD1306_begin();
     SSD1306_clear(oled_buf);
 
+    //Build_Screen(&Screens, HOME_SCREEN);
+    Build_Screen(&Screens.Home_Screen_Parameters, HOME_SCREEN);
+   // Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID]);
+
+    /*
     Build_Screen(&Screens.Log_Settings_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
 
     Build_Screen(&Screens.Home_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
 
     Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
+    */
 
     while (1) {
         Run_SFM();
     }
-
+/*
     // Mount the SD Card
 
     switch (f_mount(&sdVolume, "", 0)) {
@@ -626,6 +683,7 @@ int main(void) {
     __no_operation();
 
     while (1);
+    */
 
 }
 
