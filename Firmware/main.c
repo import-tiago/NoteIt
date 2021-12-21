@@ -392,7 +392,6 @@ struct ScreensStruct {
 
              .Home_Screen_Parameters = {
                  {{9},           {8},                 {7}},
-
               },
 
              /*
