@@ -384,25 +384,18 @@ void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
 //[number of parameters in each element (element name and number )][number of navigable options in the specific element number]
 
 struct ScreensStruct {
-    uint8_t Home_Screen_Parameters[1][3][1];
+    uint8_t Home_Screen_Parameters[3][3][1];
     uint8_t Log_Settings_Screen_Parameters[6][3][1];
     uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
-    uint8_t test[1][3][1];
+    uint8_t test[4][3][1];
+
 } Screens = {
-
-             .Home_Screen_Parameters = {
-                 {{9},           {8},                 {7}},
-              },
-
-             /*
    .Home_Screen_Parameters = {
        {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
        {{HOME_SCREEN},           {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}},
 
     },
-    */
-
    .Log_Settings_Screen_Parameters = {
        {{LOG_SETTINGS_SCREEN},   {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TIME},            {TWO_OPTIONS}},
@@ -411,60 +404,78 @@ struct ScreensStruct {
        {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TEMPERATURE},     {TWO_OPTIONS}},
        {{LOG_SETTINGS_SCREEN},   {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
    },
-
    .Clock_and_Calendar_Screen_Parameters = {
        {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
        {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
        {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+   },
+   .test = {
+       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
    }
-
-   ,
-
-      .test = {
-          {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}}
-
-      }
 };
 
 
-//void Build_Screen(uint8_t* *screens_list[3][1], uint8_t screen) {
-//void Build_Screen(struct ScreensStruct  *screens_list, uint8_t screen) {
-void Build_Screen(uint16_t  *screens_list, uint8_t screen) {
+void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
 
-    uint8_t a = *(screens_list);
+    uint8_t x = 0, y = 0;
 
-    a = *(screens_list + 1);
+    SSD1306_clear(oled_buf);
 
+    do{
+        switch(screen_element[number_elements][1][0])
+        {
+            case STATUS_BAR:
+                Build_Status_Bar();
+                x = 53;
+                        y = 50;
+                        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
+                        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+                __no_operation();
+                break;
+            case CURRENT_BAUD_RATE:
+                __no_operation();
+                break;
+            case CHANGE_SCREEN_BUTTON:
+                __no_operation();
+                break;
+            case BAUD_RATE_SELECTION:
+                __no_operation();
+                break;
+            case LOG_INSERT_TEMPERATURE:
+                __no_operation();
+                break;
+            case LOG_INSERT_TIME:
+                __no_operation();
+                break;
+            case LOG_INSERT_DATE:
+                __no_operation();
+                break;
+            case LOG_INSERT_EPOCH_TIMESTAMP:
+                __no_operation();
+                break;
+            case CLOCK_ADJUSTMENT:
+                __no_operation();
+                break;
+            case CALENDAR_ADJUSTMENT:
+                __no_operation();
+                break;
+            case NUMBER_SCREEN_ELEMENTS:
+                __no_operation();
+                break;
+        }
 
+        number_elements--;
+    }while(number_elements >= 0);
 
-
-
-/*
-    uint8_t a =  sizeof(screens_list[screen]);
-    uint8_t b =  sizeof(screens_list);
-    uint8_t c =  sizeof(*screens_list);
-    uint8_t d =  sizeof(*screens_list[0]);
-    uint8_t e =  sizeof(**screens_list[0]);
-    uint8_t f =  sizeof(screens_list[screen][0]);
-    */
-
-
-   // uint8_t i = screens_list[screen] ;
-        __no_operation();
-
-
-    //for(i = 0; i)
-
-
-
-
+    SSD1306_display(oled_buf);
 
     __no_operation();
 
-
 }
-
     /*
      int total = sizeof(screen);
 
@@ -573,6 +584,17 @@ int main(void) {
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
+
+    //int a1 = (Screens.Log_Settings_Screen_Parameters);
+    //int a2 = (Screens.Log_Settings_Screen_Parameters[0]);
+
+
+    //int size_row = sizeof(a1) / sizeof(a2);
+    //size_row = sizeof(a1);
+    //size_row = sizeof(a2) ;
+    //int size_row = sizeof(Screens.Log_Settings_Screen_Parameters)/sizeof(Screens.Log_Settings_Screen_Parameters[0]);
+    //int size_col = sizeof(Screens.Log_Settings_Screen_Parameters[0])/sizeof(Screens.Log_Settings_Screen_Parameters[0][0]);
+
     __enable_interrupt();
 
   //  Populate_Array((uint16_t*) &Calibration.TC.Range, (uint16_t*) &Available_TCs, NUMBER_OF_TCs);
@@ -583,8 +605,12 @@ int main(void) {
     SSD1306_clear(oled_buf);
 
     //Build_Screen(&Screens, HOME_SCREEN);
-    Build_Screen(&Screens.Home_Screen_Parameters, HOME_SCREEN);
-   // Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID]);
+
+  // Build_Screen(&Screens.Log_Settings_Screen_Parameters);
+
+    Build_Screen(Screens.Log_Settings_Screen_Parameters, (sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1  );
+    __no_operation();
+  //  Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID]);
 
     /*
     Build_Screen(&Screens.Log_Settings_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
