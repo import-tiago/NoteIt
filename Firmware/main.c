@@ -151,6 +151,7 @@ void Build_Status_Bar() {
     // SSD1306_display(oled_buf);
 }
 
+
 void Show_Current_Baudrate() {
     char *state;
     if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
@@ -387,13 +388,12 @@ struct ScreensStruct {
     uint8_t Home_Screen_Parameters[3][3][1];
     uint8_t Log_Settings_Screen_Parameters[6][3][1];
     uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
-    uint8_t test[4][3][1];
 
 } Screens = {
    .Home_Screen_Parameters = {
        {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
-       {{HOME_SCREEN},           {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}},
+       {{HOME_SCREEN},           {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}},
 
     },
    .Log_Settings_Screen_Parameters = {
@@ -402,22 +402,31 @@ struct ScreensStruct {
        {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_DATE},            {TWO_OPTIONS}},
        {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_EPOCH_TIMESTAMP}, {TWO_OPTIONS}},
        {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TEMPERATURE},     {TWO_OPTIONS}},
-       {{LOG_SETTINGS_SCREEN},   {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+       {{LOG_SETTINGS_SCREEN},   {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}}
    },
    .Clock_and_Calendar_Screen_Parameters = {
        {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
        {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
        {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
-   },
-   .test = {
-       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
-       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {CHANGE_SCREEN_BUTTON},       {NUMBER_OF_SCREENS}}
+       {{CLOCK_AND_DATE_SCREEN}, {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}}
    }
 };
 
+
+void Build_Navigation_Buttons(uint8_t current_selected_screen) {
+
+    int8_t x = 0, y = 50, i = 0;
+
+    x = (128 - (NUMBER_OF_SCREENS * 5)) / 2;
+
+    for(i = NUMBER_OF_SCREENS - 1; i >= 0; i--){
+
+        if(i == current_selected_screen)
+            SSD1306_bitmap( (x + (i * 10)) , y, current_page_bitmap, 5, 5, oled_buf);
+        else
+            SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+    }
+}
 
 void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
 
@@ -430,18 +439,17 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
         {
             case STATUS_BAR:
                 Build_Status_Bar();
-                x = 53;
-                        y = 50;
-                        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
-                        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
+
                 __no_operation();
                 break;
             case CURRENT_BAUD_RATE:
                 __no_operation();
                 break;
-            case CHANGE_SCREEN_BUTTON:
-                __no_operation();
+
+            case SCREENS_NAVIGATION_BUTTONS:
+                Build_Navigation_Buttons(screen_element[0][0][0]);
                 break;
+
             case BAUD_RATE_SELECTION:
                 __no_operation();
                 break;
@@ -609,7 +617,7 @@ int main(void) {
   // Build_Screen(&Screens.Log_Settings_Screen_Parameters);
 
     Build_Screen(Screens.Log_Settings_Screen_Parameters, (sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1  );
-    __no_operation();
+     __no_operation();
   //  Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID]);
 
     /*
@@ -621,7 +629,7 @@ int main(void) {
     */
 
     while (1) {
-        Run_SFM();
+        //Run_SFM();
     }
 /*
     // Mount the SD Card
