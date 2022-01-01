@@ -53,7 +53,7 @@ enum Adjustments_Possibilities_in_Elements {
     FIVE_OPTIONS
 };
 
- struct ScreensStruct {
+ const struct ScreensStruct {
     uint8_t Home_Screen_Parameters[4][3][1];
     uint8_t Log_Settings_Screen_Parameters[6][3][1];
     uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
