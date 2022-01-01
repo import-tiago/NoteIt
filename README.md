@@ -4,7 +4,7 @@
 
 **NoteIt** is a datalogger for devices based on UART protocols.
 
-It is powered by rechargeable battery, has micro-SD memory card storage, compatibility with 5V and 3.3V levels, automatic baud rate detector/manual baud rate selection; and, optionally, you can add date, time and temperature to the recorded data.
+It is powered by rechargeable battery, has micro-SD memory card storage with [FatFs](http://elm-chan.org/fsw/ff/00index_e.html), compatibility with 5V and 3.3V levels, automatic baud rate detector/manual baud rate selection; and, optionally, you can add date, time and temperature to the recorded data.
 
 All settings can be easily configured via the OLED display and rotary encoder.
 
