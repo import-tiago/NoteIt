@@ -26,6 +26,9 @@ This device was developed to be used in the simplest, carefree and agile way pos
 ## Schematic Preview
 ![image](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic_Preview.jpg)
 
+## PCB Preview
+<p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/tree/main/Hardware/1.%20Production"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Multilayer_Pewview.png" width="80%" height="80%" title="Watch the video" alt="Watch the video"></a></p>
+
 ### Contributing
 0. Give this project a :star:
 1. Create an issue and describe your idea.
