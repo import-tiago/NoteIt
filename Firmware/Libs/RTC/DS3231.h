@@ -29,6 +29,17 @@
 #define _BV(bit)    		 (1 << (bit))
 #define  OSF_BIT    	      7
 
+enum WeekDays {
+    SUNDAY = 1,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+};
+
+
 uint8_t BCD_to_DEC(uint8_t value);
 uint8_t DEC_to_BCD(uint8_t value);
 

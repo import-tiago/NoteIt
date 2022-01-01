@@ -34,7 +34,7 @@ uint32_t Current_Baudrate = 115200;
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
 
-char Datalogger_States[2][30] = { { "waiting data..." }, { "saving data..." } };
+char Datalogger_States[2][30] = { { "waiting data..." }, { "storing data..." } };
 
 uint8_t Current_Datalogger_State = DATALOGGER_IDLE_STATE;
 
@@ -42,7 +42,6 @@ uint8_t Current_Datalogger_State = DATALOGGER_IDLE_STATE;
 const unsigned char Bitmap_CHECKED_BUTTON[] = { 0x00, 0x00, 0x3f, 0x00, 0x5e, 0x80, 0x6d, 0x80, 0x73, 0x80, 0x73, 0x80, 0x6d, 0x80, 0x5e, 0x80, 0x3f, 0x00, 0x00, 0x00 };
 // 'CHECK_BUTTON', 10x10px
 const unsigned char Bitmap_CHECK_BUTTON[] = { 0x00, 0x00, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x00, 0x00 };
-
 // 'CUREENT_PAGE2', 5x5px
 const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
 
@@ -151,11 +150,15 @@ void Build_Status_Bar() {
     // SSD1306_display(oled_buf);
 }
 
-
-void Show_Current_Baudrate() {
+void Show_Datalogger_State() {
     char *state;
     if (Current_Datalogger_State == DATALOGGER_IDLE_STATE)
         state = &Datalogger_States[DATALOGGER_IDLE_STATE][0];
+
+    SSD1306_string(24, 34, state, 12, 0, oled_buf);
+}
+
+void Show_Current_Baudrate() {
 
     char array[20] = { 0 };
     ltoa(Current_Baudrate, array, 10);
@@ -169,37 +172,6 @@ void Show_Current_Baudrate() {
 
     for (i = 0; i < array_len; i++)
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
-
-    SSD1306_string(24, y + 18, state, 12, 0, oled_buf);
-
-    // SSD1306_display(oled_buf);
-    __no_operation();
-}
-/*
- void Show_Baudrate_List(uint8_t) {
-
- uint8_t x = 5;
- uint8_t y = 15;
- uint8_t step = 20;
- uint8_t i = 0;
- char array[20] = { 0 };
-
- uint8_t len = strlen(Baudrate_List);
-
- for (i = 0; i < len; i++)
- SSD1306_char1616(x, y, Baudrate_List[i], oled_buf);
-
- ltoa(Current_Baudrate, array, 10);
-
- SSD1306_string(24, y + 18, state, 12, 0, oled_buf);
-
- // SSD1306_display(oled_buf);
- __no_operation();
-
- }
- */
-
-void Checks_if_Secreen_Changes() {
 
 }
 
@@ -367,55 +339,9 @@ void Run_SFM() { //State Finite Machine
     */
 }
 
-void Populate_Array(uint16_t *dest, uint16_t *origin, uint16_t n) {
-
-    while (n-- > 0) {
-        *dest = *origin;
-
-        dest++;
-        origin++;
-    }
-
-}
-
-/*
- * Struct to organize every screen in the current application
- */
-//ScreenName[number of elements in screen]
-//[number of parameters in each element (element name and number )][number of navigable options in the specific element number]
-
-struct ScreensStruct {
-    uint8_t Home_Screen_Parameters[3][3][1];
-    uint8_t Log_Settings_Screen_Parameters[6][3][1];
-    uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
-
-} Screens = {
-   .Home_Screen_Parameters = {
-       {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
-       {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
-       {{HOME_SCREEN},           {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}},
-
-    },
-   .Log_Settings_Screen_Parameters = {
-       {{LOG_SETTINGS_SCREEN},   {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
-       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TIME},            {TWO_OPTIONS}},
-       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_DATE},            {TWO_OPTIONS}},
-       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_EPOCH_TIMESTAMP}, {TWO_OPTIONS}},
-       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TEMPERATURE},     {TWO_OPTIONS}},
-       {{LOG_SETTINGS_SCREEN},   {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}}
-   },
-   .Clock_and_Calendar_Screen_Parameters = {
-       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
-       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {SCREENS_NAVIGATION_BUTTONS},       {NUMBER_OF_SCREENS}}
-   }
-};
-
-
 void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
-    int8_t x = 0, y = 50, i = 0;
+    int8_t x = 0, y = 54, i = 0;
 
     x = (128 - (NUMBER_OF_SCREENS * 5)) / 2;
 
@@ -430,8 +356,6 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
 void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
 
-    uint8_t x = 0, y = 0;
-
     SSD1306_clear(oled_buf);
 
     do{
@@ -439,11 +363,14 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
         {
             case STATUS_BAR:
                 Build_Status_Bar();
-
-                __no_operation();
                 break;
+
             case CURRENT_BAUD_RATE:
-                __no_operation();
+                Show_Current_Baudrate();
+                break;
+
+            case DATALOGGER_STATE:
+                Show_Datalogger_State();
                 break;
 
             case SCREENS_NAVIGATION_BUTTONS:
@@ -475,112 +402,11 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
                 __no_operation();
                 break;
         }
-
         number_elements--;
     }while(number_elements >= 0);
 
     SSD1306_display(oled_buf);
-
-    __no_operation();
-
 }
-    /*
-     int total = sizeof(screen);
-
-     // 'column' will be 7 = size of first row
-     int column = sizeof(screen[0]);
-
-     // 'row' will be 10 = 70 / 7
-     int row = total / column;
-/*
-
-    uint8_t x = 0, y = 0;
-    SSD1306_clear(oled_buf);
-    Build_Status_Bar();
-
-    if(screen == HOME_SCREEN){
-
-
-            //Show_Current_Baudrate();
-            x = 53;
-            y = 50;
-            SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
-            SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
-
-
-    }
-
-
-    if(screen == LOG_SETTINGS_SCREEN)
-           __no_operation();
-
-    if(screen == CLOCK_AND_DATE_SCREEN)
-           __no_operation();
-
-
-    SSD1306_display(oled_buf);
-
-}
-
-/*
-void Build_Screen(Screens_List selected_screen) {
-
-    uint8_t x = 0, y = 0;
-    SSD1306_clear(oled_buf);
-    Build_Status_Bar();
-    if (selected_screen == HOME_SCREEN) {
-        //Show_Current_Baudrate();
-        x = 53;
-        y = 50;
-        SSD1306_bitmap(x, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 8, y - 10, "...", 14, 0, oled_buf);
-
-    }
-    else if (selected_screen == BAUDRATE_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, ".\0", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 8, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 15, y - 10, "..", 14, 0, oled_buf);
-    }
-    else if (selected_screen == LOG_SETTINGS_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, "..", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 15, y, current_page_bitmap, 5, 5, oled_buf);
-        SSD1306_string(x + 23, y - 10, ".\0", 14, 0, oled_buf);
-    }
-    else if (selected_screen == TIME_AND_DATE_SCREEN) {
-        x = 53;
-        y = 50;
-        SSD1306_string(x, y - 10, "...", 14, 0, oled_buf);
-        SSD1306_bitmap(x + 23, y, current_page_bitmap, 5, 5, oled_buf);
-
-    }
-
-    SSD1306_display(oled_buf);
-
-    Current_Screen = selected_screen;
-
-}
-*/
-
-
-/*
-struct _Available_TCs {
-    uint16_t Range[NUMBER_OF_TCs];
-} Struct_TC_Ranges;
-
-struct _Calibration_Points {
-    uint16_t Point[NUMBER_OF_CALIBRATION_POINTS];
-} Struct_Calibration_Points;
-
-struct CalibrationProcess {
-    struct _Available_TCs TC;
-    struct _Calibration_Points Calibration_Points;
-
-} Calibration;
-*/
 
 int main(void) {
 
@@ -592,41 +418,14 @@ int main(void) {
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
-
-    //int a1 = (Screens.Log_Settings_Screen_Parameters);
-    //int a2 = (Screens.Log_Settings_Screen_Parameters[0]);
-
-
-    //int size_row = sizeof(a1) / sizeof(a2);
-    //size_row = sizeof(a1);
-    //size_row = sizeof(a2) ;
-    //int size_row = sizeof(Screens.Log_Settings_Screen_Parameters)/sizeof(Screens.Log_Settings_Screen_Parameters[0]);
-    //int size_col = sizeof(Screens.Log_Settings_Screen_Parameters[0])/sizeof(Screens.Log_Settings_Screen_Parameters[0][0]);
-
     __enable_interrupt();
 
-  //  Populate_Array((uint16_t*) &Calibration.TC.Range, (uint16_t*) &Available_TCs, NUMBER_OF_TCs);
-
-    //Set_Clock_and_Calendar(0, 58, 13, 1, 28, 11, 21);
+    //Set_Clock_and_Calendar(0, 45, 21, FRIDAY, 31, 12, 21);
 
     SSD1306_begin();
     SSD1306_clear(oled_buf);
 
-    //Build_Screen(&Screens, HOME_SCREEN);
-
-  // Build_Screen(&Screens.Log_Settings_Screen_Parameters);
-
-    Build_Screen(Screens.Log_Settings_Screen_Parameters, (sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1  );
-     __no_operation();
-  //  Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID]);
-
-    /*
-    Build_Screen(&Screens.Log_Settings_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
-
-    Build_Screen(&Screens.Home_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
-
-    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters[SCREEN_ID][SCREEN_ID][SINGLE_POSITION]);
-    */
+    Build_Screen(Screens.Home_Screen_Parameters, (sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1  );
 
     while (1) {
         //Run_SFM();

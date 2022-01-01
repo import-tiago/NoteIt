@@ -23,7 +23,6 @@ uint32_t Baudrate_List[] = {
 #define SCREEN_ID 0
 #define SINGLE_POSITION 0
 
-
 enum ScreensList {
     HOME_SCREEN,
     LOG_SETTINGS_SCREEN,
@@ -34,6 +33,7 @@ enum ScreensList {
 enum ScreenElementsList {
     STATUS_BAR,
     CURRENT_BAUD_RATE,
+    DATALOGGER_STATE,
     SCREENS_NAVIGATION_BUTTONS,
     BAUD_RATE_SELECTION,
     LOG_INSERT_TEMPERATURE,
@@ -52,6 +52,39 @@ enum Adjustments_Possibilities_in_Elements {
     FOUR_OPTIONS,
     FIVE_OPTIONS
 };
+
+ struct ScreensStruct {
+    uint8_t Home_Screen_Parameters[4][3][1];
+    uint8_t Log_Settings_Screen_Parameters[6][3][1];
+    uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
+
+} Screens = {
+   .Home_Screen_Parameters = {
+       {{HOME_SCREEN},           {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{HOME_SCREEN},           {CURRENT_BAUD_RATE},          {BAUDRATE_LIST_LENGTH}},
+       {{HOME_SCREEN},           {DATALOGGER_STATE},           {BAUDRATE_LIST_LENGTH}},
+       {{HOME_SCREEN},           {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
+    },
+   .Log_Settings_Screen_Parameters = {
+       {{LOG_SETTINGS_SCREEN},   {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TIME},            {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_DATE},            {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_EPOCH_TIMESTAMP}, {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {LOG_INSERT_TEMPERATURE},     {TWO_OPTIONS}},
+       {{LOG_SETTINGS_SCREEN},   {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
+   },
+   .Clock_and_Calendar_Screen_Parameters = {
+       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
+       {{CLOCK_AND_DATE_SCREEN}, {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
+   }
+};
+
+
+
+
+
 
 
 /*
