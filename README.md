@@ -27,6 +27,7 @@ This device was developed to be used in the simplest, carefree and agile way pos
 <p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/Schematic%20v1.2.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic_Preview.jpg" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
 
 ## PCB Preview
+- 50 mm x 35 mm / 4 layers.
 <p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/tree/main/Hardware/1.%20Production"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Multilayer_Pewview.png" width="80%" height="80%" title="Watch the video" alt="Watch the video"></a></p>
 
 ### Contributing
