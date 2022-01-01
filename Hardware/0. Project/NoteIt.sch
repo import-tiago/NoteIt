@@ -5808,18 +5808,18 @@ package type OT</description>
 </class>
 </classes>
 <groups>
-<schematic_group name="ROTARY_ENCODER" titleSize="3.81"/>
-<schematic_group name="BATTERY_CHARGING_MANAGER" grouprefs="POWER_SUPPLY"/>
-<schematic_group name="BATTERY_PROTECTOR" grouprefs="POWER_SUPPLY"/>
-<schematic_group name="BATTERY_MONITOR" grouprefs="POWER_SUPPLY"/>
-<schematic_group name="VOLTAGE_REGULATOR" grouprefs="POWER_SUPPLY"/>
-<schematic_group name="MICROCONTROLLER" titleSize="3.81"/>
-<schematic_group name="DISPLAY_OLED" titleSize="3.81"/>
-<schematic_group name="MICRO_SDCARD_CONTROLLER" titleSize="3.81"/>
-<schematic_group name="POWER_SUPPLY" titleSize="3.81"/>
-<schematic_group name="SPY-BY-WIRE_(ICSP)" titleSize="3.81"/>
-<schematic_group name="REAL_TIME_CLOCK" titleSize="3.81"/>
-<schematic_group name="DATALOGGER_INPUT" titleSize="3.81"/>
+<schematic_group name="ROTARY_ENCODER" titleSize="3.81" layer="95"/>
+<schematic_group name="BATTERY_CHARGING_MANAGER" layer="95" grouprefs="POWER_SUPPLY"/>
+<schematic_group name="BATTERY_PROTECTOR" layer="95" grouprefs="POWER_SUPPLY"/>
+<schematic_group name="BATTERY_MONITOR" layer="95" grouprefs="POWER_SUPPLY"/>
+<schematic_group name="VOLTAGE_REGULATOR" layer="95" grouprefs="POWER_SUPPLY"/>
+<schematic_group name="MICROCONTROLLER" titleSize="3.81" layer="95"/>
+<schematic_group name="DISPLAY_OLED" titleSize="3.81" layer="95"/>
+<schematic_group name="MICRO_SDCARD_CONTROLLER" titleSize="3.81" layer="95"/>
+<schematic_group name="POWER_SUPPLY" titleSize="3.81" layer="95"/>
+<schematic_group name="SPY-BY-WIRE_(ICSP)" titleSize="3.81" layer="95"/>
+<schematic_group name="REAL_TIME_CLOCK" titleSize="3.81" layer="95"/>
+<schematic_group name="DATALOGGER_INPUT" titleSize="3.81" layer="95"/>
 </groups>
 <parts>
 <part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/3" override_package_urn="urn:adsk.eagle:footprint:25763183/1"/>
