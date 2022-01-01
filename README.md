@@ -10,7 +10,7 @@ All settings can be easily configured via the OLED display and rotary encoder.
 
 The content stored on the memory card can be accessed by a computer using a USB type C cable connected directly to the NoteIt, without the needed for an external USB/SD-Card adapter.
 
-| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2001.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2003.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB%20Preview%2002.jpg) |
+| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Preview_01.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Preview_03.jpg) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Preview_02.jpg) |
 |--|--|--|
 
 This device was developed to be used in the simplest, carefree and agile way possible: just connect to the target device and know that the data is being saved.
@@ -24,7 +24,7 @@ This device was developed to be used in the simplest, carefree and agile way pos
 <p align="left"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png" width="50%" height="50%"></p>
 
 ## Schematic Preview
-![image](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic%20Preview.jpg)
+![image](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic_Preview.jpg)
 
 ### Contributing
 0. Give this project a :star:
