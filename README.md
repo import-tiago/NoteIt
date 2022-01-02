@@ -19,9 +19,12 @@ This device was developed to be used in the simplest, carefree and agile way pos
 - Don't worry about voltage levels: being UART, the data will be registered.
 - Don't worry about the datalogger power supply: it has its own power supply and is ultra low consumption, you can use it for weeks without an external source. If you want, you can use an external 5V source via USB cable type C.
 
-## Screens Prototype Preview
-### Home Screen
-<p align="left"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png" width="50%" height="50%"></p>
+## Screens Prototypes Preview
+
+| Home Screen | Log Settings Screen | Clock and Date Screen |
+|--|--|--|
+| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Log_Settings_Screen_Prototype.png) | |
+
 
 ## Schematic Preview
 <p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/Schematic%20v1.2.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic_Preview.jpg" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
