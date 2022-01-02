@@ -28,7 +28,7 @@ uint8_t* Get_Current_Time_and_Date(void) {
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // week day
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // month day
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // month
-    date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() ); // year
+    date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // year
     __no_operation();
     return date_and_time_array;
 }
