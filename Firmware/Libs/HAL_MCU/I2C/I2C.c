@@ -30,6 +30,10 @@ void I2C_Begin_Transmission(uint8_t slave_addr, uint8_t reg_addr, uint8_t n_byte
     while (!(UCB0IFG & UCTXIFG0));
 }
 
+void I2C_Finish_Transmission() {
+    I2C_Send(0);
+}
+
 void I2C_Request_From(uint8_t slave_addr, uint8_t register_addr, uint8_t n_bytes) {
     UCB0I2CSA = slave_addr;         // target chip Slave address
     UCB0CTLW0 |= UCSWRST;           // Software reset enabled (Puts eUSCI_B in configuration mode)

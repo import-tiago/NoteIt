@@ -28,8 +28,8 @@ uint8_t* Get_Current_Time_and_Date(void) {
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // week day
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // month day
     date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // month
-    date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() & bit_mask[i]); // year
-
+    date_and_time_array[i++] = BCD_to_DEC(I2C_Receive() ); // year
+    __no_operation();
     return date_and_time_array;
 }
 
@@ -43,6 +43,7 @@ void Set_Clock_and_Calendar(uint8_t second, uint8_t minute, uint8_t hour, uint8_
     I2C_Send(DEC_to_BCD(month_day)); // month day (1 to 31)
     I2C_Send(DEC_to_BCD(month));     // month
     I2C_Send(DEC_to_BCD(year));      // year (0 to 99)
+    I2C_Finish_Transmission();
 
     uint8_t bit_state = I2C_Read_Single_Byte(DS3231_SLAVE_ADDR, DS3231_REG_STATUS_CTL);          // I2C_Receive the status register
     I2C_Write_Single_Byte(DS3231_SLAVE_ADDR, DS3231_REG_STATUS_CTL, bit_state & ~_BV(OSF_BIT));  // clear the Oscillator Stop Flag
