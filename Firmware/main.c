@@ -19,13 +19,12 @@
 #include <./DISPLAY/Screens/Screens.h>
 
 /*
-typedef enum {
-    HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
-} Screens_List;
-*/
+ typedef enum {
+ HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
+ } Screens_List;
+ */
 
 //uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
-
 uint32_t Current_Baudrate = 115200;
 
 //Screens_List Current_Screen = HOME_SCREEN;
@@ -34,16 +33,25 @@ uint32_t Current_Baudrate = 115200;
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
 
-char Datalogger_States[2][30] = { { "waiting data..." }, { "storing data..." } };
+char Datalogger_States[2][30] = {
+                                  {
+                                    "waiting data..." },
+                                  {
+                                    "storing data..." } };
+
+char Log_Variables[4][30] = {
+                              {
+                                "Add Date" },
+                              {
+                                "Add Time" },
+                              {
+                                "Add Timestamp" },
+                              {
+                                "Add Temperature" } };
+
+#define NUMBER_OF_LOG_VARIABLES ((sizeof(Log_Variables) / sizeof(Log_Variables[0]))-1)
 
 uint8_t Current_Datalogger_State = DATALOGGER_IDLE_STATE;
-
-// 'CHECKED_BUTTON', 10x10px
-const unsigned char Bitmap_CHECKED_BUTTON[] = { 0x00, 0x00, 0x3f, 0x00, 0x5e, 0x80, 0x6d, 0x80, 0x73, 0x80, 0x73, 0x80, 0x6d, 0x80, 0x5e, 0x80, 0x3f, 0x00, 0x00, 0x00 };
-// 'CHECK_BUTTON', 10x10px
-const unsigned char Bitmap_CHECK_BUTTON[] = { 0x00, 0x00, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x00, 0x00 };
-// 'CUREENT_PAGE2', 5x5px
-const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
 
 uint8_t oled_buf[WIDTH * HEIGHT / 8];
 int pos;
@@ -78,7 +86,8 @@ void delay_ms(uint8_t v) {
         __delay_cycles(1000);
 }
 
-char array[5] = { 0 };
+char array[5] = {
+                  0 };
 int8_t value = 0;
 int8_t incValue = 0;
 
@@ -100,7 +109,8 @@ void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
 
 void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
 
-    char clock[20] = { 0 };
+    char clock[20] = {
+                       0 };
 
     char sec = 0;
     char min = 0;
@@ -122,7 +132,8 @@ void Show_Clock(uint8_t x, uint8_t y, uint8_t font_size) {
 
 void Show_Calendar(uint8_t x, uint8_t y, uint8_t font_size) {
 
-    char calendar[20] = { 0 };
+    char calendar[20] = {
+                          0 };
 
     char day = 0;
     char month = 0;
@@ -158,9 +169,106 @@ void Show_Datalogger_State() {
     SSD1306_string(24, 34, state, 12, 0, oled_buf);
 }
 
+
+void Build_List_Log_Variables() {
+
+    int8_t x = 0, y = 54, i = 0;
+    char *state;
+
+    x = 16;
+    y = 20;
+
+    int cursor = 0;
+
+    for (i = NUMBER_OF_LOG_VARIABLES; i >= 0; i--) {
+
+        state = &Log_Variables[i][0];
+
+        if (!cursor) {
+            SSD1306_string(x - 10, y + 1, ">", 12, 0, oled_buf);
+            cursor = 1;
+            SSD1306_string(x, y, state, 12, 0, oled_buf);
+            SSD1306_bitmap(110, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+        }
+        else{
+
+        SSD1306_string(x, y, state, 12, 0, oled_buf);
+        SSD1306_bitmap(110, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
+
+        }
+        y += 16;
+
+                if (y >= 50)
+                    break;
+    }
+
+}
+
+void Build_Clock_and_Calendar_Adj() {
+
+
+    char clock[20] = { 0 };
+
+    char calendar[20] = { 0 };
+
+
+      char min = 0;
+      char hr = 0;
+
+      char day = 0;
+      char month = 0;
+      char year = 0;
+
+      memset(clock, '\0', 20);
+
+      g_current_time_and_date = Get_Current_Time_and_Date();
+
+
+      min = *(g_current_time_and_date + 1);
+      hr = *(g_current_time_and_date + 2);
+
+      day = *(g_current_time_and_date + 4);
+      month = *(g_current_time_and_date + 5);
+      year = *(g_current_time_and_date + 6);
+
+      sprintf(clock, "%02d:%02dh", hr, min);
+      sprintf(calendar, "%02d/%02d/20%02d", day, month, year);
+      __no_operation();
+
+
+
+      int8_t x = 0, y = 54, i = 0;
+
+
+      x = 25;
+      y = 15;
+      char *state = &clock;
+
+      int cursor = 0;
+
+         if (!cursor) {
+             SSD1306_string(x - 13, y + 3, ">", 12, 0, oled_buf);
+             cursor = 1;
+
+         }
+
+      SSD1306_string(x, y, state, 15, 0, oled_buf);
+      SSD1306_string(x, y+17, calendar, 15, 0, oled_buf);
+
+
+
+
+
+
+
+
+
+}
+
 void Show_Current_Baudrate() {
 
-    char array[20] = { 0 };
+    char array[20] = {
+                       0 };
     ltoa(Current_Baudrate, array, 10);
 
     uint8_t array_len = strlen(array);
@@ -177,166 +285,166 @@ void Show_Current_Baudrate() {
 
 void Run_SFM() { //State Finite Machine
     /*
-    switch (Current_Screen) {
+     switch (Current_Screen) {
 
-        case HOME_SCREEN: {
+     case HOME_SCREEN: {
 
-            Build_Screen(HOME_SCREEN);
+     Build_Screen(HOME_SCREEN);
 
-            __no_operation();
+     __no_operation();
 
-            uint8_t adj_status = Rotary_Encoder_Push_Button();
-              next_screen = HOME_SCREEN;
-            do {
+     uint8_t adj_status = Rotary_Encoder_Push_Button();
+     next_screen = HOME_SCREEN;
+     do {
 
-                Rotary_Encoder_Read();
+     Rotary_Encoder_Read();
 
-                if (Rotary_Encoder_Changed()) {
-                    if (Rotary_Encoder_is_Clockwise()) {
-                        if (next_screen < TIME_AND_DATE_SCREEN)
-                            next_screen++;
-                        else
-                            next_screen = HOME_SCREEN;
+     if (Rotary_Encoder_Changed()) {
+     if (Rotary_Encoder_is_Clockwise()) {
+     if (next_screen < TIME_AND_DATE_SCREEN)
+     next_screen++;
+     else
+     next_screen = HOME_SCREEN;
 
-                        Build_Screen(next_screen);
-                    }
-                    if (Rotary_Encoder_is_Counterclockwise()) {
-                        if (next_screen > HOME_SCREEN)
-                            next_screen--;
-                        else
-                            next_screen = TIME_AND_DATE_SCREEN;
-                        Build_Screen(next_screen);
-                    }
+     Build_Screen(next_screen);
+     }
+     if (Rotary_Encoder_is_Counterclockwise()) {
+     if (next_screen > HOME_SCREEN)
+     next_screen--;
+     else
+     next_screen = TIME_AND_DATE_SCREEN;
+     Build_Screen(next_screen);
+     }
 
-                }
+     }
 
-            }
-            while (Current_Screen == HOME_SCREEN);
+     }
+     while (Current_Screen == HOME_SCREEN);
 
-            Current_Screen = next_screen;
+     Current_Screen = next_screen;
 
-            break;
-        }
+     break;
+     }
 
-        case BAUDRATE_SCREEN: {
-            Build_Screen(BAUDRATE_SCREEN);
+     case BAUDRATE_SCREEN: {
+     Build_Screen(BAUDRATE_SCREEN);
 
-            __no_operation();
+     __no_operation();
 
-            uint8_t adj_status = Rotary_Encoder_Push_Button();
-          next_screen = BAUDRATE_SCREEN;
-            do {
+     uint8_t adj_status = Rotary_Encoder_Push_Button();
+     next_screen = BAUDRATE_SCREEN;
+     do {
 
-                Rotary_Encoder_Read();
+     Rotary_Encoder_Read();
 
-                if (Rotary_Encoder_Changed()) {
-                    if (Rotary_Encoder_is_Clockwise()) {
-                        if (next_screen < TIME_AND_DATE_SCREEN)
-                            next_screen++;
-                        else
-                            next_screen = HOME_SCREEN;
+     if (Rotary_Encoder_Changed()) {
+     if (Rotary_Encoder_is_Clockwise()) {
+     if (next_screen < TIME_AND_DATE_SCREEN)
+     next_screen++;
+     else
+     next_screen = HOME_SCREEN;
 
-                        Build_Screen(next_screen);
-                    }
-                    if (Rotary_Encoder_is_Counterclockwise()) {
-                        if (next_screen > HOME_SCREEN)
-                            next_screen--;
-                        else
-                            next_screen = TIME_AND_DATE_SCREEN;
-                        Build_Screen(next_screen);
-                    }
+     Build_Screen(next_screen);
+     }
+     if (Rotary_Encoder_is_Counterclockwise()) {
+     if (next_screen > HOME_SCREEN)
+     next_screen--;
+     else
+     next_screen = TIME_AND_DATE_SCREEN;
+     Build_Screen(next_screen);
+     }
 
-                }
+     }
 
-            }
-            while (Current_Screen == BAUDRATE_SCREEN);
+     }
+     while (Current_Screen == BAUDRATE_SCREEN);
 
-            Current_Screen = next_screen;
+     Current_Screen = next_screen;
 
-            break;
+     break;
 
-        }
+     }
 
-        case LOG_SETTINGS_SCREEN: {
+     case LOG_SETTINGS_SCREEN: {
 
-            Build_Screen(LOG_SETTINGS_SCREEN);
+     Build_Screen(LOG_SETTINGS_SCREEN);
 
-            __no_operation();
+     __no_operation();
 
-            uint8_t adj_status = Rotary_Encoder_Push_Button();
-         next_screen = LOG_SETTINGS_SCREEN;
-            do {
+     uint8_t adj_status = Rotary_Encoder_Push_Button();
+     next_screen = LOG_SETTINGS_SCREEN;
+     do {
 
-                Rotary_Encoder_Read();
+     Rotary_Encoder_Read();
 
-                if (Rotary_Encoder_Changed()) {
-                    if (Rotary_Encoder_is_Clockwise()) {
-                        if (next_screen < TIME_AND_DATE_SCREEN)
-                            next_screen++;
-                        else
-                            next_screen = HOME_SCREEN;
+     if (Rotary_Encoder_Changed()) {
+     if (Rotary_Encoder_is_Clockwise()) {
+     if (next_screen < TIME_AND_DATE_SCREEN)
+     next_screen++;
+     else
+     next_screen = HOME_SCREEN;
 
-                        Build_Screen(next_screen);
-                    }
-                    if (Rotary_Encoder_is_Counterclockwise()) {
-                        if (next_screen > HOME_SCREEN)
-                            next_screen--;
-                        else
-                            next_screen = TIME_AND_DATE_SCREEN;
-                        Build_Screen(next_screen);
-                    }
+     Build_Screen(next_screen);
+     }
+     if (Rotary_Encoder_is_Counterclockwise()) {
+     if (next_screen > HOME_SCREEN)
+     next_screen--;
+     else
+     next_screen = TIME_AND_DATE_SCREEN;
+     Build_Screen(next_screen);
+     }
 
-                }
+     }
 
-            }
-            while (Current_Screen == LOG_SETTINGS_SCREEN);
+     }
+     while (Current_Screen == LOG_SETTINGS_SCREEN);
 
-            Current_Screen = next_screen;
+     Current_Screen = next_screen;
 
-            break;
-        }
+     break;
+     }
 
-        case TIME_AND_DATE_SCREEN: {
+     case TIME_AND_DATE_SCREEN: {
 
-            Build_Screen(TIME_AND_DATE_SCREEN);
+     Build_Screen(TIME_AND_DATE_SCREEN);
 
-            __no_operation();
+     __no_operation();
 
-            uint8_t adj_status = Rotary_Encoder_Push_Button();
-           next_screen = TIME_AND_DATE_SCREEN;
-            do {
+     uint8_t adj_status = Rotary_Encoder_Push_Button();
+     next_screen = TIME_AND_DATE_SCREEN;
+     do {
 
-                Rotary_Encoder_Read();
+     Rotary_Encoder_Read();
 
-                if (Rotary_Encoder_Changed()) {
-                    if (Rotary_Encoder_is_Clockwise()) {
-                        if (next_screen < TIME_AND_DATE_SCREEN)
-                            next_screen++;
-                        else
-                            next_screen = HOME_SCREEN;
+     if (Rotary_Encoder_Changed()) {
+     if (Rotary_Encoder_is_Clockwise()) {
+     if (next_screen < TIME_AND_DATE_SCREEN)
+     next_screen++;
+     else
+     next_screen = HOME_SCREEN;
 
-                        Build_Screen(next_screen);
-                    }
-                    if (Rotary_Encoder_is_Counterclockwise()) {
-                        if (next_screen > HOME_SCREEN)
-                            next_screen--;
-                        else
-                            next_screen = TIME_AND_DATE_SCREEN;
-                        Build_Screen(next_screen);
-                    }
+     Build_Screen(next_screen);
+     }
+     if (Rotary_Encoder_is_Counterclockwise()) {
+     if (next_screen > HOME_SCREEN)
+     next_screen--;
+     else
+     next_screen = TIME_AND_DATE_SCREEN;
+     Build_Screen(next_screen);
+     }
 
-                }
+     }
 
-            }
-            while (Current_Screen == TIME_AND_DATE_SCREEN);
+     }
+     while (Current_Screen == TIME_AND_DATE_SCREEN);
 
-            Current_Screen = next_screen;
+     Current_Screen = next_screen;
 
-            break;
-        }
+     break;
+     }
 
-    }
-    */
+     }
+     */
 }
 
 void Build_Navigation_Buttons(uint8_t current_selected_screen) {
@@ -345,22 +453,21 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
     x = (128 - (NUMBER_OF_SCREENS * 5)) / 2;
 
-    for(i = NUMBER_OF_SCREENS - 1; i >= 0; i--){
+    for (i = NUMBER_OF_SCREENS - 1; i >= 0; i--) {
 
-        if(i == current_selected_screen)
-            SSD1306_bitmap( (x + (i * 10)) , y, current_page_bitmap, 5, 5, oled_buf);
+        if (i == current_selected_screen)
+            SSD1306_bitmap((x + (i * 10)), y, current_page_bitmap, 5, 5, oled_buf);
         else
             SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
     }
 }
 
-void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
+void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) {
 
     SSD1306_clear(oled_buf);
 
-    do{
-        switch(screen_element[number_elements][1][0])
-        {
+    do {
+        switch (screen_element[number_elements][1][0]) {
             case STATUS_BAR:
                 Build_Status_Bar();
                 break;
@@ -381,6 +488,7 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
                 __no_operation();
                 break;
             case LOG_INSERT_TEMPERATURE:
+                Build_List_Log_Variables();
                 __no_operation();
                 break;
             case LOG_INSERT_TIME:
@@ -393,6 +501,7 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
                 __no_operation();
                 break;
             case CLOCK_ADJUSTMENT:
+                Build_Clock_and_Calendar_Adj();
                 __no_operation();
                 break;
             case CALENDAR_ADJUSTMENT:
@@ -403,7 +512,8 @@ void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
                 break;
         }
         number_elements--;
-    }while(number_elements >= 0);
+    }
+    while (number_elements >= 0);
 
     SSD1306_display(oled_buf);
 }
@@ -412,7 +522,7 @@ int main(void) {
 
     Watchdog_Init();
     GPIOs_Init();
-    // GPIO_Interrupt_Init();
+    //GPIO_Interrupt_Init();
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
@@ -420,102 +530,110 @@ int main(void) {
 
     __enable_interrupt();
 
-    //Set_Clock_and_Calendar(0, 45, 21, FRIDAY, 31, 12, 21);
 
+    /*
+     g_current_time_and_date = Get_Current_Time_and_Date();
+     char min = *(g_current_time_and_date + 1);
+
+    if(min <= 50)
+    Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
+    */
     SSD1306_begin();
     SSD1306_clear(oled_buf);
 
-    Build_Screen(Screens.Home_Screen_Parameters, (sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1  );
+    //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
+    //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
+    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
 
     while (1) {
         //Run_SFM();
     }
-/*
-    // Mount the SD Card
+    /*
+     // Mount the SD Card
 
-    switch (f_mount(&sdVolume, "", 0)) {
-        __no_operation();
-    case FR_OK:
-        status = 42;
-        break;
-    case FR_INVALID_DRIVE:
-        status = 1;
-        break;
-    case FR_DISK_ERR:
-        status = 2;
-        break;
-    case FR_NOT_READY:
-        status = 3;
-        break;
-    case FR_NO_FILESYSTEM:
-        status = 4;
-        break;
-    default:
-        status = 5;
-        break;
-    }
+     switch (f_mount(&sdVolume, "", 0)) {
+     __no_operation();
+     case FR_OK:
+     status = 42;
+     break;
+     case FR_INVALID_DRIVE:
+     status = 1;
+     break;
+     case FR_DISK_ERR:
+     status = 2;
+     break;
+     case FR_NOT_READY:
+     status = 3;
+     break;
+     case FR_NO_FILESYSTEM:
+     status = 4;
+     break;
+     default:
+     status = 5;
+     break;
+     }
 
-    if (status != 42) {
-        // Error has occurred
-        //P4OUT |= BIT6;
-        while (1);
-    }
+     if (status != 42) {
+     // Error has occurred
+     //P4OUT |= BIT6;
+     while (1);
+     }
 
-    char filename[] = "LOG2_00.csv";
-    FILINFO fno;
-    FRESULT fr;
-    uint8_t i;
-    for (i = 0; i < 100; i++) {
-        filename[5] = i / 10 + '0';
-        filename[6] = i % 10 + '0';
-        fr = f_stat(filename, &fno);
-        __no_operation();
-        if (fr == FR_OK) {
-            __no_operation();
-            continue;
-        }
-        else if (fr == FR_NO_FILE) {
-            __no_operation();
-            break;
-        }
-        else {
-            __no_operation();
-            // Error occurred
-            //P4OUT |= BIT6;
-            //  P1OUT |= BIT0;
-            while (1);
-        }
-    }
+     char filename[] = "LOG2_00.csv";
+     FILINFO fno;
+     FRESULT fr;
+     uint8_t i;
+     for (i = 0; i < 100; i++) {
+     filename[5] = i / 10 + '0';
+     filename[6] = i % 10 + '0';
+     fr = f_stat(filename, &fno);
+     __no_operation();
+     if (fr == FR_OK) {
+     __no_operation();
+     continue;
+     }
+     else if (fr == FR_NO_FILE) {
+     __no_operation();
+     break;
+     }
+     else {
+     __no_operation();
+     // Error occurred
+     //P4OUT |= BIT6;
+     //  P1OUT |= BIT0;
+     while (1);
+     }
+     }
 
-    // Initialize result variable
-    UINT bw = 0;
+     // Initialize result variable
+     UINT bw = 0;
 
-    FloatToPrint(testFloat, printValue);
+     FloatToPrint(testFloat, printValue);
 
-    // Open & write
-    if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
-        f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
-        for (i = 0; i < 10; i++) {
-            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-        }
-        f_sync(&logfile);
-        testFloat += 1205.57;
-        FloatToPrint(testFloat, printValue);
-        for (i = 0; i < 10; i++) {
-            f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
-        }
-        f_close(&logfile);                          // Close the file
-        if (bw == 11) {
-            __no_operation();
-            //    P1OUT |= BIT0;
-        }
-    }
+     // Open & write
+     if (f_open(&logfile, filename, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) { // Open file - If nonexistent, create
+     f_lseek(&logfile, logfile.fsize); // Move forward by filesize; logfile.fsize+1 is not needed in this application
+     for (i = 0; i < 10; i++) {
+     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+     }
+     f_sync(&logfile);
+     testFloat += 1205.57;
+     FloatToPrint(testFloat, printValue);
+     for (i = 0; i < 10; i++) {
+     f_printf(&logfile, "%ld.%ld\n", printValue[0], printValue[1]);
+     }
+     f_close(&logfile);                          // Close the file
+     if (bw == 11) {
+     __no_operation();
+     //    P1OUT |= BIT0;
+     }
+     }
 
-    //   P1OUT |= BIT0;
-    __no_operation();
+     //   P1OUT |= BIT0;
+     __no_operation();
 
-    while (1);
-    */
+     while (1);
+     */
 
 }
 

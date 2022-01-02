@@ -5,6 +5,14 @@
 #include <stdint.h>
 #include <stdint.h>
 
+// 'CHECKED_BUTTON', 10x10px
+const unsigned char Bitmap_CHECKED_BUTTON[] = { 0x00, 0x00, 0x3f, 0x00, 0x5e, 0x80, 0x6d, 0x80, 0x73, 0x80, 0x73, 0x80, 0x6d, 0x80, 0x5e, 0x80, 0x3f, 0x00, 0x00, 0x00 };
+// 'CHECK_BUTTON', 10x10px
+const unsigned char Bitmap_CHECK_BUTTON[] = { 0x00, 0x00, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x7f, 0x80, 0x00, 0x00 };
+// 'CUREENT_PAGE2', 5x5px
+const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
+
+
 uint32_t Baudrate_List[] = {
                             1200,
                             2400,
@@ -81,20 +89,18 @@ enum Adjustments_Possibilities_in_Elements {
    }
 };
 
+#define HOME_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1)
+#define LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1)
+#define CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Clock_and_Calendar_Screen_Parameters) / sizeof(Screens.Clock_and_Calendar_Screen_Parameters[0]))-1)
 
 
 
 
 
 
-/*
-uint8_t HomeScreen[][2][1] = {
-                                 {{STATUS_BAR}, {0}},
-                                 {{CURRENT_BAUD_RATE}, {0}},
-                                 {{CHANGE_SCREEN_BUTTON}, {NUMBER_OF_SCREENS}}
-                              };
-*/
-#define HOME_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(HomeScreen) / sizeof(uint8_t)))
+
+
+
 
 
 #define BAUDRATE_SCREEN_NUMBER_OF_ELEMENTS ((uint8_t)(sizeof(Baudrate_Screen) / sizeof(uint8_t)))
