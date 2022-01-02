@@ -21,9 +21,9 @@ This device was developed to be used in the simplest, carefree and agile way pos
 
 ## Screens Prototypes Preview
 
-| Home Screen | Log Settings Screen | Clock and Date Screen |
+| Home Screen | Log Settings Screen | Clock and Date Adjustment Screen |
 |--|--|--|
-| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Log_Settings_Screen_Prototype.png) | |
+| ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Log_Settings_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Clock_and_Calendar_Adj_Screen_Prototype.png)|
 
 
 ## Schematic Preview
