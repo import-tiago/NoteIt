@@ -267,19 +267,23 @@ void Build_Clock_and_Calendar_Adj() {
 
 void Show_Current_Baudrate() {
 
-    char array[20] = {
-                       0 };
+    char array[20] = { 0 };
     ltoa(Current_Baudrate, array, 10);
 
     uint8_t array_len = strlen(array);
     uint8_t i = 0;
 
-    uint8_t x = 5;
+    uint8_t x = 10;
     uint8_t y = 15;
-    uint8_t step = 20;
+    uint8_t step = 18;
+
+    SSD1306_string(5, y + 3, "<", 12, 0, oled_buf);
+    SSD1306_string(120, y + 3, ">", 12, 0, oled_buf);
 
     for (i = 0; i < array_len; i++)
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
+        //SSD1306_char3216(x + (step * i), y, array[i], oled_buf);
+
 
 }
 
@@ -541,9 +545,19 @@ int main(void) {
     SSD1306_begin();
     SSD1306_clear(oled_buf);
 
-    //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
+
+
+
+
+
+
+
+
+
+
+    Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
     //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
-    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
+    //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
 
     while (1) {
         //Run_SFM();
