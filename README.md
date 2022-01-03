@@ -1,6 +1,6 @@
 # NoteIt
 
-[![Status](https://img.shields.io/badge/status-WIP-red)](https://github.com/TiagoPaulaSilva/NoteIt)
+[![Status](https://img.shields.io/badge/status-WIP-red)](https://github.com/TiagoPaulaSilva/NoteIt) - waiting PCBs v1.2 from JLCPCB...
 
 **NoteIt** is a datalogger for devices based on UART protocols.
 
