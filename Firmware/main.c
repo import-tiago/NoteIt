@@ -522,6 +522,22 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
     SSD1306_display(oled_buf);
 }
 
+void print_rotary_state(){
+    char print_a[10] = {0};
+    char print_b[10] = {0};
+
+    sprintf(print_a, "A = %d", _a);
+    sprintf(print_b, "A = %d", _b);
+
+    SSD1306_string(40, 10, print_a, 14, 0, oled_buf);
+    SSD1306_string(40, 35, print_a, 15, 0, oled_buf);
+
+    SSD1306_display(oled_buf);
+
+    __no_operation();
+
+}
+
 int main(void) {
 
     Watchdog_Init();
@@ -553,9 +569,7 @@ int main(void) {
 
 
 
-
-
-    Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
+    //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
     //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
     //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
 
