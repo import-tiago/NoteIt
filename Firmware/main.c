@@ -93,6 +93,10 @@ int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
 int _a, _b;
+int _a0, _b0;
+uint32_t debounce_a = 0;
+uint32_t debounce_b = 0;
+uint32_t sys_tick_ms = 0;
 
 void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x = x;
@@ -169,7 +173,6 @@ void Show_Datalogger_State() {
     SSD1306_string(24, 34, state, 12, 0, oled_buf);
 }
 
-
 void Build_List_Log_Variables() {
 
     int8_t x = 0, y = 54, i = 0;
@@ -190,84 +193,73 @@ void Build_List_Log_Variables() {
             SSD1306_string(x, y, state, 12, 0, oled_buf);
             SSD1306_bitmap(110, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
         }
-        else{
+        else {
 
-        SSD1306_string(x, y, state, 12, 0, oled_buf);
-        SSD1306_bitmap(110, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
+            SSD1306_string(x, y, state, 12, 0, oled_buf);
+            SSD1306_bitmap(110, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
 
         }
         y += 16;
 
-                if (y >= 50)
-                    break;
+        if (y >= 50)
+            break;
     }
 
 }
 
 void Build_Clock_and_Calendar_Adj() {
 
+    char clock[20] = {
+                       0 };
 
-    char clock[20] = { 0 };
+    char calendar[20] = {
+                          0 };
 
-    char calendar[20] = { 0 };
+    char min = 0;
+    char hr = 0;
 
+    char day = 0;
+    char month = 0;
+    char year = 0;
 
-      char min = 0;
-      char hr = 0;
+    memset(clock, '\0', 20);
 
-      char day = 0;
-      char month = 0;
-      char year = 0;
+    g_current_time_and_date = Get_Current_Time_and_Date();
 
-      memset(clock, '\0', 20);
+    min = *(g_current_time_and_date + 1);
+    hr = *(g_current_time_and_date + 2);
 
-      g_current_time_and_date = Get_Current_Time_and_Date();
+    day = *(g_current_time_and_date + 4);
+    month = *(g_current_time_and_date + 5);
+    year = *(g_current_time_and_date + 6);
 
+    sprintf(clock, "%02d:%02dh", hr, min);
+    sprintf(calendar, "%02d/%02d/20%02d", day, month, year);
+    __no_operation();
 
-      min = *(g_current_time_and_date + 1);
-      hr = *(g_current_time_and_date + 2);
+    int8_t x = 0, y = 54, i = 0;
 
-      day = *(g_current_time_and_date + 4);
-      month = *(g_current_time_and_date + 5);
-      year = *(g_current_time_and_date + 6);
+    x = 25;
+    y = 15;
+    char *state = &clock;
 
-      sprintf(clock, "%02d:%02dh", hr, min);
-      sprintf(calendar, "%02d/%02d/20%02d", day, month, year);
-      __no_operation();
+    int cursor = 0;
 
+    if (!cursor) {
+        SSD1306_string(x - 13, y + 3, ">", 12, 0, oled_buf);
+        cursor = 1;
 
+    }
 
-      int8_t x = 0, y = 54, i = 0;
-
-
-      x = 25;
-      y = 15;
-      char *state = &clock;
-
-      int cursor = 0;
-
-         if (!cursor) {
-             SSD1306_string(x - 13, y + 3, ">", 12, 0, oled_buf);
-             cursor = 1;
-
-         }
-
-      SSD1306_string(x, y, state, 15, 0, oled_buf);
-      SSD1306_string(x, y+17, calendar, 15, 0, oled_buf);
-
-
-
-
-
-
-
-
+    SSD1306_string(x, y, state, 15, 0, oled_buf);
+    SSD1306_string(x, y + 17, calendar, 15, 0, oled_buf);
 
 }
 
 void Show_Current_Baudrate() {
 
-    char array[20] = { 0 };
+    char array[20] = {
+                       0 };
     ltoa(Current_Baudrate, array, 10);
 
     uint8_t array_len = strlen(array);
@@ -282,8 +274,7 @@ void Show_Current_Baudrate() {
 
     for (i = 0; i < array_len; i++)
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
-        //SSD1306_char3216(x + (step * i), y, array[i], oled_buf);
-
+    //SSD1306_char3216(x + (step * i), y, array[i], oled_buf);
 
 }
 
@@ -522,15 +513,23 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
     SSD1306_display(oled_buf);
 }
 
-void print_rotary_state(){
-    char print_a[10] = {0};
-    char print_b[10] = {0};
+void Init_Timer0() {
+    TA0CCTL0 |= CCIE;                      // TACCR0 interrupt enabled
+    TA0CCR0 = 1000;
+    TA0CTL |= TASSEL__SMCLK | MC__UP;    // SMCLK, up count mode
+}
 
-    sprintf(print_a, "A = %d", _a);
-    sprintf(print_b, "A = %d", _b);
+void print_rotary_state() {
+    char print_a[10] = {
+                         0 };
+    char print_b[10] = {
+                         0 };
+
+    sprintf(print_a, "A = %i", _a);
+    sprintf(print_b, "B = %i", _b);
 
     SSD1306_string(40, 10, print_a, 14, 0, oled_buf);
-    SSD1306_string(40, 35, print_a, 15, 0, oled_buf);
+    SSD1306_string(40, 35, print_b, 15, 0, oled_buf);
 
     SSD1306_display(oled_buf);
 
@@ -542,7 +541,10 @@ int main(void) {
 
     Watchdog_Init();
     GPIOs_Init();
-    //GPIO_Interrupt_Init();
+
+    GPIO_Interrupt_Init();
+    Init_Timer0();
+
     //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
@@ -550,24 +552,16 @@ int main(void) {
 
     __enable_interrupt();
 
-
     /*
      g_current_time_and_date = Get_Current_Time_and_Date();
      char min = *(g_current_time_and_date + 1);
 
-    if(min <= 50)
-    Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
-    */
+     if(min <= 50)
+     Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
+     */
     SSD1306_begin();
     SSD1306_clear(oled_buf);
-
-
-
-
-
-
-
-
+    SSD1306_display(oled_buf);
 
     //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
     //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
@@ -665,8 +659,81 @@ int main(void) {
 
 }
 
+//TIMER
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer_A(void) {
+    sys_tick_ms++;
+
+    static int first_debounce_time = 3;
+    static int reactivate_isr_latency = 10;
+
+    if (debounce_a && (sys_tick_ms - debounce_a) >= first_debounce_time) {
+        _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
+        _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
+        if ( (sys_tick_ms - debounce_a) >= reactivate_isr_latency) {
+
+        print_rotary_state();
+        if (_a)
+            P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+        else
+            P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+
+    __no_operation();
+
+        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+        debounce_a = 0;
+        debounce_b = 0;
+        }
+    }
+    if (debounce_b && (sys_tick_ms - debounce_b) >= first_debounce_time) {
+        _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
+        _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
+
+        if ( (sys_tick_ms - debounce_b) >= reactivate_isr_latency) {
+
+        print_rotary_state();
+        if (_b)
+            P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_B;
+        else
+            P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+
+           __no_operation();
+
+        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_B;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+        debounce_a = 0;
+        debounce_b = 0;
+        }
+    }
+
+}
+
 //EXTERNAL INPUT EDGE DETECT
 #pragma vector=PORT4_VECTOR
 __interrupt void ISR_Rotary_Encoder_Monitor(void) {
+
+    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
+        _a0 = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
+        debounce_a = sys_tick_ms;
+        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+
+        __no_operation();
+    }
+
+    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
+        _b0 = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
+        debounce_b = sys_tick_ms;
+        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+        //P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+
+        __no_operation();
+    }
+
+    //P4IES |=  GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
 
 }
