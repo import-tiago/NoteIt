@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+#define DEBOUNCE_TIME 3
+
+
+
+
 static const int8_t _rotaryEncoderTable[] = { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 };
 int8_t test(int8_t _a, int8_t _b);
 int8_t Rotary_Encoder_Read(void) ;

@@ -92,12 +92,8 @@ int8_t value = 0;
 int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
-int _a, _b, _c;
-int _a0, _b0, _c0;
-int ccw = 0, cw = 0;
-uint32_t debounce_a = 0;
-uint32_t debounce_b = 0;
-uint32_t sys_tick_ms = 0;
+
+
 
 void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x = x;
@@ -523,31 +519,20 @@ void Init_Timer0() {
 void print_rotary_state() {
 
     SSD1306_clear(oled_buf);
+    __delay_cycles(1000);
 
-    char print_a[10] = {
-                         0 };
-    char print_b[10] = {
-                         0 };
+    char v[10] = {0};
 
-    char print_c[10] = {
-                         0 };
 
-    char cwa[10] = {
-                     0 };
+    //sprintf(v, "%i", Rotary_Encoder_Read());
+    sprintf(v, "%i", Rotary_Encoder_is_Clockwise());
 
-    int y = 0;
 
-    sprintf(print_a, "A = %i", _a);
-    sprintf(print_b, "B = %i", _b);
-    sprintf(print_c, "C = %i", _c);
-    sprintf(cwa, "I = %i", cw);
+    SSD1306_string(40, 30, v, 14, 0, oled_buf);
 
-    SSD1306_string(40, y + (0 * 15), print_a, 14, 0, oled_buf);
-    SSD1306_string(40, y + (1 * 15), print_b, 14, 0, oled_buf);
-    SSD1306_string(40, y + (2 * 15), print_c, 14, 0, oled_buf);
-    SSD1306_string(40, y + (3 * 15), cwa, 14, 0, oled_buf);
 
     SSD1306_display(oled_buf);
+
     __no_operation();
 }
 
@@ -575,7 +560,7 @@ int main(void) {
     //SSD1306_display(oled_buf);
 
     while (1) {
-
+        print_rotary_state();
     }
 
     /*
@@ -585,9 +570,7 @@ int main(void) {
      if(min <= 50)
      Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
      */
-    SSD1306_begin();
-    SSD1306_clear(oled_buf);
-    SSD1306_display(oled_buf);
+
 
     //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
     //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
@@ -685,97 +668,4 @@ int main(void) {
 
 }
 
-//TIMER
-#pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A(void) {
-    sys_tick_ms++;
 
-    static int first_debounce_time = 5;
-    static int reactivate_isr_latency = 5;
-    static int diff = 0;
-
-    if (debounce_a && (sys_tick_ms - debounce_a) >= first_debounce_time) {
-        _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
-        _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
-
-     //   if ((sys_tick_ms - debounce_a) >= reactivate_isr_latency) {
-
-            _c = _a | _b;
-
-            diff = (_c0 - _c);
-
-            if ((diff == 2) || (diff == -2))
-                cw++;
-            else
-                cw--;
-
-            print_rotary_state();
-            if (_a)
-                P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;
-            else
-                P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-
-            __no_operation();
-
-            P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
-            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-            debounce_a = 0;
-            debounce_b = 0;
-
-            _c0 = _c;
-      //  }
-    }
-
-    if (debounce_b && (sys_tick_ms - debounce_b) >= first_debounce_time) {
-        _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
-        _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
-
-        if ((sys_tick_ms - debounce_b) >= reactivate_isr_latency) {
-
-            _c = (_a<<1) | _b;
-
-            diff = (_c0 - _c);
-
-            if ((diff == 2) || (diff == -2))
-                cw++;
-            else
-                cw--;
-
-            print_rotary_state();
-            if (_b)
-                P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_B;
-            else
-                P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-
-            __no_operation();
-
-            P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_B;
-            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-            debounce_a = 0;
-            debounce_b = 0;
-
-            _c0 = _c;
-        }
-    }
-
-}
-
-//EXTERNAL INPUT EDGE DETECT
-#pragma vector=PORT4_VECTOR
-__interrupt void ISR_Rotary_Encoder_Monitor(void) {
-    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
-        debounce_a = sys_tick_ms;
-        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-        __no_operation();
-    }
-
-    if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
-        debounce_b = sys_tick_ms;
-        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        __no_operation();
-    }
-}
