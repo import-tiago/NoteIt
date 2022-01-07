@@ -21,6 +21,8 @@ This device was developed to be used in the simplest, carefree and agile way pos
 
 ## Screens Prototypes Preview
 
+Custom symbols created using [image2cpp](https://javl.github.io/image2cpp/).
+
 | Baud Rate Selection Screen | Log File Settings Screen | Clock and Calendar Adjustment Screen |
 |--|--|--|
 | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Home_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Log_Settings_Screen_Prototype.png) | ![](https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Clock_and_Calendar_Adj_Screen_Prototype.png)|
