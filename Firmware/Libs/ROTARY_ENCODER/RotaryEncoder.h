@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 static const int8_t _rotaryEncoderTable[] = { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 };
-
+int8_t test(int8_t _a, int8_t _b);
 int8_t Rotary_Encoder_Read(void) ;
 uint8_t Rotary_Encoder_Changed(void);
 uint8_t Rotary_Encoder_Push_Button(void);

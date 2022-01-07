@@ -302,6 +302,7 @@ void SSD1306_clear(uint8_t *buffer) {
     for (i = 0; i < WIDTH * HEIGHT / 8; i++) {
         buffer[i] = 0;
     }
+
 }
 
 void SSD1306_pixel(int x, int y, char color, uint8_t *buffer) {

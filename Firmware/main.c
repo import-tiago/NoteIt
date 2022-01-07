@@ -92,8 +92,9 @@ int8_t value = 0;
 int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
-int _a, _b;
-int _a0, _b0;
+int _a, _b, _c;
+int _a0, _b0, _c0;
+int ccw = 0, cw = 0;
 uint32_t debounce_a = 0;
 uint32_t debounce_b = 0;
 uint32_t sys_tick_ms = 0;
@@ -520,21 +521,34 @@ void Init_Timer0() {
 }
 
 void print_rotary_state() {
+
+    SSD1306_clear(oled_buf);
+
     char print_a[10] = {
                          0 };
     char print_b[10] = {
                          0 };
 
+    char print_c[10] = {
+                         0 };
+
+    char cwa[10] = {
+                     0 };
+
+    int y = 0;
+
     sprintf(print_a, "A = %i", _a);
     sprintf(print_b, "B = %i", _b);
+    sprintf(print_c, "C = %i", _c);
+    sprintf(cwa, "I = %i", cw);
 
-    SSD1306_string(40, 10, print_a, 14, 0, oled_buf);
-    SSD1306_string(40, 35, print_b, 15, 0, oled_buf);
+    SSD1306_string(40, y + (0 * 15), print_a, 14, 0, oled_buf);
+    SSD1306_string(40, y + (1 * 15), print_b, 14, 0, oled_buf);
+    SSD1306_string(40, y + (2 * 15), print_c, 14, 0, oled_buf);
+    SSD1306_string(40, y + (3 * 15), cwa, 14, 0, oled_buf);
 
     SSD1306_display(oled_buf);
-
     __no_operation();
-
 }
 
 int main(void) {
@@ -551,6 +565,18 @@ int main(void) {
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
 
     __enable_interrupt();
+
+    SSD1306_begin();
+    SSD1306_clear(oled_buf);
+    SSD1306_display(oled_buf);
+    __delay_cycles(1000);
+
+    //SSD1306_string(20, 15, print_a, 14, 1, oled_buf);
+    //SSD1306_display(oled_buf);
+
+    while (1) {
+
+    }
 
     /*
      g_current_time_and_date = Get_Current_Time_and_Date();
@@ -664,48 +690,73 @@ int main(void) {
 __interrupt void Timer_A(void) {
     sys_tick_ms++;
 
-    static int first_debounce_time = 3;
-    static int reactivate_isr_latency = 10;
+    static int first_debounce_time = 5;
+    static int reactivate_isr_latency = 5;
+    static int diff = 0;
 
     if (debounce_a && (sys_tick_ms - debounce_a) >= first_debounce_time) {
         _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
         _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
-        if ( (sys_tick_ms - debounce_a) >= reactivate_isr_latency) {
 
-        print_rotary_state();
-        if (_a)
-            P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;
-        else
-            P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+     //   if ((sys_tick_ms - debounce_a) >= reactivate_isr_latency) {
 
-    __no_operation();
+            _c = _a | _b;
 
-        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        debounce_a = 0;
-        debounce_b = 0;
-        }
+            diff = (_c0 - _c);
+
+            if ((diff == 2) || (diff == -2))
+                cw++;
+            else
+                cw--;
+
+            print_rotary_state();
+            if (_a)
+                P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+            else
+                P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+
+            __no_operation();
+
+            P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+            debounce_a = 0;
+            debounce_b = 0;
+
+            _c0 = _c;
+      //  }
     }
+
     if (debounce_b && (sys_tick_ms - debounce_b) >= first_debounce_time) {
         _a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
         _b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
 
-        if ( (sys_tick_ms - debounce_b) >= reactivate_isr_latency) {
+        if ((sys_tick_ms - debounce_b) >= reactivate_isr_latency) {
 
-        print_rotary_state();
-        if (_b)
-            P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_B;
-        else
-            P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+            _c = (_a<<1) | _b;
 
-           __no_operation();
+            diff = (_c0 - _c);
 
-        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_B;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        debounce_a = 0;
-        debounce_b = 0;
+            if ((diff == 2) || (diff == -2))
+                cw++;
+            else
+                cw--;
+
+            print_rotary_state();
+            if (_b)
+                P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_B;
+            else
+                P4IES &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+
+            __no_operation();
+
+            P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_B;
+            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+            P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+            debounce_a = 0;
+            debounce_b = 0;
+
+            _c0 = _c;
         }
     }
 
@@ -714,26 +765,17 @@ __interrupt void Timer_A(void) {
 //EXTERNAL INPUT EDGE DETECT
 #pragma vector=PORT4_VECTOR
 __interrupt void ISR_Rotary_Encoder_Monitor(void) {
-
     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
-        _a0 = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
         debounce_a = sys_tick_ms;
         P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-
         __no_operation();
     }
 
     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_B)) {
-        _b0 = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
         debounce_b = sys_tick_ms;
         P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        //P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-
         __no_operation();
     }
-
-    //P4IES |=  GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
-
 }
