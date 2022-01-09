@@ -98,9 +98,6 @@ void GPIO_Interrupt_Init() {
     P4IES |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
     P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
     P4IFG &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
-    //P1IES |= BIT2;   // Select the wake-up edge trigger (0: low-to-high | 1: high-to-low)
-    //P1IE |= BIT2;   // Set the interrupt enable
-    //P1IFG &= ~BIT2;    
 }
 
 void ADC_Init() {

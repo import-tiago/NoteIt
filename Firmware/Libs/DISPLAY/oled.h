@@ -3,7 +3,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-
+#define SCROLL_BAR_MAX_SIZE 64
 #define VCCSTATE SSD1306_SWITCHCAPVCC
 #define WIDTH 128
 #define HEIGHT 64

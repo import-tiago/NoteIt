@@ -18,12 +18,6 @@
 #include <./DISPLAY/oled.h>
 #include <./DISPLAY/Screens/Screens.h>
 
-/*
- typedef enum {
- HOME_SCREEN = 0, BAUDRATE_SCREEN, LOG_SETTINGS_SCREEN, TIME_AND_DATE_SCREEN
- } Screens_List;
- */
-
 //uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
 uint32_t Current_Baudrate = 115200;
 
@@ -92,8 +86,7 @@ int8_t value = 0;
 int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
-
-
+uint32_t sys_tick_ms = 0;
 
 void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x = x;
@@ -170,37 +163,48 @@ void Show_Datalogger_State() {
     SSD1306_string(24, 34, state, 12, 0, oled_buf);
 }
 
+void Build_Scroll_Bar(uint8_t number_items) {
+    char bar_size = SCROLL_BAR_MAX_SIZE / number_items;
+    uint8_t x = 124;
+    uint8_t y = 16;
+
+    SSD1306_bitmap(x, y, scrollbar_bitmap, 4, bar_size, oled_buf);
+
+}
+
 void Build_List_Log_Variables() {
 
     int8_t x = 0, y = 54, i = 0;
-    char *state;
+    char *variable_name;
+    char cursor_space = 8;
+    char checkbutton_space = 20;
 
-    x = 16;
+    x = 1;
     y = 20;
 
     int cursor = 0;
 
     for (i = NUMBER_OF_LOG_VARIABLES; i >= 0; i--) {
 
-        state = &Log_Variables[i][0];
+        variable_name = &Log_Variables[i][0];
 
         if (!cursor) {
-            SSD1306_string(x - 10, y + 1, ">", 12, 0, oled_buf);
+            SSD1306_string(x, y + 1, ">", 12, 0, oled_buf);
             cursor = 1;
-            SSD1306_string(x, y, state, 12, 0, oled_buf);
-            SSD1306_bitmap(110, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+            SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
+            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
         }
         else {
-
-            SSD1306_string(x, y, state, 12, 0, oled_buf);
-            SSD1306_bitmap(110, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
-
+            SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
+            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
         }
         y += 16;
 
         if (y >= 50)
             break;
     }
+
+    Build_Scroll_Bar(NUMBER_OF_LOG_VARIABLES);
 
 }
 
@@ -273,170 +277,6 @@ void Show_Current_Baudrate() {
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
     //SSD1306_char3216(x + (step * i), y, array[i], oled_buf);
 
-}
-
-void Run_SFM() { //State Finite Machine
-    /*
-     switch (Current_Screen) {
-
-     case HOME_SCREEN: {
-
-     Build_Screen(HOME_SCREEN);
-
-     __no_operation();
-
-     uint8_t adj_status = Rotary_Encoder_Push_Button();
-     next_screen = HOME_SCREEN;
-     do {
-
-     Rotary_Encoder_Read();
-
-     if (Rotary_Encoder_Changed()) {
-     if (Rotary_Encoder_is_Clockwise()) {
-     if (next_screen < TIME_AND_DATE_SCREEN)
-     next_screen++;
-     else
-     next_screen = HOME_SCREEN;
-
-     Build_Screen(next_screen);
-     }
-     if (Rotary_Encoder_is_Counterclockwise()) {
-     if (next_screen > HOME_SCREEN)
-     next_screen--;
-     else
-     next_screen = TIME_AND_DATE_SCREEN;
-     Build_Screen(next_screen);
-     }
-
-     }
-
-     }
-     while (Current_Screen == HOME_SCREEN);
-
-     Current_Screen = next_screen;
-
-     break;
-     }
-
-     case BAUDRATE_SCREEN: {
-     Build_Screen(BAUDRATE_SCREEN);
-
-     __no_operation();
-
-     uint8_t adj_status = Rotary_Encoder_Push_Button();
-     next_screen = BAUDRATE_SCREEN;
-     do {
-
-     Rotary_Encoder_Read();
-
-     if (Rotary_Encoder_Changed()) {
-     if (Rotary_Encoder_is_Clockwise()) {
-     if (next_screen < TIME_AND_DATE_SCREEN)
-     next_screen++;
-     else
-     next_screen = HOME_SCREEN;
-
-     Build_Screen(next_screen);
-     }
-     if (Rotary_Encoder_is_Counterclockwise()) {
-     if (next_screen > HOME_SCREEN)
-     next_screen--;
-     else
-     next_screen = TIME_AND_DATE_SCREEN;
-     Build_Screen(next_screen);
-     }
-
-     }
-
-     }
-     while (Current_Screen == BAUDRATE_SCREEN);
-
-     Current_Screen = next_screen;
-
-     break;
-
-     }
-
-     case LOG_SETTINGS_SCREEN: {
-
-     Build_Screen(LOG_SETTINGS_SCREEN);
-
-     __no_operation();
-
-     uint8_t adj_status = Rotary_Encoder_Push_Button();
-     next_screen = LOG_SETTINGS_SCREEN;
-     do {
-
-     Rotary_Encoder_Read();
-
-     if (Rotary_Encoder_Changed()) {
-     if (Rotary_Encoder_is_Clockwise()) {
-     if (next_screen < TIME_AND_DATE_SCREEN)
-     next_screen++;
-     else
-     next_screen = HOME_SCREEN;
-
-     Build_Screen(next_screen);
-     }
-     if (Rotary_Encoder_is_Counterclockwise()) {
-     if (next_screen > HOME_SCREEN)
-     next_screen--;
-     else
-     next_screen = TIME_AND_DATE_SCREEN;
-     Build_Screen(next_screen);
-     }
-
-     }
-
-     }
-     while (Current_Screen == LOG_SETTINGS_SCREEN);
-
-     Current_Screen = next_screen;
-
-     break;
-     }
-
-     case TIME_AND_DATE_SCREEN: {
-
-     Build_Screen(TIME_AND_DATE_SCREEN);
-
-     __no_operation();
-
-     uint8_t adj_status = Rotary_Encoder_Push_Button();
-     next_screen = TIME_AND_DATE_SCREEN;
-     do {
-
-     Rotary_Encoder_Read();
-
-     if (Rotary_Encoder_Changed()) {
-     if (Rotary_Encoder_is_Clockwise()) {
-     if (next_screen < TIME_AND_DATE_SCREEN)
-     next_screen++;
-     else
-     next_screen = HOME_SCREEN;
-
-     Build_Screen(next_screen);
-     }
-     if (Rotary_Encoder_is_Counterclockwise()) {
-     if (next_screen > HOME_SCREEN)
-     next_screen--;
-     else
-     next_screen = TIME_AND_DATE_SCREEN;
-     Build_Screen(next_screen);
-     }
-
-     }
-
-     }
-     while (Current_Screen == TIME_AND_DATE_SCREEN);
-
-     Current_Screen = next_screen;
-
-     break;
-     }
-
-     }
-     */
 }
 
 void Build_Navigation_Buttons(uint8_t current_selected_screen) {
@@ -512,8 +352,12 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
 
 void Init_Timer0() {
     TA0CCTL0 |= CCIE;                      // TACCR0 interrupt enabled
-    TA0CCR0 = 1000;
+    TA0CCR0 = 1000; // 1ms
     TA0CTL |= TASSEL__SMCLK | MC__UP;    // SMCLK, up count mode
+
+    TA1CCTL0 |= CCIE;                      // TACCR0 interrupt enabled
+    TA1CCR0 = 1000; // 1ms
+    TA1CTL |= TASSEL__SMCLK | MC__UP;    // SMCLK, up count mode
 }
 
 void print_rotary_state() {
@@ -521,19 +365,179 @@ void print_rotary_state() {
     SSD1306_clear(oled_buf);
     __delay_cycles(1000);
 
-    char v[10] = {0};
-
+    char v[10] = {
+                   0 };
 
     //sprintf(v, "%i", Rotary_Encoder_Read());
     sprintf(v, "%i", Rotary_Encoder_is_Clockwise());
 
-
     SSD1306_string(40, 30, v, 14, 0, oled_buf);
-
 
     SSD1306_display(oled_buf);
 
     __no_operation();
+}
+
+void Run_SFM() { //State Finite Machine
+
+    switch (Current_Screen) {
+        __no_operation();
+        case CHANGING_SECREEN_MODE: {
+            uint8_t next_screen;
+            __no_operation();
+            do {
+                if (Rotary_Encoder_is_Clockwise()) {
+                    if (Last_Screen < NUMBER_OF_SCREENS) {
+                        next_screen = Last_Screen + 1;
+
+                    }
+                    else
+                        next_screen = NUMBER_OF_SCREENS - 1;
+                }
+                else if (Rotary_Encoder_is_Counterclockwise()) {
+                    if (Last_Screen > 0) {
+                        next_screen = Last_Screen - 1;
+                    }
+                    else
+                        next_screen = 0;
+                }
+
+                if (next_screen == HOME_SCREEN)
+                    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[next_screen]);
+                else if (next_screen == LOG_SETTINGS_SCREEN)
+                    Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[next_screen]);
+                else if (next_screen == CLOCK_AND_CALENDAR_SCREEN)
+                    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[next_screen]);
+
+            }
+            while (Rotary_Encoder_Push_Button() != BUTTON_PRESSED);
+
+            Current_Screen = next_screen;
+
+            break;
+        }
+
+        case HOME_SCREEN: {
+            /*
+
+             Build_Screen(HOME_SCREEN);
+
+             __no_operation();
+
+             uint8_t adj_status = Rotary_Encoder_Push_Button();
+             next_screen = HOME_SCREEN;
+             do {
+
+             Rotary_Encoder_Read();
+
+             if (Rotary_Encoder_Changed()) {
+             if (Rotary_Encoder_is_Clockwise()) {
+             if (next_screen < TIME_AND_DATE_SCREEN)
+             next_screen++;
+             else
+             next_screen = HOME_SCREEN;
+
+             Build_Screen(next_screen);
+             }
+             if (Rotary_Encoder_is_Counterclockwise()) {
+             if (next_screen > HOME_SCREEN)
+             next_screen--;
+             else
+             next_screen = TIME_AND_DATE_SCREEN;
+             Build_Screen(next_screen);
+             }
+
+             }
+
+             }
+             while (Current_Screen == HOME_SCREEN);
+
+             Current_Screen = next_screen;
+             */
+
+            break;
+        }
+
+        case LOG_SETTINGS_SCREEN: {
+            /*
+             Build_Screen(LOG_SETTINGS_SCREEN);
+
+             __no_operation();
+
+             uint8_t adj_status = Rotary_Encoder_Push_Button();
+             next_screen = LOG_SETTINGS_SCREEN;
+             do {
+
+             Rotary_Encoder_Read();
+
+             if (Rotary_Encoder_Changed()) {
+             if (Rotary_Encoder_is_Clockwise()) {
+             if (next_screen < TIME_AND_DATE_SCREEN)
+             next_screen++;
+             else
+             next_screen = HOME_SCREEN;
+
+             Build_Screen(next_screen);
+             }
+             if (Rotary_Encoder_is_Counterclockwise()) {
+             if (next_screen > HOME_SCREEN)
+             next_screen--;
+             else
+             next_screen = TIME_AND_DATE_SCREEN;
+             Build_Screen(next_screen);
+             }
+
+             }
+
+             }
+             while (Current_Screen == LOG_SETTINGS_SCREEN);
+
+             Current_Screen = next_screen;
+             */
+            break;
+        }
+
+        case CLOCK_AND_CALENDAR_SCREEN: {
+            /*
+             Build_Screen(TIME_AND_DATE_SCREEN);
+
+             __no_operation();
+
+             uint8_t adj_status = Rotary_Encoder_Push_Button();
+             next_screen = TIME_AND_DATE_SCREEN;
+             do {
+
+             Rotary_Encoder_Read();
+
+             if (Rotary_Encoder_Changed()) {
+             if (Rotary_Encoder_is_Clockwise()) {
+             if (next_screen < TIME_AND_DATE_SCREEN)
+             next_screen++;
+             else
+             next_screen = HOME_SCREEN;
+
+             Build_Screen(next_screen);
+             }
+             if (Rotary_Encoder_is_Counterclockwise()) {
+             if (next_screen > HOME_SCREEN)
+             next_screen--;
+             else
+             next_screen = TIME_AND_DATE_SCREEN;
+             Build_Screen(next_screen);
+             }
+
+             }
+
+             }
+             while (Current_Screen == TIME_AND_DATE_SCREEN);
+
+             Current_Screen = next_screen;
+             */
+            break;
+        }
+
+    }
+
 }
 
 int main(void) {
@@ -559,9 +563,7 @@ int main(void) {
     //SSD1306_string(20, 15, print_a, 14, 1, oled_buf);
     //SSD1306_display(oled_buf);
 
-    while (1) {
-        print_rotary_state();
-    }
+    //print_rotary_state();
 
     /*
      g_current_time_and_date = Get_Current_Time_and_Date();
@@ -571,13 +573,12 @@ int main(void) {
      Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
      */
 
-
-    //Build_Screen(Screens.Home_Screen_Parameters, HOME_SCREEN_NUMBER_OF_ELEMENTS);
-    //Build_Screen(Screens.Log_Settings_Screen_Parameters, LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS);
+    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[HOME_SCREEN]);
+    //Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[LOG_SETTINGS_SCREEN]);
     //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
 
     while (1) {
-        //Run_SFM();
+        Run_SFM();
     }
     /*
      // Mount the SD Card
@@ -668,4 +669,20 @@ int main(void) {
 
 }
 
+// ISR TIMER
+#pragma vector = TIMER1_A0_VECTOR
+__interrupt void System_Time_Tick_MiliSeconds() {
+    sys_tick_ms++;
 
+    if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED)
+        Rotary_Encoder_Switch_Holding++;
+    else
+        Rotary_Encoder_Switch_Holding = 0;
+
+    if (Rotary_Encoder_Switch_Holding >= SWITCH_HOLD_TIME) {
+        Last_Screen = Current_Screen;
+        Current_Screen = CHANGING_SECREEN_MODE;
+        Rotary_Encoder_Switch_Holding = 0;
+    }
+
+}

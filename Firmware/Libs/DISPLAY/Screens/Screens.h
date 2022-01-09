@@ -12,6 +12,31 @@ const unsigned char Bitmap_CHECK_BUTTON[] = { 0x00, 0x00, 0x7f, 0x80, 0x7f, 0x80
 // 'CUREENT_PAGE2', 5x5px
 const unsigned char current_page_bitmap[] = { 0xf8, 0x88, 0x88, 0x88, 0xf8 };
 
+const uint8_t Signal816[16] = //mobie signal
+        { 0xFE, 0x02, 0x92, 0x0A, 0x54, 0x2A, 0x38, 0xAA, 0x12, 0xAA, 0x12, 0xAA, 0x12, 0xAA, 0x12, 0xAA };
+
+const uint8_t Msg816[16] =  //message
+        { 0x1F, 0xF8, 0x10, 0x08, 0x18, 0x18, 0x14, 0x28, 0x13, 0xC8, 0x10, 0x08, 0x10, 0x08, 0x1F, 0xF8 };
+
+const uint8_t Bat816[16] = //batery
+        { 0x0F, 0xFE, 0x30, 0x02, 0x26, 0xDA, 0x26, 0xDA, 0x26, 0xDA, 0x26, 0xDA, 0x30, 0x02, 0x0F, 0xFE };
+
+const uint8_t Bluetooth88[8] = // bluetooth
+        { 0x18, 0x54, 0x32, 0x1C, 0x1C, 0x32, 0x54, 0x18 };
+
+const uint8_t GPRS88[8] = //GPRS
+        { 0xC3, 0x99, 0x24, 0x20, 0x2C, 0x24, 0x99, 0xC3 };
+
+const uint8_t Alarm88[8] = //alram
+        { 0xC3, 0xBD, 0x42, 0x52, 0x4E, 0x42, 0x3C, 0xC3 };
+
+const uint8_t scrollbar_bitmap[] = {  //4x49px
+    0x00, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60,
+    0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60,
+    0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60,
+    0x00
+};
+
 
 uint32_t Baudrate_List[] = {
                             1200,
@@ -34,8 +59,9 @@ uint32_t Baudrate_List[] = {
 enum ScreensList {
     HOME_SCREEN,
     LOG_SETTINGS_SCREEN,
-    CLOCK_AND_DATE_SCREEN,
-    NUMBER_OF_SCREENS
+    CLOCK_AND_CALENDAR_SCREEN,
+    NUMBER_OF_SCREENS,
+    CHANGING_SECREEN_MODE
 };
 
 enum ScreenElementsList {
@@ -82,16 +108,20 @@ enum Adjustments_Possibilities_in_Elements {
        {{LOG_SETTINGS_SCREEN},   {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
    },
    .Clock_and_Calendar_Screen_Parameters = {
-       {{CLOCK_AND_DATE_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
-       {{CLOCK_AND_DATE_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
-       {{CLOCK_AND_DATE_SCREEN}, {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
+       {{CLOCK_AND_CALENDAR_SCREEN}, {STATUS_BAR},                 {NO_ADJUSTMENTS_AVAILABLE}},
+       {{CLOCK_AND_CALENDAR_SCREEN}, {CLOCK_ADJUSTMENT},           {TWO_OPTIONS}},
+       {{CLOCK_AND_CALENDAR_SCREEN}, {CALENDAR_ADJUSTMENT},        {THREE_OPTIONS}},
+       {{CLOCK_AND_CALENDAR_SCREEN}, {SCREENS_NAVIGATION_BUTTONS}, {NUMBER_OF_SCREENS}}
    }
 };
 
-#define HOME_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1)
-#define LOG_SETTINGS_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1)
-#define CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS ((sizeof(Screens.Clock_and_Calendar_Screen_Parameters) / sizeof(Screens.Clock_and_Calendar_Screen_Parameters[0]))-1)
+
+uint8_t Elements_in_Screen[] = {
+    ((sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1),
+    ((sizeof(Screens.Log_Settings_Screen_Parameters) / sizeof(Screens.Log_Settings_Screen_Parameters[0]))-1),
+    ((sizeof(Screens.Clock_and_Calendar_Screen_Parameters) / sizeof(Screens.Clock_and_Calendar_Screen_Parameters[0]))-1)
+};
+
 
 
 
@@ -112,7 +142,8 @@ enum Adjustments_Possibilities_in_Elements {
 #define CLOCK_AND_CALENDAR_NUMBER_OF_ELEMENTS  ((uint8_t)(sizeof(Clock_and_Calendar_Screen) / sizeof(uint8_t)))
 
 
-
+static uint8_t Current_Screen = HOME_SCREEN;
+static uint8_t Last_Screen = HOME_SCREEN;
 
 
 

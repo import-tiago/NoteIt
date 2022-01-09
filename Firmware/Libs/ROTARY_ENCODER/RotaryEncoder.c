@@ -3,8 +3,8 @@
 #include <./HAL_BOARD/HAL_BOARD.h>
 #include <./HAL_MCU/HAL_MCU.h>
 
-uint8_t sys_tick_ms = 0;
-uint8_t debouncing = 0;
+uint32_t current_debouncing_tick_ms = 0;
+uint32_t initial_debouncing_time = 0;
 static int16_t rotary_value = 0;
 static int16_t last_rotary_value = 0;
 
@@ -13,20 +13,7 @@ int8_t Rotary_Encoder_Read() {
 }
 
 uint8_t Rotary_Encoder_Push_Button() {
-    buttonState = (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
-
-    if (buttonState != lastButtonState) {
-
-        if (buttonState) {      // if the state has changed, increment the counter
-            buttonPushCounter++; // if the current state is HIGH then the button went from off to on:
-        }
-        else {
-
-        }
-    }
-    lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
-
-    return buttonPushCounter;
+     return (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
 }
 
 uint8_t Rotary_Encoder_Changed(void) {
@@ -41,16 +28,16 @@ uint8_t Rotary_Encoder_is_Counterclockwise(void){
     return last_rotary_value > rotary_value ? 1 : 0;
 }
 
-//TIMER
+// ISR TIMER
 #pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A() {
+__interrupt void ISR_Rotary_Enconder_Debounce() {
 
     static uint8_t state_signal_a = 0;
     static uint8_t state_signal_b = 0;
 
-    sys_tick_ms++;
+    current_debouncing_tick_ms++;
 
-    if (debouncing && (sys_tick_ms - debouncing) >= DEBOUNCE_TIME) {
+    if (initial_debouncing_time && (current_debouncing_tick_ms - initial_debouncing_time) >= MINIMAL_DEBOUNCE_TIME) {
 
         last_rotary_value = rotary_value;
 
@@ -66,15 +53,15 @@ __interrupt void Timer_A() {
         P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
-        debouncing = 0;
+        initial_debouncing_time = 0;
     }
 }
 
-//EXTERNAL INPUT EDGE DETECT
+// ISR EXTERNAL INPUT EDGE DETECT
 #pragma vector=PORT4_VECTOR
 __interrupt void ISR_Rotary_Encoder_Monitor() {
     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
-        debouncing = sys_tick_ms;
+        initial_debouncing_time = current_debouncing_tick_ms;
         P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
     }
