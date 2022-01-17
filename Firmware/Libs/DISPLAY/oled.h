@@ -62,7 +62,7 @@ void SSD1306_char3216(uint8_t x, uint8_t y, uint8_t chChar, uint8_t* buffer);
 void SSD1306_string(uint8_t x, uint8_t y, const char *pString, uint8_t Size, uint8_t Mode, uint8_t* buffer);
 void SPIWrite(uint8_t *buffer, int bufferLength);
 void command(uint8_t cmd);
-void delay(uint8_t v) ;
+//void delay(uint8_t v) ;
 
 extern const uint8_t Waveshare12864[1024];
 extern const uint8_t Font1612[11][32];

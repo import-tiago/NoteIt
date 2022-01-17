@@ -2,9 +2,71 @@
 #include <./HAL_BOARD/HAL_BOARD.h>
 
 void Software_Trim();                        // Software Trim to get the best DCOFTRIM value
+#define MCLK_FREQ_MHZ   16                     // MCLK = 16MHz
 
-void Watchdog_Init() {
-    WDTCTL = WDTPW | WDTHOLD;   // Stop watch-dog timer
+void Software_Trim() {
+    unsigned int oldDcoTap = 0xffff;
+    unsigned int newDcoTap = 0xffff;
+    unsigned int newDcoDelta = 0xffff;
+    unsigned int bestDcoDelta = 0xffff;
+    unsigned int csCtl0Copy = 0;
+    unsigned int csCtl1Copy = 0;
+    unsigned int csCtl0Read = 0;
+    unsigned int csCtl1Read = 0;
+    unsigned int dcoFreqTrim = 3;
+    unsigned char endLoop = 0;
+
+    do {
+        CSCTL0 = 0x100;                         // DCO Tap = 256
+        do {
+            CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
+        } while (CSCTL7 & DCOFFG);               // Test DCO fault flag
+
+        __delay_cycles((unsigned int) 3000 * MCLK_FREQ_MHZ);               // Wait FLL lock status (FLLUNLOCK) to be stable
+                                                                           // Suggest to wait 24 cycles of divided FLL reference clock
+        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0))
+            ;
+
+        csCtl0Read = CSCTL0;                   // Read CSCTL0
+        csCtl1Read = CSCTL1;                   // Read CSCTL1
+
+        oldDcoTap = newDcoTap;                 // Record DCOTAP value of last time
+        newDcoTap = csCtl0Read & 0x01ff;       // Get DCOTAP value of this time
+        dcoFreqTrim = (csCtl1Read & 0x0070) >> 4;       // Get DCOFTRIM value
+
+        if (newDcoTap < 256)                    // DCOTAP < 256
+                {
+            newDcoDelta = 256 - newDcoTap;     // Delta value between DCPTAP and 256
+            if ((oldDcoTap != 0xffff) && (oldDcoTap >= 256)) // DCOTAP cross 256
+                endLoop = 1;                   // Stop while loop
+            else {
+                dcoFreqTrim--;
+                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
+            }
+        } else                                   // DCOTAP >= 256
+        {
+            newDcoDelta = newDcoTap - 256;     // Delta value between DCPTAP and 256
+            if (oldDcoTap < 256)                // DCOTAP cross 256
+                endLoop = 1;                   // Stop while loop
+            else {
+                dcoFreqTrim++;
+                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
+            }
+        }
+
+        if (newDcoDelta < bestDcoDelta)         // Record DCOTAP closest to 256
+                {
+            csCtl0Copy = csCtl0Read;
+            csCtl1Copy = csCtl1Read;
+            bestDcoDelta = newDcoDelta;
+        }
+
+    } while (endLoop == 0);                      // Poll until endLoop == 1
+
+    CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
+    CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
+    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1))
+        ; // Poll until FLL is locked
 }
 
 void Oscillator_Init() {
@@ -15,8 +77,7 @@ void Oscillator_Init() {
     do {
         CSCTL7 &= ~(XT1OFFG | DCOFFG);           // Clear XT1 and DCO fault flag
         SFRIFG1 &= ~OFIFG;
-    }
-    while (SFRIFG1 & OFIFG);                   // Test oscillator fault flag
+    } while (SFRIFG1 & OFIFG);                   // Test oscillator fault flag
 
     __bis_SR_register(SCG0);                     // disable FLL
     CSCTL3 |= SELREF__XT1CLK;                    // Set XT1 as FLL reference source
@@ -28,6 +89,11 @@ void Oscillator_Init() {
 
     CSCTL4 = SELMS__DCOCLKDIV | SELA__XT1CLK;   // set XT1 (~32768Hz) as ACLK source, ACLK = 32768Hz
                                                 // default DCOCLKDIV as MCLK and SMCLK source
+
+}
+
+void Watchdog_Init() {
+    WDTCTL = WDTPW | WDTHOLD;   // Stop watch-dog timer
 }
 
 void GPIOs_Init() {
@@ -95,90 +161,34 @@ void GPIOs_Init() {
 
 void GPIO_Interrupt_Init() {
 
-    P4IES |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
-    P4IE |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;
-    P4IFG &= ~(GPIO_ROTARY_ENCODER_BUTTON + GPIO_ROTARY_ENCODER_SIGNAL_A + GPIO_ROTARY_ENCODER_SIGNAL_B);
+    P4IES |=  GPIO_ROTARY_ENCODER_SIGNAL_A;
+    P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+    P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
 }
 
 void ADC_Init() {
+
+    // Configure ADC12
+    ADCCTL0 |= ADCSHT_12 | ADCON;                             // ADCON, S&H=1024; ADC clks
+    ADCCTL1 |= ADCSHP;                                       // ADCCLK = MODOSC; sampling timer
+    ADCCTL2 &= ~ADCRES;                                      // clear ADCRES in ADCCTL
+    ADCCTL2 |= ADCRES_2;                                     // 12-bit conversion results
+    ADCMCTL0 |= ADCINCH_0;                         // A1 ADC input select; Vref=VeREF+
+
+/*
     ADCCTL0 &= ~ADCENC;               // Disable ADC conversion (needed for the next steps)
-    ADCMCTL0 |= ADCSREF_3;            // VR+ = VeREF+ and VR– = AVSS
-    ADCMCTL0 |= ADCINCH_11;           // A11 as the highest channel for a sequence of conversions (goes down from A11)
-    ADCCTL0 |= ADCSHT_10;            // ADC sample-and-hold time = 512 ADCCLK cycles
+    ADCMCTL0 |= ADCSREF_0;            // VR+ = AVCC and VR- = AVSS
+    ADCMCTL0 |= ADCINCH_0;           // A0 ADC input select
+    ADCCTL0 |= ADCSHT_12;            // ADC sample-and-hold time = 1024 ADCCLK cycles
     ADCCTL0 |= ADCON;                // ADC on
-    ADCCTL0 |= ADCMSC;               // ADC sample-and-conversions are performed automatically as soon as the prior conversion is completed (sequential mode)
+    //ADCCTL0 |= ADCMSC;               // ADC sample-and-conversions are performed automatically as soon as the prior conversion is completed (sequential mode)
     ADCCTL1 |= ADCSHS_0;             // ADC sample-and-hold source = ADCSC bit
-    ADCCTL1 |= ADCSHP;               // ADC sample-and-hold pulse-mode select = SAMPCON signal is sourced from the sampling timer
-    ADCCTL1 |= ADCCONSEQ_1;          // ADC conversion sequence mode = Sequence-of-channels
+    ADCCTL1 |= ADCSHP_0;             // ADC sample-and-hold pulse-mode select = SAMPCON signal is sourced from the sampling timer
+
     ADCCTL2 &= ~ADCRES;               // ADC resolution = 12 bit (14 clock cycle conversion time)
     ADCCTL2 |= ADCRES_2;             // ADC resolution = 12 bit (14 clock cycle conversion time)
     ADCIE |= ADCIE0;               // ADC interrupts enable
-}
-
-void Software_Trim() {
-    unsigned int oldDcoTap = 0xffff;
-    unsigned int newDcoTap = 0xffff;
-    unsigned int newDcoDelta = 0xffff;
-    unsigned int bestDcoDelta = 0xffff;
-    unsigned int csCtl0Copy = 0;
-    unsigned int csCtl1Copy = 0;
-    unsigned int csCtl0Read = 0;
-    unsigned int csCtl1Read = 0;
-    unsigned int dcoFreqTrim = 3;
-    unsigned char endLoop = 0;
-
-    do {
-        CSCTL0 = 0x100;                         // DCO Tap = 256
-        do {
-            CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
-        }
-        while (CSCTL7 & DCOFFG);               // Test DCO fault flag
-
-        __delay_cycles((unsigned int) 3000 * 16);               // Wait FLL lock status (FLLUNLOCK) to be stable
-                                                                // Suggest to wait 24 cycles of divided FLL reference clock
-        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0));
-
-        csCtl0Read = CSCTL0;                   // Read CSCTL0
-        csCtl1Read = CSCTL1;                   // Read CSCTL1
-
-        oldDcoTap = newDcoTap;                 // Record DCOTAP value of last time
-        newDcoTap = csCtl0Read & 0x01ff;       // Get DCOTAP value of this time
-        dcoFreqTrim = (csCtl1Read & 0x0070) >> 4;       // Get DCOFTRIM value
-
-        if (newDcoTap < 256)                    // DCOTAP < 256
-                {
-            newDcoDelta = 256 - newDcoTap;     // Delta value between DCPTAP and 256
-            if ((oldDcoTap != 0xffff) && (oldDcoTap >= 256)) // DCOTAP cross 256
-                endLoop = 1;                   // Stop while loop
-            else {
-                dcoFreqTrim--;
-                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
-            }
-        }
-        else                                   // DCOTAP >= 256
-        {
-            newDcoDelta = newDcoTap - 256;     // Delta value between DCPTAP and 256
-            if (oldDcoTap < 256)                // DCOTAP cross 256
-                endLoop = 1;                   // Stop while loop
-            else {
-                dcoFreqTrim++;
-                CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
-            }
-        }
-
-        if (newDcoDelta < bestDcoDelta)         // Record DCOTAP closest to 256
-                {
-            csCtl0Copy = csCtl0Read;
-            csCtl1Copy = csCtl1Read;
-            bestDcoDelta = newDcoDelta;
-        }
-
-    }
-    while (endLoop == 0);                      // Poll until endLoop == 1
-
-    CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
-    CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
-    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)); // Poll until FLL is locked
+    */
 }
 
 void Init_GPIO_Interrupt() {

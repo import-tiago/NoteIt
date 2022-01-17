@@ -6,7 +6,7 @@
 #define MINIMAL_DEBOUNCE_TIME 3 // mili-seconds
 
 
-#define SWITCH_HOLD_TIME 2000
+#define SWITCH_HOLD_TIME 1000
 #define BUTTON_PRESSED 0
 
 static uint32_t Rotary_Encoder_Switch_Holding = 0;

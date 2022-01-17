@@ -5822,92 +5822,170 @@ package type OT</description>
 <schematic_group name="DATALOGGER_INPUT" titleSize="3.81" layer="95"/>
 </groups>
 <parts>
-<part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/3" override_package_urn="urn:adsk.eagle:footprint:25763183/1"/>
-<part name="U1" library="adafruit" deviceset="MCP73831" device="/OT" package3d_urn="urn:adsk.eagle:package:6240724/1" override_package3d_urn="urn:adsk.eagle:package:32842001/2" override_package_urn="urn:adsk.eagle:footprint:6240078/1" value="MCP73831/2"/>
-<part name="R5" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4K7"/>
-<part name="U3" library="SamacSys_Parts" deviceset="S-8261ACMMD-G4MT2U" device="" package3d_urn="urn:adsk.eagle:package:32843301/2" value="S-8261ACMMD-G4MT2U"/>
-<part name="R7" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="2k"/>
-<part name="R9" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="470R"/>
-<part name="C7" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
-<part name="C14" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1uF"/>
-<part name="C16" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
-<part name="C18" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1uF"/>
-<part name="C19" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="SW1" library="rotary-encoder" deviceset="KY-040" device="" override_package3d_urn="urn:adsk.eagle:package:25763182/3" override_package_urn="urn:adsk.eagle:footprint:25763183/1">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U1" library="adafruit" deviceset="MCP73831" device="/OT" package3d_urn="urn:adsk.eagle:package:6240724/1" override_package3d_urn="urn:adsk.eagle:package:32842001/2" override_package_urn="urn:adsk.eagle:footprint:6240078/1" value="MCP73831/2">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R5" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U3" library="SamacSys_Parts" deviceset="S-8261ACMMD-G4MT2U" device="" package3d_urn="urn:adsk.eagle:package:32843301/2" value="S-8261ACMMD-G4MT2U">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R7" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="2k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R9" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="470R">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C7" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C14" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C16" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C18" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C19" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY8" library="My-Supply" deviceset="5V" device="" value="VUSB"/>
 <part name="SUPPLY13" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY14" library="My-Supply" deviceset="0V" device=""/>
-<part name="R15" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M"/>
-<part name="R16" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M"/>
-<part name="R13" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)"/>
-<part name="Q1" library="transistor-npn" library_urn="urn:adsk.eagle:library:398" deviceset="BC817*" device="SMD" package3d_urn="urn:adsk.eagle:package:28748/2" technology="-16LT1" value="BC817"/>
-<part name="R10" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4K7 (5%)"/>
-<part name="R8" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)"/>
-<part name="C6" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
-<part name="R14" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1k (5%)"/>
-<part name="LED1" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_0603" package3d_urn="urn:adsk.eagle:package:15822/2"/>
-<part name="C4" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="R15" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R16" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R13" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="Q1" library="transistor-npn" library_urn="urn:adsk.eagle:library:398" deviceset="BC817*" device="SMD" package3d_urn="urn:adsk.eagle:package:28748/2" technology="-16LT1" value="BC817">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R10" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R8" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C6" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R14" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="LED1" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_0603" package3d_urn="urn:adsk.eagle:package:15822/2">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C4" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="U2" library="MSP430FR2476TPTR" deviceset="MSP430FR2476TPTR" device="" package3d_urn="urn:adsk.eagle:package:20303257/3" value="MSP430FR2476TPTR">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="MSP430FR2476TPTR"/>
 </part>
 <part name="SUPPLY5" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+4.1V" device="" value="3.3V"/>
 <part name="C2" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="C0603C104M5RACTU"/>
 </part>
-<part name="C1" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF x 10V">
+<part name="C1" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="GRM188R61A106ME69D"/>
 </part>
-<part name="DS1" library="diy-modules" deviceset="DISPLAY-OLED-128X64" device="" package3d_urn="urn:adsk.eagle:package:32761919/2" value="DISPLAY-OLED-128X64"/>
+<part name="DS1" library="diy-modules" deviceset="DISPLAY-OLED-128X64" device="" package3d_urn="urn:adsk.eagle:package:32761919/2" value="DISPLAY-OLED-128X64">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY24" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="C21" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="C21" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY25" library="My-Supply" deviceset="0V" device=""/>
-<part name="C8" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="22pF x 100V">
+<part name="C8" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="22pF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="C0603C220J1GACTU"/>
 </part>
-<part name="C9" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="22pF x 100V">
+<part name="C9" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="22pF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="C0603C220J1GACTU"/>
 </part>
 <part name="Y1" library="crystal-geyer_V1_0" deviceset="CRYSTAL-MINI" device="" package3d_urn="urn:adsk.eagle:package:20357137/2" override_package3d_urn="urn:adsk.eagle:package:20394872/2" override_package_urn="urn:adsk.eagle:footprint:11884/1" value="32.768 kHz">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="CM7V-T1A-32.768k-9pF-20PPM-TA-QA T3"/>
 </part>
 <part name="SUPPLY1" library="My-Supply" deviceset="0V" device=""/>
-<part name="U6" library="TS3A27518EPWR" deviceset="TS3A27518EPWR" device="" package3d_urn="urn:adsk.eagle:package:32845175/2" value="TS3A27518EPWR"/>
+<part name="U6" library="TS3A27518EPWR" deviceset="TS3A27518EPWR" device="" package3d_urn="urn:adsk.eagle:package:32845175/2" value="TS3A27518EPWR">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY2" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY3" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY4" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY10" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="C20" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="C20" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY11" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY22" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="C15" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="C15" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY23" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY26" library="My-Supply" deviceset="0V" device=""/>
-<part name="U5" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:32842001/2" value="SN74AHC1G125DBV"/>
+<part name="U5" library="SN74AHC1G125DRLR" deviceset="SN74AHC1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:32842001/2" value="SN74AHC1G125DBV">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY28" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY29" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY32" library="My-Supply" deviceset="0V" device=""/>
-<part name="R3" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="5k1 (5%)"/>
-<part name="R6" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="5k1 (5%)"/>
+<part name="R3" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="5k1">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R6" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="5k1">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY35" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY27" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY30" library="My-Supply" deviceset="0V" device=""/>
-<part name="R4" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M"/>
+<part name="R4" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY36" library="My-Supply" deviceset="0V" device=""/>
-<part name="C3" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="4.7nF"/>
+<part name="C3" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="4.7nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY37" library="My-Supply" deviceset="0V" device=""/>
-<part name="R18" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)"/>
-<part name="CN4" library="SamacSys_Parts" deviceset="FTSH-105-01-L-DV-K-TR" device="" package3d_urn="urn:adsk.eagle:package:32845337/2" value="FTSH-105-01-L-DV-K-TR"/>
+<part name="R18" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="CN4" library="SamacSys_Parts" deviceset="FTSH-105-01-L-DV-K-TR" device="" package3d_urn="urn:adsk.eagle:package:32845337/2" value="FTSH-105-01-L-DV-K-TR">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY40" library="My-Supply" deviceset="0V" device=""/>
-<part name="R17" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="47k (5%)">
+<part name="R17" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="47k">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
-<part name="C13" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1nF x 50V">
+<part name="C13" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="1nF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="C0603C102M5RACTU"/>
 </part>
 <part name="SUPPLY41" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY42" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY43" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="C17" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
-<part name="U8" library="adafruit" deviceset="DS3231" device="/SO" package3d_urn="urn:adsk.eagle:package:32845204/2" override_package3d_urn="urn:adsk.eagle:package:32845134/2" override_package_urn="urn:adsk.eagle:footprint:6240108/1" value="DS3231/SO"/>
+<part name="C17" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U8" library="adafruit" deviceset="DS3231" device="/SO" package3d_urn="urn:adsk.eagle:package:32845204/2" override_package3d_urn="urn:adsk.eagle:package:32845134/2" override_package_urn="urn:adsk.eagle:footprint:6240108/1" value="DS3231/SO">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY15" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY44" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY6" library="My-Supply" deviceset="0V" device=""/>
@@ -5916,52 +5994,90 @@ package type OT</description>
 <part name="SUPPLY46" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY47" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY48" library="My-Supply" deviceset="0V" device=""/>
-<part name="R19" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4K7 (5%)">
+<part name="R19" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
-<part name="R20" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4K7 (5%)">
+<part name="R20" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
 <part name="SUPPLY49" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY50" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="SUPPLY51" library="My-Supply" deviceset="3.3V" device=""/>
 <part name="FRAME1" library="frames-OSHW" deviceset="FRAME_C_L" device=""/>
-<part name="R1" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M"/>
-<part name="R2" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M"/>
+<part name="R1" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R2" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="1M">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY9" library="My-Supply" deviceset="0V" device=""/>
-<part name="R11" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7"/>
-<part name="R12" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k"/>
+<part name="R11" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="4k7">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R12" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY17" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY18" library="My-Supply" deviceset="0V" device=""/>
-<part name="C5" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF"/>
-<part name="C10" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF"/>
-<part name="C11" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF"/>
+<part name="C5" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C10" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="10uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C11" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY16" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY19" library="My-Supply" deviceset="0V" device=""/>
 <part name="SUPPLY20" library="My-Supply" deviceset="0V" device=""/>
-<part name="U4" library="SamacSys_Parts" deviceset="GL823K" device="" package3d_urn="urn:adsk.eagle:package:32845305/2"/>
-<part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle"/>
+<part name="U4" library="SamacSys_Parts" deviceset="GL823K" device="" package3d_urn="urn:adsk.eagle:package:32845305/2">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="CN1" library="USB C CONNECOTR" deviceset="USB4080-03-A" device="" package3d_urn="urn:adsk.eagle:package:32764401/2" value="USB 3.2 Gen 2 Type C Receptacle">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="SUPPLY12" library="My-Supply" deviceset="0V" device=""/>
-<part name="CN6" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card"/>
-<part name="CN5" library="SamacSys_Parts" deviceset="CR1220" device="" package3d_urn="urn:adsk.eagle:package:32858608/4"/>
-<part name="CN2" library="Battery" deviceset="BATTERY" device="JST-2" package3d_urn="urn:adsk.eagle:package:32835973/2" value="Lithium Ion Polymer"/>
-<part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
-<part name="Q3" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS"/>
-<part name="U7" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" package3d_urn="urn:adsk.eagle:package:32842001/2"/>
-<part name="CN3" library="Terminal Block 2P 3.5pitch" deviceset="OSTTE020104" device="" override_package3d_urn="urn:adsk.eagle:package:32867978/2" override_package_urn="urn:adsk.eagle:footprint:32867979/1" value=""/>
+<part name="CN6" library="Micro SD" deviceset="MICROSD-PUSH-OUT" device="" package3d_urn="urn:adsk.eagle:package:32766245/3" value="Micro-SD Card">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="CN5" library="SamacSys_Parts" deviceset="CR1220" device="" package3d_urn="urn:adsk.eagle:package:32858608/4">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="CN2" library="Battery" deviceset="BATTERY" device="JST-2" package3d_urn="urn:adsk.eagle:package:32835973/2" value="Lithium Ion Polymer">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="Q2" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="Q3" library="SI2374DS" deviceset="SI2374DS" device="SOT23" package3d_urn="urn:adsk.eagle:package:32844852/2" value="SI2374DS">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U7" library="TLV75530PDBVR" deviceset="TLV75530PDBVR" device="" package3d_urn="urn:adsk.eagle:package:32842001/2">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="CN3" library="Terminal Block 2P 3.5pitch" deviceset="OSTTE020104" device="" override_package3d_urn="urn:adsk.eagle:package:32867978/2" override_package_urn="urn:adsk.eagle:footprint:32867979/1" value="">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="C12" library="My-RLC" deviceset="C_" device="0603" package3d_urn="urn:adsk.eagle:package:23494015/2" value="100nF">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="C0603C102M5RACTU"/>
 </part>
 <part name="SUPPLY21" library="My-Supply" deviceset="0V" device=""/>
-<part name="R21" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)">
+<part name="R21" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
 <part name="SUPPLY31" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="R22" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)">
+<part name="R22" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
 <part name="SUPPLY33" library="My-Supply" deviceset="3.3V" device=""/>
-<part name="R23" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k (5%)">
+<part name="R23" library="My-RLC" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:23494030/2" value="10k">
+<attribute name="PARTNO" value="*"/>
 <attribute name="PN" value="RC0603JR-1047KL"/>
 </part>
 <part name="SUPPLY34" library="My-Supply" deviceset="3.3V" device=""/>
@@ -5971,19 +6087,19 @@ package type OT</description>
 <plain>
 <text x="487.172" y="28.067" size="3.81" layer="94" align="center">Tiago Silva</text>
 <text x="487.172" y="22.225" size="2.413" layer="94" align="center">github.com/TiagoPaulaSilva/NoteIt</text>
-<text x="544.195" y="1.27" size="2.54" layer="94" ratio="5">1.2</text>
+<text x="544.195" y="1.27" size="2.54" layer="94" ratio="5">1.3</text>
 <text x="473.075" y="6.35" size="2.54" layer="94" ratio="5">Complete Schematic</text>
 <text x="437.515" y="183.515" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
 <text x="506.095" y="182.88" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
 <text x="506.095" y="173.355" size="1.27" layer="98" align="center" grouprefs="ROTARY_ENCODER">needs MCU pull-up</text>
 <text x="305.435" y="-50.8" size="2.1844" layer="152" align="center"></text>
-<text x="151.765" y="322.58" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">Overcharge = 4.325V</text>
-<text x="151.765" y="318.77" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">Overdischarge = 3.000V</text>
-<wire x1="185.42" y1="374.015" x2="179.07" y2="374.015" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="179.07" y1="374.015" x2="180.34" y2="374.65" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="180.34" y1="374.65" x2="180.34" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="180.34" y1="373.38" x2="179.07" y2="374.015" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<text x="182.499" y="375.793" size="1.27" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">7μA max.</text>
+<text x="151.765" y="322.58" size="1.778" layer="208" align="center" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">Overcharge = 4.325V</text>
+<text x="151.765" y="318.77" size="1.778" layer="208" align="center" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">Overdischarge = 3.000V</text>
+<wire x1="185.42" y1="374.015" x2="179.07" y2="374.015" width="0.1524" layer="208" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="179.07" y1="374.015" x2="180.34" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="180.34" y1="374.65" x2="180.34" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="180.34" y1="373.38" x2="179.07" y2="374.015" width="0.1524" layer="208" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<text x="182.499" y="375.793" size="1.27" layer="208" align="center" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">7μA max.</text>
 <text x="75.565" y="334.01" size="1.27" layer="208" font="vector" align="center" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">I-REG [mA]
 = 1000V / R-PROG</text>
 <wire x1="100.965" y1="379.73" x2="107.315" y2="379.73" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
@@ -5999,7 +6115,7 @@ at 500mA</text>
 <wire x1="335.28" y1="358.775" x2="334.645" y2="360.045" width="0.1524" layer="208" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
 <wire x1="334.645" y1="360.045" x2="335.915" y2="360.045" width="0.1524" layer="208" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
 <wire x1="335.915" y1="360.045" x2="335.28" y2="358.775" width="0.1524" layer="208" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
-<text x="226.06" y="363.22" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">3.7V ~ 4.2V
+<text x="226.06" y="363.22" size="1.778" layer="208" align="center" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">3.7V ~ 4.2V
 230mAh</text>
 <wire x1="247.65" y1="379.73" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
 <wire x1="247.65" y1="373.38" x2="247.015" y2="374.65" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
@@ -6007,7 +6123,7 @@ at 500mA</text>
 <wire x1="248.285" y1="374.65" x2="247.65" y2="373.38" width="0.1524" layer="208" grouprefs="BATTERY_MONITOR POWER_SUPPLY"/>
 <text x="253.111" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY">2.1μA max.</text>
 <text x="262.89" y="395.605" size="0.254" layer="201" align="center" grouprefs="BATTERY_MONITOR POWER_SUPPLY"> </text>
-<text x="182.88" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"> </text>
+<text x="182.88" y="395.605" size="0.254" layer="91" align="center" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"> </text>
 <text x="44.45" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"> </text>
 <wire x1="249.555" y1="236.855" x2="278.765" y2="236.855" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <wire x1="278.765" y1="236.855" x2="278.765" y2="213.995" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -6032,7 +6148,7 @@ TOLERANT</text>
 <wire x1="271.145" y1="46.355" x2="272.415" y2="46.355" width="0.1524" layer="208" grouprefs="DATALOGGER_INPUT"/>
 <wire x1="272.415" y1="46.355" x2="271.78" y2="45.085" width="0.1524" layer="208" grouprefs="DATALOGGER_INPUT"/>
 <text x="21.59" y="151.13" size="6.4516" layer="91" grouprefs="MICRO_SDCARD_CONTROLLER"> </text>
-<text x="354.965" y="245.11" size="1.27" layer="200" align="center" grouprefs="MICRO_SDCARD_CONTROLLER">this is a signal provided by the socket, 
+<text x="355.727" y="245.364" size="1.27" layer="200" align="center" grouprefs="MICRO_SDCARD_CONTROLLER">this is a signal provided by the socket, 
 not the micro-sd card itself.</text>
 <text x="344.805" y="46.355" size="1.27" layer="97" rot="R90" grouprefs="REAL_TIME_CLOCK">(3V / 37 mAh)</text>
 <text x="365.125" y="38.735" size="1.27" layer="200" font="vector" ratio="5" align="center" grouprefs="REAL_TIME_CLOCK">7-bits Slave Address
@@ -6054,46 +6170,57 @@ from SIMO (MOSI) pin.</text>
 <instance part="SW1" gate="G$1" x="468.63" y="175.26" smashed="yes" grouprefs="ROTARY_ENCODER">
 <attribute name="NAME" x="460.756" y="191.262" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="460.756" y="189.103" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="468.63" y="175.26" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U1" gate="G$1" x="85.09" y="376.555" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">
 <attribute name="NAME" x="78.8035" y="387.35" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="82.55" y="385.445" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="85.09" y="376.555" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R5" gate="G$1" x="62.23" y="334.01" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">
 <attribute name="NAME" x="60.0964" y="334.01" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="64.262" y="334.01" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="62.23" y="334.01" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="U3" gate="G$1" x="153.035" y="363.22" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
+<instance part="U3" gate="G$1" x="153.035" y="363.22" smashed="yes" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">
 <attribute name="NAME" x="134.747" y="377.825" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="143.51" y="375.92" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="153.035" y="363.22" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R7" gate="G$1" x="123.19" y="321.31" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
+<instance part="R7" gate="G$1" x="123.19" y="321.31" smashed="yes" rot="R90" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">
 <attribute name="NAME" x="121.0564" y="321.31" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="125.222" y="321.31" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="123.19" y="321.31" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R9" gate="G$1" x="199.39" y="372.11" smashed="yes" rot="R180" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
+<instance part="R9" gate="G$1" x="199.39" y="372.11" smashed="yes" rot="R180" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">
 <attribute name="NAME" x="199.39" y="374.4214" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="199.39" y="370.0145" size="1.27" layer="96" rot="R180" align="center"/>
+<attribute name="PARTNO" x="199.39" y="372.11" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C7" gate="G$1" x="184.15" y="365.76" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">
+<instance part="C7" gate="G$1" x="184.15" y="365.76" smashed="yes" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY">
 <attribute name="NAME" x="180.2765" y="364.5535" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="187.2615" y="364.4265" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="184.15" y="365.76" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C14" gate="G$1" x="294.005" y="351.155" smashed="yes" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR">
 <attribute name="NAME" x="289.306" y="350.139" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="297.434" y="349.8215" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="294.005" y="351.155" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C16" gate="G$1" x="311.785" y="351.155" smashed="yes" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR">
 <attribute name="NAME" x="307.4035" y="350.139" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="314.8965" y="350.139" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="311.785" y="351.155" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C18" gate="G$1" x="363.855" y="351.155" smashed="yes" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR">
 <attribute name="NAME" x="359.156" y="350.139" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="366.9665" y="349.8215" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="363.855" y="351.155" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C19" gate="G$1" x="380.365" y="351.155" smashed="yes" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR">
 <attribute name="NAME" x="375.666" y="350.139" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="383.794" y="350.139" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="380.365" y="351.155" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY8" gate="G$1" x="31.115" y="404.495" smashed="yes" grouprefs="POWER_SUPPLY">
 <attribute name="VALUE" x="31.1404" y="408.94" size="1.27" layer="96" align="center"/>
@@ -6105,47 +6232,58 @@ from SIMO (MOSI) pin.</text>
 <instance part="R15" gate="G$1" x="245.745" y="358.14" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
 <attribute name="NAME" x="243.6114" y="358.14" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="247.777" y="358.14" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="245.745" y="358.14" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R16" gate="G$1" x="245.745" y="342.9" smashed="yes" rot="R90" grouprefs="BATTERY_MONITOR POWER_SUPPLY">
 <attribute name="NAME" x="243.6114" y="342.9" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="247.777" y="342.9" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="245.745" y="342.9" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R13" gate="G$1" x="212.725" y="264.16" smashed="yes" rot="R90" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="210.5914" y="264.16" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="214.757" y="263.9695" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="212.725" y="264.16" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="Q1" gate="G$1" x="210.185" y="248.92" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="215.265" y="249.8725" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="216.8525" y="247.9675" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="210.185" y="248.92" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R10" gate="G$1" x="200.025" y="248.92" smashed="yes" rot="R180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="200.152" y="251.1806" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="200.279" y="246.761" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="200.025" y="248.92" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R8" gate="G$1" x="192.405" y="240.665" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="190.2714" y="240.665" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="194.437" y="240.792" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="192.405" y="240.665" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C6" gate="G$1" x="158.75" y="172.085" smashed="yes" rot="R180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="154.8765" y="173.4185" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="161.925" y="173.355" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="158.75" y="172.085" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R14" gate="G$1" x="218.44" y="183.515" smashed="yes" rot="MR270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="216.4461" y="183.515" size="1.27" layer="95" rot="MR90" align="center"/>
 <attribute name="VALUE" x="220.218" y="183.1975" size="1.27" layer="96" rot="MR90" align="center"/>
+<attribute name="PARTNO" x="218.44" y="183.515" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="LED1" gate="G$1" x="218.44" y="167.005" smashed="yes" rot="MR0" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="215.8365" y="165.9255" size="1.27" layer="95" rot="MR90" align="center"/>
 <attribute name="VALUE" x="212.725" y="162.433" size="1.778" layer="96" rot="MR90"/>
+<attribute name="PARTNO" x="218.44" y="167.005" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C4" gate="G$1" x="132.08" y="172.085" smashed="yes" rot="R180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="128.3335" y="173.609" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="135.255" y="173.6725" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="132.08" y="172.085" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U2" gate="G$1" x="120.015" y="90.805" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="NAME" x="78.105" y="125.095" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="77.47" y="123.19" size="1.27" layer="96" align="center-left"/>
 <attribute name="PN" x="120.015" y="90.805" size="2.54" layer="96" display="off"/>
+<attribute name="PARTNO" x="120.015" y="90.805" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY5" gate="P" x="25.4" y="130.81" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="VALUE" x="25.4" y="134.9375" size="1.27" layer="96" align="center"/>
@@ -6154,15 +6292,18 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="34.3535" y="68.6435" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="41.2115" y="68.5165" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PN" x="38.1" y="69.85" size="1.27" layer="96" display="off"/>
+<attribute name="PARTNO" x="38.1" y="69.85" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C1" gate="G$1" x="25.4" y="69.85" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="NAME" x="21.3995" y="68.58" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="28.5115" y="68.199" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PN" x="25.4" y="69.85" size="1.27" layer="96" display="off"/>
+<attribute name="PARTNO" x="25.4" y="69.85" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="DS1" gate="G$1" x="392.43" y="114.3" smashed="yes" grouprefs="DISPLAY_OLED">
 <attribute name="NAME" x="372.11" y="133.35" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="380.0475" y="131.1275" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="392.43" y="114.3" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY24" gate="G$1" x="422.91" y="131.445" smashed="yes" grouprefs="DISPLAY_OLED">
 <attribute name="VALUE" x="422.9354" y="135.255" size="1.27" layer="96" align="center"/>
@@ -6170,27 +6311,32 @@ from SIMO (MOSI) pin.</text>
 <instance part="C21" gate="G$1" x="422.91" y="114.935" smashed="yes" grouprefs="DISPLAY_OLED">
 <attribute name="NAME" x="418.4015" y="113.7285" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="426.0215" y="113.6015" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="422.91" y="114.935" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY25" gate="G$1" x="422.91" y="92.71" smashed="yes" grouprefs="DISPLAY_OLED"/>
 <instance part="C8" gate="G$1" x="214.63" y="76.835" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="NAME" x="210.7565" y="75.6285" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="217.7415" y="75.5015" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PN" x="214.63" y="76.835" size="1.27" layer="96" display="off"/>
+<attribute name="PARTNO" x="214.63" y="76.835" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C9" gate="G$1" x="227.33" y="76.835" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="NAME" x="223.4565" y="75.6285" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="230.759" y="75.184" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PN" x="227.33" y="76.835" size="1.27" layer="96" display="off"/>
+<attribute name="PARTNO" x="227.33" y="76.835" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="Y1" gate="G$1" x="220.98" y="86.36" smashed="yes" grouprefs="MICROCONTROLLER">
 <attribute name="NAME" x="220.98" y="92.456" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="220.98" y="90.297" size="1.27" layer="96" align="center"/>
 <attribute name="PN" x="220.98" y="86.36" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO" x="220.98" y="86.36" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY1" gate="G$1" x="62.23" y="306.07" smashed="yes" grouprefs="POWER_SUPPLY"/>
 <instance part="U6" gate="G$1" x="295.275" y="214.63" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="286.0675" y="185.15" size="1.27" layer="95" ratio="10" rot="SR0" align="center"/>
 <attribute name="VALUE" x="292.1" y="183.1975" size="1.27" layer="96" ratio="10" rot="SR0" align="center"/>
+<attribute name="PARTNO" x="295.275" y="214.63" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY2" gate="G$1" x="302.895" y="273.685" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="VALUE" x="302.9204" y="277.495" size="1.27" layer="96" align="center"/>
@@ -6203,6 +6349,7 @@ from SIMO (MOSI) pin.</text>
 <instance part="C20" gate="G$1" x="388.62" y="241.3" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="386.969" y="244.729" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="387.5405" y="237.6805" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="388.62" y="241.3" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY11" gate="G$1" x="394.335" y="234.95" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="SUPPLY22" gate="G$1" x="212.725" y="273.685" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER">
@@ -6211,12 +6358,14 @@ from SIMO (MOSI) pin.</text>
 <instance part="C15" gate="G$1" x="311.15" y="243.205" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="309.499" y="246.761" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="310.007" y="240.157" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="311.15" y="243.205" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY23" gate="G$1" x="317.5" y="236.855" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="SUPPLY26" gate="G$1" x="132.08" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="U5" gate="G$1" x="273.05" y="57.15" smashed="yes" grouprefs="DATALOGGER_INPUT">
 <attribute name="NAME" x="278.257" y="52.451" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="285.4325" y="50.4825" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="273.05" y="57.15" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY28" gate="G$1" x="273.05" y="36.195" smashed="yes" grouprefs="DATALOGGER_INPUT"/>
 <instance part="SUPPLY29" gate="G$1" x="273.05" y="72.39" smashed="yes" grouprefs="DATALOGGER_INPUT">
@@ -6226,10 +6375,12 @@ from SIMO (MOSI) pin.</text>
 <instance part="R3" gate="G$1" x="55.245" y="191.77" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="53.1114" y="191.77" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="57.277" y="191.77" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="55.245" y="191.77" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R6" gate="G$1" x="122.555" y="173.355" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="120.1039" y="173.355" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="124.587" y="173.355" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="122.555" y="173.355" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY35" gate="G$1" x="122.555" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="SUPPLY27" gate="G$1" x="192.405" y="229.87" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -6237,31 +6388,37 @@ from SIMO (MOSI) pin.</text>
 <instance part="R4" gate="G$1" x="61.595" y="167.64" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="59.1439" y="167.64" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="63.5635" y="167.386" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="61.595" y="167.64" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY36" gate="G$1" x="61.595" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="C3" gate="G$1" x="69.215" y="166.37" smashed="yes" rot="R180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="65.9765" y="167.7035" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="72.263" y="167.5765" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="69.215" y="166.37" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY37" gate="G$1" x="69.215" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="R18" gate="G$1" x="375.285" y="252.095" smashed="yes" rot="R270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="372.8339" y="252.095" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="377.6345" y="252.1585" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="375.285" y="252.095" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CN4" gate="G$1" x="271.78" y="108.585" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)">
 <attribute name="NAME" x="271.78" y="120.523" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="271.78" y="117.983" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="271.78" y="108.585" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY40" gate="G$1" x="255.27" y="92.075" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <instance part="R17" gate="G$1" x="288.925" y="117.475" smashed="yes" rot="MR270" grouprefs="SPY-BY-WIRE_(ICSP)">
 <attribute name="NAME" x="286.6009" y="117.475" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="291.211" y="117.4115" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="288.925" y="117.475" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="288.925" y="117.475" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C13" gate="G$1" x="288.925" y="101.6" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)">
 <attribute name="NAME" x="284.4165" y="100.33" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="292.0365" y="100.2665" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PN" x="288.925" y="101.6" size="1.27" layer="96" display="off"/>
+<attribute name="PARTNO" x="288.925" y="101.6" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY41" gate="G$1" x="288.925" y="92.075" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <instance part="SUPPLY42" gate="G$1" x="255.27" y="124.46" smashed="yes" grouprefs="SPY-BY-WIRE_(ICSP)">
@@ -6273,10 +6430,12 @@ from SIMO (MOSI) pin.</text>
 <instance part="C17" gate="G$1" x="327.025" y="52.07" smashed="yes" rot="R180" grouprefs="REAL_TIME_CLOCK">
 <attribute name="NAME" x="322.834" y="53.34" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="330.1365" y="53.2765" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="327.025" y="52.07" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U8" gate="G$1" x="365.125" y="50.165" smashed="yes" grouprefs="REAL_TIME_CLOCK">
 <attribute name="VALUE" x="359.41" y="64.262" size="1.27" layer="96" align="center"/>
 <attribute name="NAME" x="355.9175" y="66.04" size="1.27" layer="95" align="center"/>
+<attribute name="PARTNO" x="365.125" y="50.165" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY15" gate="G$1" x="327.025" y="36.195" smashed="yes" grouprefs="REAL_TIME_CLOCK"/>
 <instance part="SUPPLY44" gate="G$1" x="469.9" y="151.765" smashed="yes" grouprefs="ROTARY_ENCODER"/>
@@ -6290,11 +6449,13 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="389.4709" y="60.96" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="393.7635" y="60.8965" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="391.795" y="60.96" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="391.795" y="60.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R20" gate="G$1" x="403.86" y="60.96" smashed="yes" rot="MR270" grouprefs="REAL_TIME_CLOCK">
 <attribute name="NAME" x="401.5359" y="60.96" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="406.146" y="60.8965" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="403.86" y="60.96" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="403.86" y="60.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY49" gate="G$1" x="327.025" y="73.025" smashed="yes" grouprefs="REAL_TIME_CLOCK">
 <attribute name="VALUE" x="327.0504" y="76.835" size="1.27" layer="96" align="center"/>
@@ -6314,33 +6475,40 @@ from SIMO (MOSI) pin.</text>
 <instance part="R1" gate="G$1" x="31.115" y="197.485" smashed="yes" rot="R90" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="28.6639" y="197.485" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="33.4645" y="197.485" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="31.115" y="197.485" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R2" gate="G$1" x="31.115" y="174.625" smashed="yes" rot="R90" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="28.9814" y="174.625" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="33.147" y="174.625" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="31.115" y="174.625" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY9" gate="G$1" x="31.115" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="R11" gate="G$1" x="207.01" y="184.15" smashed="yes" rot="MR270" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="204.8764" y="184.15" size="1.27" layer="95" rot="MR270" align="center"/>
 <attribute name="VALUE" x="209.042" y="184.15" size="1.27" layer="96" rot="MR270" align="center"/>
+<attribute name="PARTNO" x="207.01" y="184.15" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R12" gate="G$1" x="207.01" y="169.545" smashed="yes" rot="R90" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="204.8764" y="169.545" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="209.042" y="169.545" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="207.01" y="169.545" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY17" gate="G$1" x="207.01" y="160.655" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="SUPPLY18" gate="G$1" x="158.75" y="153.67" smashed="yes" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="C5" gate="G$1" x="144.78" y="172.085" smashed="yes" rot="R180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="141.0335" y="173.609" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="147.955" y="173.6725" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="144.78" y="172.085" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C10" gate="G$1" x="229.235" y="172.085" smashed="yes" rot="MR180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="224.8535" y="173.4185" size="1.27" layer="95" rot="MR0" align="center"/>
 <attribute name="VALUE" x="232.41" y="173.6725" size="1.27" layer="96" rot="MR270" align="center"/>
+<attribute name="PARTNO" x="229.235" y="172.085" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C11" gate="G$1" x="241.935" y="172.085" smashed="yes" rot="MR180" grouprefs="MICRO_SDCARD_CONTROLLER">
 <attribute name="NAME" x="237.871" y="173.4185" size="1.27" layer="95" rot="MR0" align="center"/>
 <attribute name="VALUE" x="245.11" y="173.6725" size="1.27" layer="96" rot="MR270" align="center"/>
+<attribute name="PARTNO" x="241.935" y="172.085" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY16" gate="G$1" x="241.935" y="153.67" smashed="yes" rot="MR0" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <instance part="SUPPLY19" gate="G$1" x="229.235" y="153.67" smashed="yes" rot="MR0" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -6348,50 +6516,61 @@ from SIMO (MOSI) pin.</text>
 <instance part="U4" gate="G$1" x="179.705" y="191.77" smashed="yes">
 <attribute name="NAME" x="170.815" y="213.0425" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="172.72" y="211.1375" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="179.705" y="191.77" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CN1" gate="G$1" x="90.805" y="194.31" smashed="yes">
 <attribute name="NAME" x="79.375" y="212.5345" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="90.805" y="210.82" size="1.27" layer="96" rot="MR180" align="center"/>
+<attribute name="PARTNO" x="90.805" y="194.31" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY12" gate="G$1" x="113.03" y="153.67" smashed="yes"/>
 <instance part="CN6" gate="G$1" x="360.045" y="223.52" smashed="yes">
 <attribute name="NAME" x="344.17" y="230.6955" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="347.98" y="228.854" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="360.045" y="223.52" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CN5" gate="G$1" x="338.455" y="51.435" smashed="yes">
 <attribute name="NAME" x="334.264" y="51.943" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="342.265" y="52.197" size="1.27" layer="96" rot="R90" align="center"/>
+<attribute name="PARTNO" x="338.455" y="51.435" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CN2" gate="G$1" x="215.265" y="364.49" smashed="yes">
 <attribute name="NAME" x="208.0895" y="364.2995" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="225.7425" y="367.03" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="215.265" y="364.49" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="Q2" gate="G$1" x="212.725" y="344.17" smashed="yes" rot="MR180">
 <attribute name="NAME" x="219.9005" y="345.948" size="1.27" layer="95" rot="MR180" align="center"/>
 <attribute name="VALUE" x="222.4405" y="344.043" size="1.27" layer="96" rot="MR180" align="center"/>
+<attribute name="PARTNO" x="212.725" y="344.17" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="Q3" gate="G$1" x="212.725" y="331.47" smashed="yes">
 <attribute name="NAME" x="219.9005" y="333.502" size="1.27" layer="95" align="center"/>
 <attribute name="VALUE" x="222.758" y="331.5335" size="1.27" layer="96" align="center"/>
+<attribute name="PARTNO" x="212.725" y="331.47" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U7" gate="G$1" x="332.74" y="376.555" smashed="yes">
 <attribute name="NAME" x="320.9925" y="388.0325" size="1.27" layer="95" ratio="10" rot="SR0" align="center"/>
 <attribute name="VALUE" x="326.7075" y="385.89" size="1.27" layer="96" ratio="10" rot="SR0" align="center"/>
+<attribute name="PARTNO" x="332.74" y="376.555" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CN3" gate="G$1" x="258.445" y="57.15" smashed="yes" rot="MR0" grouprefs="DATALOGGER_INPUT">
 <attribute name="NAME" x="255.5875" y="61.28021875" size="1.27" layer="95" rot="MR0" align="center"/>
 <attribute name="VALUE" x="255.897209375" y="39.37" size="1.271559375" layer="96" rot="MR90"/>
+<attribute name="PARTNO" x="258.445" y="57.15" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C12" gate="G$1" x="282.575" y="67.31" smashed="yes" rot="R90">
 <attribute name="NAME" x="283.7815" y="70.8025" size="1.27" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="283.9085" y="64.389" size="1.27" layer="96" rot="R180" align="center"/>
 <attribute name="PN" x="282.575" y="67.31" size="1.27" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="282.575" y="67.31" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY21" gate="G$1" x="291.465" y="63.5" smashed="yes"/>
 <instance part="R21" gate="G$1" x="449.58" y="187.96" smashed="yes" rot="MR270" grouprefs="ROTARY_ENCODER">
 <attribute name="NAME" x="446.9384" y="187.96" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="451.866" y="187.8965" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="449.58" y="187.96" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="449.58" y="187.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY31" gate="G$1" x="449.58" y="197.485" smashed="yes" grouprefs="ROTARY_ENCODER">
 <attribute name="VALUE" x="449.6054" y="201.295" size="1.27" layer="96" align="center"/>
@@ -6400,6 +6579,7 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="484.4034" y="188.595" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="489.0135" y="188.5315" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="487.045" y="188.595" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="487.045" y="188.595" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY33" gate="G$1" x="487.045" y="198.12" smashed="yes" grouprefs="ROTARY_ENCODER">
 <attribute name="VALUE" x="487.0704" y="201.93" size="1.27" layer="96" align="center"/>
@@ -6408,6 +6588,7 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="492.9759" y="188.595" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="497.586" y="188.5315" size="1.27" layer="96" rot="MR90" align="center"/>
 <attribute name="PN" x="495.3" y="188.595" size="1.27" layer="96" font="vector" rot="MR270" display="off"/>
+<attribute name="PARTNO" x="495.3" y="188.595" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY34" gate="G$1" x="495.3" y="198.12" smashed="yes" grouprefs="ROTARY_ENCODER">
 <attribute name="VALUE" x="495.3254" y="201.93" size="1.27" layer="96" align="center"/>
@@ -6560,14 +6741,10 @@ from SIMO (MOSI) pin.</text>
 <wire x1="260.35" y1="111.125" x2="255.27" y2="111.125" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <wire x1="255.27" y1="111.125" x2="255.27" y2="108.585" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <pinref part="CN4" gate="G$1" pin="5"/>
-<wire x1="255.27" y1="108.585" x2="255.27" y2="106.045" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
-<wire x1="255.27" y1="106.045" x2="255.27" y2="103.505" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
+<wire x1="255.27" y1="108.585" x2="255.27" y2="103.505" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <wire x1="255.27" y1="103.505" x2="255.27" y2="94.615" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <wire x1="260.35" y1="108.585" x2="255.27" y2="108.585" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <junction x="255.27" y="108.585" grouprefs="SPY-BY-WIRE_(ICSP)"/>
-<pinref part="CN4" gate="G$1" pin="7"/>
-<wire x1="260.35" y1="106.045" x2="255.27" y2="106.045" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
-<junction x="255.27" y="106.045" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <pinref part="CN4" gate="G$1" pin="9"/>
 <wire x1="260.35" y1="103.505" x2="255.27" y2="103.505" width="0.1524" layer="91" grouprefs="SPY-BY-WIRE_(ICSP)"/>
 <junction x="255.27" y="103.505" grouprefs="SPY-BY-WIRE_(ICSP)"/>
@@ -6887,32 +7064,32 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="U3" gate="G$1" pin="VM"/>
 <pinref part="R7" gate="G$1" pin="2"/>
-<wire x1="123.19" y1="326.39" x2="123.19" y2="328.93" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="123.19" y1="328.93" x2="128.905" y2="328.93" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="123.19" y1="326.39" x2="123.19" y2="328.93" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="123.19" y1="328.93" x2="128.905" y2="328.93" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 </segment>
 </net>
 <net name="N$31" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="VDD"/>
 <pinref part="R9" gate="G$1" pin="2"/>
-<wire x1="174.625" y1="372.11" x2="184.15" y2="372.11" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="174.625" y1="372.11" x2="184.15" y2="372.11" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="C7" gate="G$1" pin="1"/>
-<wire x1="184.15" y1="372.11" x2="194.31" y2="372.11" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="184.15" y1="368.3" x2="184.15" y2="372.11" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<junction x="184.15" y="372.11" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="184.15" y1="372.11" x2="194.31" y2="372.11" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="184.15" y1="368.3" x2="184.15" y2="372.11" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<junction x="184.15" y="372.11" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 </segment>
 </net>
 <net name="N$32" class="0">
 <segment>
 <pinref part="C7" gate="G$1" pin="2"/>
 <pinref part="U3" gate="G$1" pin="VSS"/>
-<wire x1="184.15" y1="360.68" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="184.15" y1="355.6" x2="174.625" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="215.265" y1="358.14" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="215.265" y1="355.6" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<junction x="184.15" y="355.6" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="215.265" y1="349.25" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<junction x="215.265" y="355.6" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="184.15" y1="360.68" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="184.15" y1="355.6" x2="174.625" y2="355.6" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="215.265" y1="358.14" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="215.265" y1="355.6" x2="184.15" y2="355.6" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<junction x="184.15" y="355.6" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="215.265" y1="349.25" x2="215.265" y2="355.6" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<junction x="215.265" y="355.6" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="CN2" gate="G$1" pin="GND"/>
 <pinref part="Q2" gate="G$1" pin="S"/>
 </segment>
@@ -6920,28 +7097,28 @@ from SIMO (MOSI) pin.</text>
 <net name="N$1" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="DO"/>
-<wire x1="208.915" y1="346.71" x2="174.625" y2="346.71" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="208.915" y1="346.71" x2="174.625" y2="346.71" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="Q2" gate="G$1" pin="G"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="CO"/>
-<wire x1="208.915" y1="328.93" x2="174.625" y2="328.93" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="208.915" y1="328.93" x2="174.625" y2="328.93" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="Q3" gate="G$1" pin="G"/>
 </segment>
 </net>
-<net name="N$33" class="0">
+<net name="VBAT" class="0">
 <segment>
 <pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="215.265" y1="372.11" x2="204.47" y2="372.11" width="0.15" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<wire x1="215.265" y1="369.57" x2="215.265" y2="372.11" width="0.15" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="215.265" y1="372.11" x2="204.47" y2="372.11" width="0.15" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<wire x1="215.265" y1="369.57" x2="215.265" y2="372.11" width="0.15" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="U1" gate="G$1" pin="VBAT"/>
 <wire x1="104.14" y1="381.635" x2="215.265" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
-<wire x1="215.265" y1="381.635" x2="215.265" y2="372.11" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
-<junction x="215.265" y="372.11" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="215.265" y1="381.635" x2="215.265" y2="372.11" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
+<junction x="215.265" y="372.11" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <wire x1="314.96" y1="381.635" x2="311.785" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
-<junction x="215.265" y="381.635" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<junction x="215.265" y="381.635" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <wire x1="311.785" y1="381.635" x2="294.005" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
 <wire x1="294.005" y1="381.635" x2="245.745" y2="381.635" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <junction x="311.785" y="381.635" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
@@ -6961,11 +7138,12 @@ from SIMO (MOSI) pin.</text>
 <pinref part="CN2" gate="G$1" pin="VDD"/>
 <pinref part="U7" gate="G$1" pin="EN"/>
 <pinref part="U7" gate="G$1" pin="IN"/>
+<label x="213.36" y="383.54" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
-<wire x1="215.265" y1="339.09" x2="215.265" y2="336.55" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
+<wire x1="215.265" y1="339.09" x2="215.265" y2="336.55" width="0.1524" layer="91" grouprefs="BATTERY_PROTECTOR POWER_SUPPLY"/>
 <pinref part="Q2" gate="G$1" pin="D"/>
 <pinref part="Q3" gate="G$1" pin="D"/>
 </segment>
@@ -7361,10 +7539,10 @@ from SIMO (MOSI) pin.</text>
 <pinref part="CN1" gate="G$1" pin="DN1"/>
 </segment>
 <segment>
-<pinref part="U4" gate="G$1" pin="DP"/>
-<pinref part="CN1" gate="G$1" pin="DP2"/>
-<wire x1="164.465" y1="194.31" x2="108.585" y2="194.31" width="0.1524" layer="91"/>
-<label x="111.76" y="194.945" size="1.27" layer="95"/>
+<pinref part="CN1" gate="G$1" pin="DN2"/>
+<pinref part="U4" gate="G$1" pin="DN"/>
+<wire x1="108.585" y1="196.85" x2="164.465" y2="196.85" width="0.1524" layer="91"/>
+<label x="111.76" y="197.485" size="1.27" layer="95"/>
 </segment>
 </net>
 <net name="USB_P" class="0">
@@ -7374,10 +7552,10 @@ from SIMO (MOSI) pin.</text>
 <pinref part="CN1" gate="G$1" pin="DP1"/>
 </segment>
 <segment>
-<pinref part="CN1" gate="G$1" pin="DN2"/>
-<pinref part="U4" gate="G$1" pin="DN"/>
-<wire x1="108.585" y1="196.85" x2="164.465" y2="196.85" width="0.1524" layer="91"/>
-<label x="111.76" y="197.485" size="1.27" layer="95"/>
+<pinref part="U4" gate="G$1" pin="DP"/>
+<pinref part="CN1" gate="G$1" pin="DP2"/>
+<wire x1="164.465" y1="194.31" x2="108.585" y2="194.31" width="0.1524" layer="91"/>
+<label x="111.76" y="194.945" size="1.27" layer="95"/>
 </segment>
 </net>
 <net name="N$6" class="0">

@@ -246,9 +246,9 @@ void SSD1306_begin() {
 
     P5OUT &= ~SPI_DISPLAY_CS;			// Select SPI target slave
     P6OUT |= GPIO_OLED_RESET;
-    delay(10);
+   __delay_cycles(16000); //1ms
     P6OUT &= ~GPIO_OLED_RESET;
-    delay(10);
+    __delay_cycles(16000); //1ms
     P6OUT |= GPIO_OLED_RESET;
 
     command(SSD1306_DISPLAYOFF);
@@ -395,8 +395,9 @@ void SSD1306_display(uint8_t *buffer) {
     P3OUT |= GPIO_OLED_TRANSMISSION_MODE; //  Transmit a data
     SPIWrite(buffer, WIDTH * HEIGHT / 8);
 }
-
+/*
 void delay(uint8_t v) {
     while (v--)
         __delay_cycles(1000);
 }
+*/

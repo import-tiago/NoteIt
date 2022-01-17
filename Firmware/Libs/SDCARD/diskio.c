@@ -42,7 +42,7 @@
 #define SPI_SOMI        SPI_SDCARD_SOMI   // P1.5
 #define SPI_SIMO        SPI_SDCARD_SIMO   // P1.4
 #define SPI_CLK         SPI_SDCARD_CLK    // P1.6
-#define SD_CS           SPI_SDCARD_CS   // P1.7
+#define SD_CS           SPI_SDCARD_CS     // P1.7
 
 //Ports
 #define SPI_SEL         P1SEL0

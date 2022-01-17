@@ -13,19 +13,25 @@ int8_t Rotary_Encoder_Read() {
 }
 
 uint8_t Rotary_Encoder_Push_Button() {
-     return (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
+    return (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
 }
 
 uint8_t Rotary_Encoder_Changed(void) {
     return last_rotary_value != rotary_value ? 1 : 0;
 }
 
-uint8_t Rotary_Encoder_is_Clockwise(void){
-    return last_rotary_value < rotary_value ? 1 : 0;
+uint8_t Rotary_Encoder_is_Clockwise(void) {
+    uint8_t v = last_rotary_value < rotary_value ? 1 : 0;
+    if (v)
+        last_rotary_value = rotary_value;
+    return v;
 }
 
-uint8_t Rotary_Encoder_is_Counterclockwise(void){
-    return last_rotary_value > rotary_value ? 1 : 0;
+uint8_t Rotary_Encoder_is_Counterclockwise(void) {
+    uint8_t v = last_rotary_value > rotary_value ? 1 : 0;
+    if (v)
+        last_rotary_value = rotary_value;
+    return v;
 }
 
 // ISR TIMER
@@ -41,8 +47,8 @@ __interrupt void ISR_Rotary_Enconder_Debounce() {
 
         last_rotary_value = rotary_value;
 
-        state_signal_a = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A));
-        state_signal_b = ((P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B));
+        state_signal_a = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_A);
+        state_signal_b = (P4IN & GPIO_ROTARY_ENCODER_SIGNAL_B);
 
         if ((!state_signal_a && state_signal_b) || (state_signal_a && !state_signal_b))
             rotary_value++;
@@ -52,7 +58,7 @@ __interrupt void ISR_Rotary_Enconder_Debounce() {
         P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_B;
+
         initial_debouncing_time = 0;
     }
 }

@@ -18,11 +18,87 @@
 #include <./DISPLAY/oled.h>
 #include <./DISPLAY/Screens/Screens.h>
 
+
+#define TA0_OVERFLOW        16000 // 1ms
+
+
+float map(float x, float in_min, float in_max, float out_min, float out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+uint16_t analogRead() {
+    ADCCTL0 |= ADCENC | ADCSC;  // Sampling and conversion start
+    while (!(ADCIFG & ADCIFG0));
+    return ADCMEM0;
+
+}
+
+
+
+//ADC
+#define ADC_POSITIVE_VREF              ((float)3.30)
+#define ADC_RESOLUTION                 12
+#define ADC_STEPS                      (1 << (ADC_RESOLUTION))
+#define ADC_RESOLUTION_IN_VOLTAGE      ((float)(ADC_POSITIVE_VREF/ADC_STEPS))
+#define VALUE_SIGNAL_DC_VOLTAGE        ((int)(ADC_STEPS / 2))
+
+#define RESISTOR_VOLTAGE_DIVIDER_R1           1.0F // 1M ohm
+#define RESISTOR_VOLTAGE_DIVIDER_R2           1.0F // 1M ohm
+#define RESISTOR_VOLTAGE_DIVIDER_ATTENUATION  (RESISTOR_VOLTAGE_DIVIDER_R2 / (RESISTOR_VOLTAGE_DIVIDER_R1 + RESISTOR_VOLTAGE_DIVIDER_R2))
+
+// BATTERY
+#define ADC_BATTERY_SAMPLES 100
+int ADC_Battery_Array[ADC_BATTERY_SAMPLES];
+int ADC_Battery_Mean = 0;
+float Battery_Voltage = 0;
+char current_battery_voltage[10] = {0};
+char current_battery_percentage[10] = {0};
+
+long Moving_Average(int instantaneous_value, int* array_values, int array_len) {
+
+  long average = 0;
+  int i = 0;
+
+  // Shifts the entire buffer and discards the oldest value
+  for (i = array_len - 1; i > 0; i--)
+    *(&array_values[i]) = *(&array_values[i - 1]);
+
+  *(&array_values[0]) = instantaneous_value;
+
+  for (i = 0; i < array_len; i++)
+    average += (long) * ((&array_values[i]));
+
+  return (average / array_len);
+}
+
+float Get_Battery_Voltage() {
+    static float stable = 5;
+
+  ADC_Battery_Mean = Moving_Average(analogRead(), &ADC_Battery_Array[0], ADC_BATTERY_SAMPLES);
+
+  Battery_Voltage = (ADC_RESOLUTION_IN_VOLTAGE * ADC_Battery_Mean )  / RESISTOR_VOLTAGE_DIVIDER_ATTENUATION;
+
+  if(stable > Battery_Voltage)
+      stable = Battery_Voltage;
+
+  return stable+ 0.015;
+}
+
+
+
+
+
+
 //uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
 uint32_t Current_Baudrate = 115200;
 
 //Screens_List Current_Screen = HOME_SCREEN;
 //Screens_List next_screen;
+
+void delay(uint8_t n) {
+    while (n--)
+        __delay_cycles(16000);
+}
 
 #define DATALOGGER_IDLE_STATE 0
 #define DATALOGGER_RECEIVING_STATE 1
@@ -87,6 +163,12 @@ int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
 uint32_t sys_tick_ms = 0;
+uint32_t t0;
+int new = 1;
+
+uint32_t read_voltage_battery_trigger = 0;
+
+int8_t Last_Screen_Builded = -1;
 
 void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x = x;
@@ -151,7 +233,7 @@ void Build_Status_Bar() {
     Show_Clock(0, 0, 12);
     Show_Calendar(48, 0, 12);
     SSD1306_bitmap(84, 2, Bat816, 16, 8, oled_buf);
-    SSD1306_string(102, 0, "100%", 12, 0, oled_buf);
+    SSD1306_string(102, 0, current_battery_percentage, 12, 0, oled_buf);
     // SSD1306_display(oled_buf);
 }
 
@@ -270,8 +352,8 @@ void Show_Current_Baudrate() {
     uint8_t y = 15;
     uint8_t step = 18;
 
-    SSD1306_string(5, y + 3, "<", 12, 0, oled_buf);
-    SSD1306_string(120, y + 3, ">", 12, 0, oled_buf);
+    //SSD1306_string(5, y + 3, "<", 12, 0, oled_buf);
+    // SSD1306_string(120, y + 3, ">", 12, 0, oled_buf);
 
     for (i = 0; i < array_len; i++)
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
@@ -279,7 +361,7 @@ void Show_Current_Baudrate() {
 
 }
 
-void Build_Navigation_Buttons(uint8_t current_selected_screen) {
+void Build_Navigation_Buttons(uint8_t current_selected_screen, uint8_t blinky) {
 
     int8_t x = 0, y = 54, i = 0;
 
@@ -287,40 +369,58 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
     for (i = NUMBER_OF_SCREENS - 1; i >= 0; i--) {
 
-        if (i == current_selected_screen)
-            SSD1306_bitmap((x + (i * 10)), y, current_page_bitmap, 5, 5, oled_buf);
-        else
-            SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+        if (blinky) {
+            if (i == current_selected_screen)
+                SSD1306_string((x + (i * 10)), y, " ", 14, 0, oled_buf);
+            else
+                SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+        }
+        else {
+
+            if (i == current_selected_screen)
+                SSD1306_bitmap((x + (i * 10)), y, current_page_bitmap, 5, 5, oled_buf);
+            else
+                SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+
+        }
     }
 }
 
-void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) {
+void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, uint8_t blinky) {
 
-    SSD1306_clear(oled_buf);
+    uint8_t build_element = Last_Screen_Builded != screen_element[0][0][0] ? 1 : 0;
+    __no_operation();
+
+    if (build_element)
+        SSD1306_clear(oled_buf);
 
     do {
         switch (screen_element[number_elements][1][0]) {
             case STATUS_BAR:
-                Build_Status_Bar();
+                if (build_element)
+                    Build_Status_Bar();
                 break;
 
             case CURRENT_BAUD_RATE:
-                Show_Current_Baudrate();
+                if (build_element)
+                    Show_Current_Baudrate();
                 break;
 
             case DATALOGGER_STATE:
-                Show_Datalogger_State();
+                if (build_element)
+                    Show_Datalogger_State();
                 break;
 
             case SCREENS_NAVIGATION_BUTTONS:
-                Build_Navigation_Buttons(screen_element[0][0][0]);
+                Build_Navigation_Buttons(screen_element[0][0][0], blinky);
                 break;
 
             case BAUD_RATE_SELECTION:
                 __no_operation();
                 break;
             case LOG_INSERT_TEMPERATURE:
-                Build_List_Log_Variables();
+                if (build_element)
+                    Build_List_Log_Variables();
                 __no_operation();
                 break;
             case LOG_INSERT_TIME:
@@ -333,7 +433,8 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
                 __no_operation();
                 break;
             case CLOCK_ADJUSTMENT:
-                Build_Clock_and_Calendar_Adj();
+                if (build_element)
+                    Build_Clock_and_Calendar_Adj();
                 __no_operation();
                 break;
             case CALENDAR_ADJUSTMENT:
@@ -348,15 +449,17 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
     while (number_elements >= 0);
 
     SSD1306_display(oled_buf);
+    delay(50);
+    Last_Screen_Builded = screen_element[0][0][0];
 }
 
 void Init_Timer0() {
     TA0CCTL0 |= CCIE;                      // TACCR0 interrupt enabled
-    TA0CCR0 = 1000; // 1ms
+    TA0CCR0 = TA0_OVERFLOW; // 1ms
     TA0CTL |= TASSEL__SMCLK | MC__UP;    // SMCLK, up count mode
 
     TA1CCTL0 |= CCIE;                      // TACCR0 interrupt enabled
-    TA1CCR0 = 1000; // 1ms
+    TA1CCR0 = TA0_OVERFLOW; // 1ms
     TA1CTL |= TASSEL__SMCLK | MC__UP;    // SMCLK, up count mode
 }
 
@@ -382,159 +485,77 @@ void Run_SFM() { //State Finite Machine
 
     switch (Current_Screen) {
         __no_operation();
-        case CHANGING_SECREEN_MODE: {
-            uint8_t next_screen;
-            __no_operation();
-            do {
-                if (Rotary_Encoder_is_Clockwise()) {
-                    if (Last_Screen < NUMBER_OF_SCREENS) {
-                        next_screen = Last_Screen + 1;
+    case CHANGING_SECREEN_MODE: {
 
-                    }
-                    else
-                        next_screen = NUMBER_OF_SCREENS - 1;
-                }
-                else if (Rotary_Encoder_is_Counterclockwise()) {
-                    if (Last_Screen > 0) {
-                        next_screen = Last_Screen - 1;
-                    }
-                    else
-                        next_screen = 0;
-                }
+        static uint8_t blinky = 1;
 
-                if (next_screen == HOME_SCREEN)
-                    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[next_screen]);
-                else if (next_screen == LOG_SETTINGS_SCREEN)
-                    Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[next_screen]);
-                else if (next_screen == CLOCK_AND_CALENDAR_SCREEN)
-                    Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[next_screen]);
+        uint8_t next_screen = HOME_SCREEN;
+
+        t0 = sys_tick_ms;
+
+        do {
+            if (Rotary_Encoder_is_Clockwise()) {
+                if (Last_Screen < NUMBER_OF_SCREENS - 1) {
+                    next_screen = ++Last_Screen;
+
+                }
+                else
+                    next_screen = 0;
+
+                Last_Screen = next_screen;
 
             }
-            while (Rotary_Encoder_Push_Button() != BUTTON_PRESSED);
+            else if (Rotary_Encoder_is_Counterclockwise()) {
+                if (Last_Screen > 0) {
+                    next_screen = --Last_Screen;
+                }
+                else
+                    next_screen = NUMBER_OF_SCREENS - 1;
 
-            Current_Screen = next_screen;
+                Last_Screen = next_screen;
 
-            break;
+            }
+
+            if ((sys_tick_ms - t0) > 100) {
+                t0 = sys_tick_ms;
+                blinky = !blinky;
+            }
+
+            if (next_screen == HOME_SCREEN) {
+                // SSD1306_clear(oled_buf);
+                Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+            }
+            else if (next_screen == LOG_SETTINGS_SCREEN) {
+                // SSD1306_clear(oled_buf);
+                Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+            }
+            else if (next_screen == CLOCK_AND_CALENDAR_SCREEN) {
+                //  SSD1306_clear(oled_buf);
+                Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+            }
+
         }
+        while (Rotary_Encoder_Push_Button() != BUTTON_PRESSED);
 
-        case HOME_SCREEN: {
-            /*
+        Current_Screen = next_screen;
 
-             Build_Screen(HOME_SCREEN);
+        break;
+    }
 
-             __no_operation();
+    case HOME_SCREEN: {
 
-             uint8_t adj_status = Rotary_Encoder_Push_Button();
-             next_screen = HOME_SCREEN;
-             do {
+        break;
+    }
 
-             Rotary_Encoder_Read();
+    case LOG_SETTINGS_SCREEN: {
 
-             if (Rotary_Encoder_Changed()) {
-             if (Rotary_Encoder_is_Clockwise()) {
-             if (next_screen < TIME_AND_DATE_SCREEN)
-             next_screen++;
-             else
-             next_screen = HOME_SCREEN;
+        break;
+    }
 
-             Build_Screen(next_screen);
-             }
-             if (Rotary_Encoder_is_Counterclockwise()) {
-             if (next_screen > HOME_SCREEN)
-             next_screen--;
-             else
-             next_screen = TIME_AND_DATE_SCREEN;
-             Build_Screen(next_screen);
-             }
+    case CLOCK_AND_CALENDAR_SCREEN: {
 
-             }
-
-             }
-             while (Current_Screen == HOME_SCREEN);
-
-             Current_Screen = next_screen;
-             */
-
-            break;
-        }
-
-        case LOG_SETTINGS_SCREEN: {
-            /*
-             Build_Screen(LOG_SETTINGS_SCREEN);
-
-             __no_operation();
-
-             uint8_t adj_status = Rotary_Encoder_Push_Button();
-             next_screen = LOG_SETTINGS_SCREEN;
-             do {
-
-             Rotary_Encoder_Read();
-
-             if (Rotary_Encoder_Changed()) {
-             if (Rotary_Encoder_is_Clockwise()) {
-             if (next_screen < TIME_AND_DATE_SCREEN)
-             next_screen++;
-             else
-             next_screen = HOME_SCREEN;
-
-             Build_Screen(next_screen);
-             }
-             if (Rotary_Encoder_is_Counterclockwise()) {
-             if (next_screen > HOME_SCREEN)
-             next_screen--;
-             else
-             next_screen = TIME_AND_DATE_SCREEN;
-             Build_Screen(next_screen);
-             }
-
-             }
-
-             }
-             while (Current_Screen == LOG_SETTINGS_SCREEN);
-
-             Current_Screen = next_screen;
-             */
-            break;
-        }
-
-        case CLOCK_AND_CALENDAR_SCREEN: {
-            /*
-             Build_Screen(TIME_AND_DATE_SCREEN);
-
-             __no_operation();
-
-             uint8_t adj_status = Rotary_Encoder_Push_Button();
-             next_screen = TIME_AND_DATE_SCREEN;
-             do {
-
-             Rotary_Encoder_Read();
-
-             if (Rotary_Encoder_Changed()) {
-             if (Rotary_Encoder_is_Clockwise()) {
-             if (next_screen < TIME_AND_DATE_SCREEN)
-             next_screen++;
-             else
-             next_screen = HOME_SCREEN;
-
-             Build_Screen(next_screen);
-             }
-             if (Rotary_Encoder_is_Counterclockwise()) {
-             if (next_screen > HOME_SCREEN)
-             next_screen--;
-             else
-             next_screen = TIME_AND_DATE_SCREEN;
-             Build_Screen(next_screen);
-             }
-
-             }
-
-             }
-             while (Current_Screen == TIME_AND_DATE_SCREEN);
-
-             Current_Screen = next_screen;
-             */
-            break;
-        }
+        break;
+    }
 
     }
 
@@ -544,44 +565,71 @@ int main(void) {
 
     Watchdog_Init();
     GPIOs_Init();
-
+    Oscillator_Init(); //16MHz
     GPIO_Interrupt_Init();
     Init_Timer0();
-
-    //Oscillator_Init(); //16MHz
     SPI_Master_Mode_Init(eUSCI_A0); //SDCARD
     SPI_Master_Mode_Init(eUSCI_B1); //Display OLED
     I2C_Master_Mode_Init(eUSCI_B0); //RTC
+    ADC_Init();
 
     __enable_interrupt();
 
     SSD1306_begin();
     SSD1306_clear(oled_buf);
     SSD1306_display(oled_buf);
-    __delay_cycles(1000);
+    delay(100);
 
+    SSD1306_string(20, 15, "TESTE", 14, 1, oled_buf);
+    SSD1306_display(oled_buf);
+    delay(100);
+
+    int i = 0;
+    for(i = 0; i < ADC_BATTERY_SAMPLES; i++)
+        ADC_Battery_Array[i] = ADC_STEPS - 1;
+
+    for(i = 0; i < ADC_BATTERY_SAMPLES; i++)
+        Get_Battery_Voltage();
+
+    sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.2, 0, 100));
+
+
+
+    /*
+    while(1){
+
+        sprintf(c, "%.2f", (Get_Battery_Voltage() ));
+        SSD1306_clear(oled_buf);
+        SSD1306_string(20, 15, c, 14, 1, oled_buf);
+        SSD1306_display(oled_buf);
+        delay(100);
+
+    }
+    */
     //SSD1306_string(20, 15, print_a, 14, 1, oled_buf);
     //SSD1306_display(oled_buf);
 
     //print_rotary_state();
 
-    /*
-     g_current_time_and_date = Get_Current_Time_and_Date();
-     char min = *(g_current_time_and_date + 1);
+    ///
+    //  g_current_time_and_date = Get_Current_Time_and_Date();
+    //  char min = *(g_current_time_and_date + 1);
 
-     if(min <= 50)
-     Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
-     */
+    //   if(min <= 50)
+    // Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
+    //
 
-    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[HOME_SCREEN]);
-    //Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[LOG_SETTINGS_SCREEN]);
-    //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS);
+    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[HOME_SCREEN], NO_BLINK);
+    //Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[LOG_SETTINGS_SCREEN], NO_BLINK);
+    //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS, NO_BLINK);
 
     while (1) {
         Run_SFM();
     }
     /*
      // Mount the SD Card
+
+
 
      switch (f_mount(&sdVolume, "", 0)) {
      __no_operation();
@@ -618,7 +666,9 @@ int main(void) {
      for (i = 0; i < 100; i++) {
      filename[5] = i / 10 + '0';
      filename[6] = i % 10 + '0';
+
      fr = f_stat(filename, &fno);
+
      __no_operation();
      if (fr == FR_OK) {
      __no_operation();
@@ -630,9 +680,13 @@ int main(void) {
      }
      else {
      __no_operation();
-     // Error occurred
-     //P4OUT |= BIT6;
-     //  P1OUT |= BIT0;
+     SSD1306_clear(oled_buf);
+     SSD1306_display(oled_buf);
+     __delay_cycles(1000);
+
+     SSD1306_string(16, 20, "SD-CARD FAIL!", 16, 1, oled_buf);
+     SSD1306_display(oled_buf);
+     __delay_cycles(1000);
      while (1);
      }
      }
@@ -674,6 +728,15 @@ int main(void) {
 __interrupt void System_Time_Tick_MiliSeconds() {
     sys_tick_ms++;
 
+
+    if((sys_tick_ms - read_voltage_battery_trigger) > 5000){
+        read_voltage_battery_trigger = sys_tick_ms;
+        sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.2, 0, 100));
+        __no_operation();
+    }
+
+
+
     if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED)
         Rotary_Encoder_Switch_Holding++;
     else
@@ -683,6 +746,7 @@ __interrupt void System_Time_Tick_MiliSeconds() {
         Last_Screen = Current_Screen;
         Current_Screen = CHANGING_SECREEN_MODE;
         Rotary_Encoder_Switch_Holding = 0;
+        P4IFG &= ~GPIO_ROTARY_ENCODER_BUTTON;
     }
 
 }
