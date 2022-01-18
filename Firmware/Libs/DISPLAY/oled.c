@@ -279,6 +279,8 @@ void SSD1306_begin() {
     command(SSD1306_DISPLAYALLON_RESUME);
     command(SSD1306_NORMALDISPLAY);
     command(SSD1306_DISPLAYON);
+
+
 }
 
 void SSD1306_clear(uint8_t *buffer) {
@@ -393,7 +395,12 @@ void SSD1306_display(uint8_t *buffer) {
     command(0);         //page atart address
     command(PAGES - 1); //page end address
     P3OUT |= GPIO_OLED_TRANSMISSION_MODE; //  Transmit a data
+
+
+
     SPIWrite(buffer, WIDTH * HEIGHT / 8);
+
+
 }
 /*
 void delay(uint8_t v) {

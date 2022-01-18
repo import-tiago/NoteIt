@@ -6,7 +6,7 @@
 
 void SPI_Master_Mode_Init(uint8_t eUSCI) {
     switch (eUSCI) {
-    case eUSCI_A0:
+    case eUSCI_A0: // SD-CARD
         UCA0CTLW0 |= UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
         UCA0CTLW0 |=
         UCMODE_0 |  // 3-pin SPI mode (without slave transmission control a.k.a. UCxSTE pin)
@@ -21,17 +21,17 @@ void SPI_Master_Mode_Init(uint8_t eUSCI) {
         UCA0CTLW0 &= ~UCSWRST;    // Clear software reset
         break;
 
-    case eUSCI_B1:
+    case eUSCI_B1: //OLED
         UCB1CTLW0 |= UCSWRST;    // Software reset enabled (Puts eUSCI in configuration mode)
         UCB1CTLW0 |=
         UCMODE_0 |  // 3-pin SPI mode
                 UCMST_1  |  // Master mode
                 UCSYNC_1 |  // Synchronous mode
-                UCCKPH_1 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
+                UCCKPH_0 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
                 UCCKPL_1 |  // Clock polarity = LOW as inactive state
                 UCSSEL_2 |  // eUSCI clock source = SMCLK
                 UCMSB;      // Direction of the receive and transmit shift register is MSB first
-        UCB1BRW = 4;             // Clock prescaler = SMCLK/4 = 4MHz
+        UCB1BRW = 2;             // Clock prescaler = SMCLK/2 = 8MHz
 
         UCB1CTLW0 &= ~UCSWRST;    // Clear software reset
         break;

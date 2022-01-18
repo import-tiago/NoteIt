@@ -19,6 +19,16 @@
 #include <./DISPLAY/Screens/Screens.h>
 
 
+
+
+
+
+
+
+
+
+
+
 #define TA0_OVERFLOW        16000 // 1ms
 
 
@@ -95,7 +105,7 @@ uint32_t Current_Baudrate = 115200;
 //Screens_List Current_Screen = HOME_SCREEN;
 //Screens_List next_screen;
 
-void delay(uint8_t n) {
+void delay(uint16_t n) {
     while (n--)
         __delay_cycles(16000);
 }
@@ -164,6 +174,7 @@ int8_t incValue = 0;
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
 uint32_t sys_tick_ms = 0;
 uint32_t t0;
+uint32_t redraw_delay;
 int new = 1;
 
 uint32_t read_voltage_battery_trigger = 0;
@@ -390,9 +401,9 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, 
 
     uint8_t build_element = Last_Screen_Builded != screen_element[0][0][0] ? 1 : 0;
     __no_operation();
-
+   build_element=1;
     if (build_element)
-        SSD1306_clear(oled_buf);
+   SSD1306_clear(oled_buf);
 
     do {
         switch (screen_element[number_elements][1][0]) {
@@ -448,8 +459,14 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, 
     }
     while (number_elements >= 0);
 
-    SSD1306_display(oled_buf);
-    delay(50);
+
+   // if ((sys_tick_ms - redraw_delay) > 500) {
+   //     redraw_delay = sys_tick_ms;
+                  SSD1306_display(oled_buf);
+     //         }
+
+  //  SSD1306_display(oled_buf);
+   // delay(50);
     Last_Screen_Builded = screen_element[0][0][0];
 }
 
@@ -490,6 +507,7 @@ void Run_SFM() { //State Finite Machine
         static uint8_t blinky = 1;
 
         uint8_t next_screen = HOME_SCREEN;
+        while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
 
         t0 = sys_tick_ms;
 
@@ -575,14 +593,112 @@ int main(void) {
 
     __enable_interrupt();
 
-    SSD1306_begin();
-    SSD1306_clear(oled_buf);
-    SSD1306_display(oled_buf);
-    delay(100);
 
-    SSD1306_string(20, 15, "TESTE", 14, 1, oled_buf);
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+    SSD1306Init();
+
+    clearScreen();
+
+    // loop to for visual of framerate
+    int k;
+    for (k=0;k<30;k++)
+    {
+        Fill_RAM_PAGE(1, 0xff);
+        Fill_RAM_PAGE(3, 0xff);
+        Fill_RAM_PAGE(5, 0xff);
+        Fill_RAM_PAGE(7, 0xff);
+
+        __delay_cycles(1000);
+
+        clearScreen();
+
+        Fill_RAM_PAGE(2, 0xff);
+        Fill_RAM_PAGE(4, 0xff);
+        Fill_RAM_PAGE(6, 0xff);
+
+        clearScreen();
+
+        __delay_cycles(1000);
+    }
+    __no_operation();
+
+
+    // display brain icon
+  //  imageDraw(Bat816, 0, 0);
+
+ //   __delay_cycles(32000000);
+
+ //   clearScreen();
+
+    // display demo text with outline
+
+    while (1)    {
+        clearScreen();
+        stringDraw(30, 30, "MSP430G2553");
+        delay(200);
+     }
+    stringDraw(4, 14, "USCI OLED BOOSTER");
+    stringDraw(6, 38, "43oh.com");
+
+    // outline
+    verticalLine(0,0,64);
+    verticalLine(128, 0, 64);
+    horizontalLine(1,126,0);
+    horizontalLine(1,126,64);
+
+    // loop in LPM3
+    while (1)    {
+        __no_operation();
+    }
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    SSD1306_begin();
+
+  SSD1306_clear(oled_buf);
     SSD1306_display(oled_buf);
-    delay(100);
+    delay(500);
+
+
+/*
+    while (1)    {
+        SSD1306_string(30, 30, "TESTE", 14, 1, oled_buf);
+          SSD1306_display(oled_buf);
+           delay(500);
+        }
+*/
 
     int i = 0;
     for(i = 0; i < ADC_BATTERY_SAMPLES; i++)
@@ -624,7 +740,8 @@ int main(void) {
     //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS, NO_BLINK);
 
     while (1) {
-        Run_SFM();
+        __no_operation();
+       Run_SFM();
     }
     /*
      // Mount the SD Card
