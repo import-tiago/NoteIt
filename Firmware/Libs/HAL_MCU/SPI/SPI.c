@@ -27,7 +27,7 @@ void SPI_Master_Mode_Init(uint8_t eUSCI) {
         UCMODE_0 |  // 3-pin SPI mode
                 UCMST_1  |  // Master mode
                 UCSYNC_1 |  // Synchronous mode
-                UCCKPH_0 |  // Clock phase = Data is captured on the first UCLK edge and changed on the following edge
+                UCCKPH_0 |  // Data is changed on the first UCLK edge and captured on the following edge.
                 UCCKPL_1 |  // Clock polarity = LOW as inactive state
                 UCSSEL_2 |  // eUSCI clock source = SMCLK
                 UCMSB;      // Direction of the receive and transmit shift register is MSB first

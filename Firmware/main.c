@@ -18,22 +18,10 @@
 #include <./DISPLAY/oled.h>
 #include <./DISPLAY/Screens/Screens.h>
 
-
-
-
-
-
-
-
-
-
-
-
 #define TA0_OVERFLOW        16000 // 1ms
 
-
 float map(float x, float in_min, float in_max, float out_min, float out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 uint16_t analogRead() {
@@ -42,8 +30,6 @@ uint16_t analogRead() {
     return ADCMEM0;
 
 }
-
-
 
 //ADC
 #define ADC_POSITIVE_VREF              ((float)3.30)
@@ -61,43 +47,44 @@ uint16_t analogRead() {
 int ADC_Battery_Array[ADC_BATTERY_SAMPLES];
 int ADC_Battery_Mean = 0;
 float Battery_Voltage = 0;
-char current_battery_voltage[10] = {0};
-char current_battery_percentage[10] = {0};
+char current_battery_voltage[10] = {
+                                     0 };
+char current_battery_percentage[10] = {
+                                        0 };
 
-long Moving_Average(int instantaneous_value, int* array_values, int array_len) {
+long Moving_Average(int instantaneous_value, int *array_values, int array_len) {
 
-  long average = 0;
-  int i = 0;
+    long average = 0;
+    int i = 0;
 
-  // Shifts the entire buffer and discards the oldest value
-  for (i = array_len - 1; i > 0; i--)
-    *(&array_values[i]) = *(&array_values[i - 1]);
+    // Shifts the entire buffer and discards the oldest value
+    for (i = array_len - 1; i > 0; i--)
+        *(&array_values[i]) = *(&array_values[i - 1]);
 
-  *(&array_values[0]) = instantaneous_value;
+    *(&array_values[0]) = instantaneous_value;
 
-  for (i = 0; i < array_len; i++)
-    average += (long) * ((&array_values[i]));
+    for (i = 0; i < array_len; i++)
+        average += (long) *((&array_values[i]));
 
-  return (average / array_len);
+    return (average / array_len);
 }
 
 float Get_Battery_Voltage() {
     static float stable = 5;
 
-  ADC_Battery_Mean = Moving_Average(analogRead(), &ADC_Battery_Array[0], ADC_BATTERY_SAMPLES);
+    ADC_Battery_Mean = Moving_Average(analogRead(), &ADC_Battery_Array[0], ADC_BATTERY_SAMPLES);
 
-  Battery_Voltage = (ADC_RESOLUTION_IN_VOLTAGE * ADC_Battery_Mean )  / RESISTOR_VOLTAGE_DIVIDER_ATTENUATION;
+    Battery_Voltage = (ADC_RESOLUTION_IN_VOLTAGE * ADC_Battery_Mean) / RESISTOR_VOLTAGE_DIVIDER_ATTENUATION;
 
-  if(stable > Battery_Voltage)
-      stable = Battery_Voltage;
+    if (!(P4IN & GPIO_USB_DETECT)) {
+        if (stable > Battery_Voltage)
+            stable = Battery_Voltage;
+    }
+    else
+        stable = Battery_Voltage;
 
-  return stable+ 0.015;
+    return stable;
 }
-
-
-
-
-
 
 //uint32_t Baudrate_List[] = { 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 230400 };
 uint32_t Current_Baudrate = 115200;
@@ -173,11 +160,17 @@ int8_t incValue = 0;
 
 int countA = 0, countB = 0, stateA, stateB; //Declare required variables
 uint32_t sys_tick_ms = 0;
-uint32_t t0;
+
+uint32_t blinky_page_button_count;
+uint8_t blinky_page_button;
+
+uint32_t blinky_battery_symbol_count;
+uint8_t blinky_battery_symbol;
+
 uint32_t redraw_delay;
 int new = 1;
 
-uint32_t read_voltage_battery_trigger = 0;
+uint32_t battery_voltage_update_count = 0;
 
 int8_t Last_Screen_Builded = -1;
 
@@ -243,7 +236,10 @@ void Build_Status_Bar() {
     // SSD1306_clear(oled_buf);
     Show_Clock(0, 0, 12);
     Show_Calendar(48, 0, 12);
-    SSD1306_bitmap(84, 2, Bat816, 16, 8, oled_buf);
+
+    if (blinky_battery_symbol)
+        SSD1306_bitmap(84, 2, Bat816, 16, 8, oled_buf);
+
     SSD1306_string(102, 0, current_battery_percentage, 12, 0, oled_buf);
     // SSD1306_display(oled_buf);
 }
@@ -359,12 +355,12 @@ void Show_Current_Baudrate() {
     uint8_t array_len = strlen(array);
     uint8_t i = 0;
 
-    uint8_t x = 10;
+    uint8_t x = 12;
     uint8_t y = 15;
-    uint8_t step = 18;
+    uint8_t step = 17;
 
-    //SSD1306_string(5, y + 3, "<", 12, 0, oled_buf);
-    // SSD1306_string(120, y + 3, ">", 12, 0, oled_buf);
+    SSD1306_string(4, y + 3, "<", 12, 1, oled_buf);
+    SSD1306_string(120, y + 3, ">", 12, 1, oled_buf);
 
     for (i = 0; i < array_len; i++)
         SSD1306_char1616(x + (step * i), y, array[i], oled_buf);
@@ -372,7 +368,7 @@ void Show_Current_Baudrate() {
 
 }
 
-void Build_Navigation_Buttons(uint8_t current_selected_screen, uint8_t blinky) {
+void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
     int8_t x = 0, y = 54, i = 0;
 
@@ -380,58 +376,57 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen, uint8_t blinky) {
 
     for (i = NUMBER_OF_SCREENS - 1; i >= 0; i--) {
 
-        if (blinky) {
-            if (i == current_selected_screen)
-                SSD1306_string((x + (i * 10)), y, " ", 14, 0, oled_buf);
-            else
-                SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
-        }
-        else {
+      //  if (blinky) {
+        //    if (i == current_selected_screen)
+         //       SSD1306_string((x + (i * 10)), y, " ", 14, 0, oled_buf);
+       //     else
+       //         SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+      //  }
+     //   else {
 
-            if (i == current_selected_screen)
+            if (i == current_selected_screen){
+                if(blinky_page_button)
                 SSD1306_bitmap((x + (i * 10)), y, current_page_bitmap, 5, 5, oled_buf);
+            }
             else
                 SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
 
-        }
+
+       // }
     }
 }
 
-void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, uint8_t blinky) {
+void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) {
 
-    uint8_t build_element = Last_Screen_Builded != screen_element[0][0][0] ? 1 : 0;
-    __no_operation();
-   build_element=1;
-    if (build_element)
-   SSD1306_clear(oled_buf);
+    SSD1306_clear(oled_buf);
 
     do {
         switch (screen_element[number_elements][1][0]) {
             case STATUS_BAR:
-                if (build_element)
-                    Build_Status_Bar();
+
+                Build_Status_Bar();
                 break;
 
             case CURRENT_BAUD_RATE:
-                if (build_element)
-                    Show_Current_Baudrate();
+
+                Show_Current_Baudrate();
                 break;
 
             case DATALOGGER_STATE:
-                if (build_element)
-                    Show_Datalogger_State();
+
+                Show_Datalogger_State();
                 break;
 
             case SCREENS_NAVIGATION_BUTTONS:
-                Build_Navigation_Buttons(screen_element[0][0][0], blinky);
+                Build_Navigation_Buttons(screen_element[0][0][0]);
                 break;
 
             case BAUD_RATE_SELECTION:
                 __no_operation();
                 break;
             case LOG_INSERT_TEMPERATURE:
-                if (build_element)
-                    Build_List_Log_Variables();
+
+                Build_List_Log_Variables();
                 __no_operation();
                 break;
             case LOG_INSERT_TIME:
@@ -444,8 +439,8 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, 
                 __no_operation();
                 break;
             case CLOCK_ADJUSTMENT:
-                if (build_element)
-                    Build_Clock_and_Calendar_Adj();
+
+                Build_Clock_and_Calendar_Adj();
                 __no_operation();
                 break;
             case CALENDAR_ADJUSTMENT:
@@ -459,14 +454,13 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements, 
     }
     while (number_elements >= 0);
 
+    // if ((sys_tick_ms - redraw_delay) > 500) {
+    //     redraw_delay = sys_tick_ms;
+    SSD1306_display(oled_buf);
+    //         }
 
-   // if ((sys_tick_ms - redraw_delay) > 500) {
-   //     redraw_delay = sys_tick_ms;
-                  SSD1306_display(oled_buf);
-     //         }
-
-  //  SSD1306_display(oled_buf);
-   // delay(50);
+    //  SSD1306_display(oled_buf);
+    // delay(50);
     Last_Screen_Builded = screen_element[0][0][0];
 }
 
@@ -504,12 +498,12 @@ void Run_SFM() { //State Finite Machine
         __no_operation();
     case CHANGING_SECREEN_MODE: {
 
-        static uint8_t blinky = 1;
+       // static uint8_t blinky = 1;
 
         uint8_t next_screen = HOME_SCREEN;
         while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
 
-        t0 = sys_tick_ms;
+      //  blinky_page_button = sys_tick_ms;
 
         do {
             if (Rotary_Encoder_is_Clockwise()) {
@@ -534,22 +528,22 @@ void Run_SFM() { //State Finite Machine
 
             }
 
-            if ((sys_tick_ms - t0) > 100) {
-                t0 = sys_tick_ms;
-                blinky = !blinky;
-            }
+           // if ((sys_tick_ms - blinky_page_button) > 100) {
+            //    blinky_page_button = sys_tick_ms;
+           //     blinky = !blinky;
+           // }
 
             if (next_screen == HOME_SCREEN) {
                 // SSD1306_clear(oled_buf);
-                Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+                Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[next_screen]);
             }
             else if (next_screen == LOG_SETTINGS_SCREEN) {
                 // SSD1306_clear(oled_buf);
-                Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+                Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[next_screen]);
             }
             else if (next_screen == CLOCK_AND_CALENDAR_SCREEN) {
                 //  SSD1306_clear(oled_buf);
-                Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[next_screen], blinky);
+                Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[next_screen]);
             }
 
         }
@@ -593,155 +587,49 @@ int main(void) {
 
     __enable_interrupt();
 
-
-
-
-
-
-
-
-/*
-
-
-
-
-
-
-
-    SSD1306Init();
-
-    clearScreen();
-
-    // loop to for visual of framerate
-    int k;
-    for (k=0;k<30;k++)
-    {
-        Fill_RAM_PAGE(1, 0xff);
-        Fill_RAM_PAGE(3, 0xff);
-        Fill_RAM_PAGE(5, 0xff);
-        Fill_RAM_PAGE(7, 0xff);
-
-        __delay_cycles(1000);
-
-        clearScreen();
-
-        Fill_RAM_PAGE(2, 0xff);
-        Fill_RAM_PAGE(4, 0xff);
-        Fill_RAM_PAGE(6, 0xff);
-
-        clearScreen();
-
-        __delay_cycles(1000);
-    }
-    __no_operation();
-
-
-    // display brain icon
-  //  imageDraw(Bat816, 0, 0);
-
- //   __delay_cycles(32000000);
-
- //   clearScreen();
-
-    // display demo text with outline
-
-    while (1)    {
-        clearScreen();
-        stringDraw(30, 30, "MSP430G2553");
-        delay(200);
-     }
-    stringDraw(4, 14, "USCI OLED BOOSTER");
-    stringDraw(6, 38, "43oh.com");
-
-    // outline
-    verticalLine(0,0,64);
-    verticalLine(128, 0, 64);
-    horizontalLine(1,126,0);
-    horizontalLine(1,126,64);
-
-    // loop in LPM3
-    while (1)    {
-        __no_operation();
-    }
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     SSD1306_begin();
 
-  SSD1306_clear(oled_buf);
+    SSD1306_clear(oled_buf);
     SSD1306_display(oled_buf);
     delay(500);
 
 
-/*
-    while (1)    {
-        SSD1306_string(30, 30, "TESTE", 14, 1, oled_buf);
-          SSD1306_display(oled_buf);
-           delay(500);
-        }
-*/
-
     int i = 0;
-    for(i = 0; i < ADC_BATTERY_SAMPLES; i++)
+    for (i = 0; i < ADC_BATTERY_SAMPLES; i++)
         ADC_Battery_Array[i] = ADC_STEPS - 1;
 
-    for(i = 0; i < ADC_BATTERY_SAMPLES; i++)
+    for (i = 0; i < ADC_BATTERY_SAMPLES; i++)
         Get_Battery_Voltage();
 
-    sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.2, 0, 100));
-
-
+    sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.30, 0, 100));
 
     /*
-    while(1){
+     while(1){
 
-        sprintf(c, "%.2f", (Get_Battery_Voltage() ));
-        SSD1306_clear(oled_buf);
-        SSD1306_string(20, 15, c, 14, 1, oled_buf);
-        SSD1306_display(oled_buf);
-        delay(100);
+     sprintf(c, "%.2f", (Get_Battery_Voltage() ));
+     SSD1306_clear(oled_buf);
+     SSD1306_string(20, 15, c, 14, 1, oled_buf);
+     SSD1306_display(oled_buf);
+     delay(100);
 
-    }
-    */
+     }
+     */
     //SSD1306_string(20, 15, print_a, 14, 1, oled_buf);
     //SSD1306_display(oled_buf);
-
     //print_rotary_state();
-
     ///
     //  g_current_time_and_date = Get_Current_Time_and_Date();
     //  char min = *(g_current_time_and_date + 1);
-
     //   if(min <= 50)
     // Set_Clock_and_Calendar(0, 50, 14, SUNDAY, 2, 1, 22);
     //
-
-    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[HOME_SCREEN], NO_BLINK);
+    Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[HOME_SCREEN]);
     //Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[LOG_SETTINGS_SCREEN], NO_BLINK);
     //Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, CLOCK_AND_CALENDAR_SCREEN_NUMBER_OF_ELEMENTS, NO_BLINK);
 
     while (1) {
         __no_operation();
-       Run_SFM();
+        Run_SFM();
     }
     /*
      // Mount the SD Card
@@ -845,12 +733,42 @@ int main(void) {
 __interrupt void System_Time_Tick_MiliSeconds() {
     sys_tick_ms++;
 
-
-    if((sys_tick_ms - read_voltage_battery_trigger) > 5000){
-        read_voltage_battery_trigger = sys_tick_ms;
-        sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.2, 0, 100));
+    if ((sys_tick_ms - battery_voltage_update_count) > 5000) {
+        battery_voltage_update_count = sys_tick_ms;
+        sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.21, 0, 100));
         __no_operation();
     }
+
+    if ((P4IN & GPIO_USB_DETECT)) {
+        if ((sys_tick_ms - blinky_battery_symbol_count) > 1000) {
+            blinky_battery_symbol_count = sys_tick_ms;
+            blinky_battery_symbol = !blinky_battery_symbol;
+        }
+    }
+    else
+        blinky_battery_symbol = 1;
+
+
+
+
+
+
+
+
+
+    if (Current_Screen == CHANGING_SECREEN_MODE) {
+        if ((sys_tick_ms - blinky_page_button_count) > 500) {
+            blinky_page_button_count = sys_tick_ms;
+            blinky_page_button = !blinky_page_button;
+        }
+    }
+    else
+        blinky_page_button = 1;
+
+
+
+
+
 
 
 
