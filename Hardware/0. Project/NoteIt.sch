@@ -6165,6 +6165,7 @@ to receive a DATA instruction
 or a COMMAND instruction
 from SIMO (MOSI) pin.</text>
 <text x="322.072" y="97.536" size="2.54" layer="200" align="center-left" grouprefs="DISPLAY_OLED">*</text>
+<text x="76.835" y="330.708" size="1.27" layer="205" font="vector" align="center">I-REG = 213mA</text>
 </plain>
 <instances>
 <instance part="SW1" gate="G$1" x="468.63" y="175.26" smashed="yes" grouprefs="ROTARY_ENCODER">
