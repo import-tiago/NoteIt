@@ -145,6 +145,7 @@ uint8_t Elements_in_Screen[] = {
 
 
 static uint8_t Current_Screen = HOME_SCREEN;
+static uint8_t Current_Element_Selected = 0;
 static uint8_t Last_Screen = HOME_SCREEN;
 
 

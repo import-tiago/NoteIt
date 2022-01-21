@@ -43,6 +43,10 @@ uint16_t analogRead() {
 #define RESISTOR_VOLTAGE_DIVIDER_ATTENUATION  (RESISTOR_VOLTAGE_DIVIDER_R2 / (RESISTOR_VOLTAGE_DIVIDER_R1 + RESISTOR_VOLTAGE_DIVIDER_R2))
 
 // BATTERY
+#define VOLTAGE_REGULATOR_OUTPUT ((float)3.30)
+#define VOLTAGE_REGULATOR_DROPOUT ((float)0.238)
+#define MAX_VOLTAGE_BATTERY ((float)4.25)
+#define MIN_VOLTAGE_BATTERY (VOLTAGE_REGULATOR_OUTPUT + VOLTAGE_REGULATOR_DROPOUT)
 #define ADC_BATTERY_SAMPLES 100
 int ADC_Battery_Array[ADC_BATTERY_SAMPLES];
 int ADC_Battery_Mean = 0;
@@ -164,6 +168,9 @@ uint32_t sys_tick_ms = 0;
 uint32_t blinky_page_button_count;
 uint8_t blinky_page_button;
 
+uint32_t blinky_cursor_count;
+uint8_t blinky_cursor;
+
 uint32_t blinky_battery_symbol_count;
 uint8_t blinky_battery_symbol;
 
@@ -263,30 +270,30 @@ void Build_Scroll_Bar(uint8_t number_items) {
 
 void Build_List_Log_Variables() {
 
-    int8_t x = 0, y = 54, i = 0;
+    int8_t x = 0, y = 54, i = 0, y_cursor;
     char *variable_name;
     char cursor_space = 8;
     char checkbutton_space = 20;
 
     x = 1;
     y = 20;
-
-    int cursor = 0;
+    y_cursor = y;
 
     for (i = NUMBER_OF_LOG_VARIABLES; i >= 0; i--) {
 
         variable_name = &Log_Variables[i][0];
 
-        if (!cursor) {
-            SSD1306_string(x, y + 1, ">", 12, 0, oled_buf);
-            cursor = 1;
-            SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
-            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+        if(blinky_cursor){
+
+            SSD1306_string(x, (y_cursor + 1) + (Current_Element_Selected * 16), ">", 12, 0, oled_buf);
         }
-        else {
-            SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
-            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
-        }
+
+
+
+
+        SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
+        SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+
         y += 16;
 
         if (y >= 50)
@@ -376,23 +383,22 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen) {
 
     for (i = NUMBER_OF_SCREENS - 1; i >= 0; i--) {
 
-      //  if (blinky) {
+        //  if (blinky) {
         //    if (i == current_selected_screen)
-         //       SSD1306_string((x + (i * 10)), y, " ", 14, 0, oled_buf);
-       //     else
-       //         SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
-      //  }
-     //   else {
+        //       SSD1306_string((x + (i * 10)), y, " ", 14, 0, oled_buf);
+        //     else
+        //         SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+        //  }
+        //   else {
 
-            if (i == current_selected_screen){
-                if(blinky_page_button)
+        if (i == current_selected_screen) {
+            if (blinky_page_button)
                 SSD1306_bitmap((x + (i * 10)), y, current_page_bitmap, 5, 5, oled_buf);
-            }
-            else
-                SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
+        }
+        else
+            SSD1306_string(x + (i * 10), y - 10, ".", 14, 0, oled_buf);
 
-
-       // }
+        // }
     }
 }
 
@@ -498,12 +504,12 @@ void Run_SFM() { //State Finite Machine
         __no_operation();
     case CHANGING_SECREEN_MODE: {
 
-       // static uint8_t blinky = 1;
+        // static uint8_t blinky = 1;
 
         uint8_t next_screen = HOME_SCREEN;
         while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
 
-      //  blinky_page_button = sys_tick_ms;
+        //  blinky_page_button = sys_tick_ms;
 
         do {
             if (Rotary_Encoder_is_Clockwise()) {
@@ -528,10 +534,10 @@ void Run_SFM() { //State Finite Machine
 
             }
 
-           // if ((sys_tick_ms - blinky_page_button) > 100) {
+            // if ((sys_tick_ms - blinky_page_button) > 100) {
             //    blinky_page_button = sys_tick_ms;
-           //     blinky = !blinky;
-           // }
+            //     blinky = !blinky;
+            // }
 
             if (next_screen == HOME_SCREEN) {
                 // SSD1306_clear(oled_buf);
@@ -555,17 +561,31 @@ void Run_SFM() { //State Finite Machine
     }
 
     case HOME_SCREEN: {
-
+        Build_Screen(Screens.Home_Screen_Parameters, Elements_in_Screen[Current_Screen]);
         break;
     }
 
     case LOG_SETTINGS_SCREEN: {
+        Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[Current_Screen]);
+        if (Rotary_Encoder_is_Clockwise()) {
+            if(Current_Element_Selected < Elements_in_Screen[Current_Screen])
+                Current_Element_Selected++;
+            else
+                Current_Element_Selected = 0;
+        }
+        else if (Rotary_Encoder_is_Counterclockwise()) {
+            if(Current_Element_Selected > 0)
+               Current_Element_Selected--;
+           else
+               Current_Element_Selected = Elements_in_Screen[Current_Screen] - 1;
+
+        }
 
         break;
     }
 
     case CLOCK_AND_CALENDAR_SCREEN: {
-
+        Build_Screen(Screens.Clock_and_Calendar_Screen_Parameters, Elements_in_Screen[Current_Screen]);
         break;
     }
 
@@ -593,7 +613,6 @@ int main(void) {
     SSD1306_display(oled_buf);
     delay(500);
 
-
     int i = 0;
     for (i = 0; i < ADC_BATTERY_SAMPLES; i++)
         ADC_Battery_Array[i] = ADC_STEPS - 1;
@@ -601,7 +620,7 @@ int main(void) {
     for (i = 0; i < ADC_BATTERY_SAMPLES; i++)
         Get_Battery_Voltage();
 
-    sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.30, 0, 100));
+    sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), MIN_VOLTAGE_BATTERY, MAX_VOLTAGE_BATTERY, 0, 100));
 
     /*
      while(1){
@@ -735,7 +754,7 @@ __interrupt void System_Time_Tick_MiliSeconds() {
 
     if ((sys_tick_ms - battery_voltage_update_count) > 5000) {
         battery_voltage_update_count = sys_tick_ms;
-        sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), 3.54, 4.21, 0, 100));
+        sprintf(current_battery_percentage, "%.0f%%", map(Get_Battery_Voltage(), MIN_VOLTAGE_BATTERY, MAX_VOLTAGE_BATTERY, 0, 100));
         __no_operation();
     }
 
@@ -748,14 +767,6 @@ __interrupt void System_Time_Tick_MiliSeconds() {
     else
         blinky_battery_symbol = 1;
 
-
-
-
-
-
-
-
-
     if (Current_Screen == CHANGING_SECREEN_MODE) {
         if ((sys_tick_ms - blinky_page_button_count) > 500) {
             blinky_page_button_count = sys_tick_ms;
@@ -764,6 +775,21 @@ __interrupt void System_Time_Tick_MiliSeconds() {
     }
     else
         blinky_page_button = 1;
+
+
+
+
+
+
+
+    if (Current_Screen != CHANGING_SECREEN_MODE) {
+        if ((sys_tick_ms - blinky_cursor_count) > 250) {
+            blinky_cursor_count = sys_tick_ms;
+            blinky_cursor = !blinky_cursor;
+        }
+    }
+    else
+        blinky_cursor = 0;
 
 
 
