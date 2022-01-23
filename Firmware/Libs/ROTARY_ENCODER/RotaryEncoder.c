@@ -8,6 +8,8 @@ uint32_t initial_debouncing_time = 0;
 static int16_t rotary_value = 0;
 static int16_t last_rotary_value = 0;
 
+int8_t first_enconder_clock = 1;
+
 int8_t Rotary_Encoder_Read() {
     return rotary_value;
 }
@@ -38,8 +40,8 @@ uint8_t Rotary_Encoder_is_Counterclockwise(void) {
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void ISR_Rotary_Enconder_Debounce() {
 
-    static uint8_t state_signal_a = 0;
-    static uint8_t state_signal_b = 0;
+    static uint8_t state_signal_a;
+    static uint8_t state_signal_b;
 
     current_debouncing_tick_ms++;
 
@@ -56,8 +58,8 @@ __interrupt void ISR_Rotary_Enconder_Debounce() {
             rotary_value--;
 
         P4IES ^= GPIO_ROTARY_ENCODER_SIGNAL_A;
-        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
 
         initial_debouncing_time = 0;
     }
@@ -68,7 +70,7 @@ __interrupt void ISR_Rotary_Enconder_Debounce() {
 __interrupt void ISR_Rotary_Encoder_Monitor() {
     if ((P4IFG & GPIO_ROTARY_ENCODER_SIGNAL_A)) {
         initial_debouncing_time = current_debouncing_tick_ms;
-        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
         P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+        P4IE &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
     }
 }

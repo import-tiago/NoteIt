@@ -20,12 +20,12 @@ void Software_Trim() {
         CSCTL0 = 0x100;                         // DCO Tap = 256
         do {
             CSCTL7 &= ~DCOFFG;                  // Clear DCO fault flag
-        } while (CSCTL7 & DCOFFG);               // Test DCO fault flag
+        }
+        while (CSCTL7 & DCOFFG);               // Test DCO fault flag
 
         __delay_cycles((unsigned int) 3000 * MCLK_FREQ_MHZ);               // Wait FLL lock status (FLLUNLOCK) to be stable
                                                                            // Suggest to wait 24 cycles of divided FLL reference clock
-        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0))
-            ;
+        while ((CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)) && ((CSCTL7 & DCOFFG) == 0));
 
         csCtl0Read = CSCTL0;                   // Read CSCTL0
         csCtl1Read = CSCTL1;                   // Read CSCTL1
@@ -43,7 +43,8 @@ void Software_Trim() {
                 dcoFreqTrim--;
                 CSCTL1 = (csCtl1Read & (~DCOFTRIM)) | (dcoFreqTrim << 4);
             }
-        } else                                   // DCOTAP >= 256
+        }
+        else                                   // DCOTAP >= 256
         {
             newDcoDelta = newDcoTap - 256;     // Delta value between DCPTAP and 256
             if (oldDcoTap < 256)                // DCOTAP cross 256
@@ -61,12 +62,12 @@ void Software_Trim() {
             bestDcoDelta = newDcoDelta;
         }
 
-    } while (endLoop == 0);                      // Poll until endLoop == 1
+    }
+    while (endLoop == 0);                      // Poll until endLoop == 1
 
     CSCTL0 = csCtl0Copy;                       // Reload locked DCOTAP
     CSCTL1 = csCtl1Copy;                       // Reload locked DCOFTRIM
-    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1))
-        ; // Poll until FLL is locked
+    while (CSCTL7 & (FLLUNLOCK0 | FLLUNLOCK1)); // Poll until FLL is locked
 }
 
 void Oscillator_Init() {
@@ -77,7 +78,8 @@ void Oscillator_Init() {
     do {
         CSCTL7 &= ~(XT1OFFG | DCOFFG);           // Clear XT1 and DCO fault flag
         SFRIFG1 &= ~OFIFG;
-    } while (SFRIFG1 & OFIFG);                   // Test oscillator fault flag
+    }
+    while (SFRIFG1 & OFIFG);                   // Test oscillator fault flag
 
     __bis_SR_register(SCG0);                     // disable FLL
     CSCTL3 |= SELREF__XT1CLK;                    // Set XT1 as FLL reference source
@@ -134,9 +136,8 @@ void GPIOs_Init() {
     //PULL-UPs and PULL DOWNs
     //P4REN |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;   // Allows internal pull-up or pull-down resistor
     //P4OUT |= GPIO_ROTARY_ENCODER_BUTTON | GPIO_ROTARY_ENCODER_SIGNAL_A | GPIO_ROTARY_ENCODER_SIGNAL_B;   // Enable pull-up
-    P4REN |= GPIO_ROTARY_ENCODER_BUTTON ;   // Allows internal pull-up or pull-down resistor
-    P4OUT |= GPIO_ROTARY_ENCODER_BUTTON ;   // Enable pull-up
-
+    P4REN |= GPIO_ROTARY_ENCODER_BUTTON;   // Allows internal pull-up or pull-down resistor
+    P4OUT |= GPIO_ROTARY_ENCODER_BUTTON;   // Enable pull-up
 
     /*  THIRD STEP: SPECIAL FUNCTIONS  */
     P2SEL0 |= XTAL_IN | XTAL_OUT;                           //Low Frequency Crystal
@@ -160,10 +161,9 @@ void GPIOs_Init() {
 }
 
 void GPIO_Interrupt_Init() {
-
-    P4IES |=  GPIO_ROTARY_ENCODER_SIGNAL_A;
-    P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
+    P4IES |= GPIO_ROTARY_ENCODER_SIGNAL_A;
     P4IFG &= ~GPIO_ROTARY_ENCODER_SIGNAL_A;
+    P4IE |= GPIO_ROTARY_ENCODER_SIGNAL_A;
 }
 
 void ADC_Init() {
@@ -175,20 +175,20 @@ void ADC_Init() {
     ADCCTL2 |= ADCRES_2;                                     // 12-bit conversion results
     ADCMCTL0 |= ADCINCH_0;                         // A1 ADC input select; Vref=VeREF+
 
-/*
-    ADCCTL0 &= ~ADCENC;               // Disable ADC conversion (needed for the next steps)
-    ADCMCTL0 |= ADCSREF_0;            // VR+ = AVCC and VR- = AVSS
-    ADCMCTL0 |= ADCINCH_0;           // A0 ADC input select
-    ADCCTL0 |= ADCSHT_12;            // ADC sample-and-hold time = 1024 ADCCLK cycles
-    ADCCTL0 |= ADCON;                // ADC on
-    //ADCCTL0 |= ADCMSC;               // ADC sample-and-conversions are performed automatically as soon as the prior conversion is completed (sequential mode)
-    ADCCTL1 |= ADCSHS_0;             // ADC sample-and-hold source = ADCSC bit
-    ADCCTL1 |= ADCSHP_0;             // ADC sample-and-hold pulse-mode select = SAMPCON signal is sourced from the sampling timer
+    /*
+     ADCCTL0 &= ~ADCENC;               // Disable ADC conversion (needed for the next steps)
+     ADCMCTL0 |= ADCSREF_0;            // VR+ = AVCC and VR- = AVSS
+     ADCMCTL0 |= ADCINCH_0;           // A0 ADC input select
+     ADCCTL0 |= ADCSHT_12;            // ADC sample-and-hold time = 1024 ADCCLK cycles
+     ADCCTL0 |= ADCON;                // ADC on
+     //ADCCTL0 |= ADCMSC;               // ADC sample-and-conversions are performed automatically as soon as the prior conversion is completed (sequential mode)
+     ADCCTL1 |= ADCSHS_0;             // ADC sample-and-hold source = ADCSC bit
+     ADCCTL1 |= ADCSHP_0;             // ADC sample-and-hold pulse-mode select = SAMPCON signal is sourced from the sampling timer
 
-    ADCCTL2 &= ~ADCRES;               // ADC resolution = 12 bit (14 clock cycle conversion time)
-    ADCCTL2 |= ADCRES_2;             // ADC resolution = 12 bit (14 clock cycle conversion time)
-    ADCIE |= ADCIE0;               // ADC interrupts enable
-    */
+     ADCCTL2 &= ~ADCRES;               // ADC resolution = 12 bit (14 clock cycle conversion time)
+     ADCCTL2 |= ADCRES_2;             // ADC resolution = 12 bit (14 clock cycle conversion time)
+     ADCIE |= ADCIE0;               // ADC interrupts enable
+     */
 }
 
 void Init_GPIO_Interrupt() {
