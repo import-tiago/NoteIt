@@ -395,25 +395,29 @@ void Build_Clock_and_Calendar_Adj() {
 
 void Show_Current_Baudrate() {
 
-    char array[20] = { 0 };
+    char array[20] = {
+                       0 };
 
     ltoa(Baudrate_List[Current_Baudrate_Index], array, 10);
 
     uint8_t len = strlen(array);
 
     uint8_t step = 17;
-    uint8_t font_size = 16;
+    uint8_t font_size = 12;
     uint8_t cursor_font_size = 12;
     uint8_t i = 0;
 
-    uint8_t x = ((WIDTH - (len * (font_size / 2)) - ((len - 1) * step)) / 2) + (cursor_font_size / 2);
-    uint8_t y = 15;
+    uint8_t x = (WIDTH - ((len - 1) * font_size) + ((len - 4) * 15) - (((len - 1) * step) - step)) / 2;
+    uint8_t y = 17;
+
+    SSD1306_string(4, y + 3, "<", 12, 1, oled_buf);
+    SSD1306_string(120, y + 3, ">", cursor_font_size, 1, oled_buf);
 
     // if (blinky_left_cursor)
-     //  SSD1306_string(4, y + 3, "<", 12, 1, oled_buf);
+    //  SSD1306_string(4, y + 3, "<", 12, 1, oled_buf);
 
-   // if (blinky_right_cursor)
-        SSD1306_string(120, y + 3, ">", cursor_font_size, 1, oled_buf);
+    // if (blinky_right_cursor)
+    //  SSD1306_string(120, y + 3, ">", cursor_font_size, 1, oled_buf);
 
     for (i = 0; i < len; i++, x += step)
         SSD1306_char1616(x, y, array[i], oled_buf);
@@ -493,11 +497,12 @@ void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) 
                 break;
         }
         number_elements--;
-    } while (number_elements >= 0);
+    }
+    while (number_elements >= 0);
 
     SSD1306_display(oled_buf);
 
-    if(screen_element[0][0][0] != CHANGING_SECREEN_MODE)
+    if (screen_element[0][0][0] != CHANGING_SECREEN_MODE)
         Last_Screen_Builded = screen_element[0][0][0];
 }
 
@@ -818,7 +823,7 @@ __interrupt void System_Time_Tick_MiliSeconds() {
         Rotary_Encoder_Switch_Holding = 0;
 
     if (Rotary_Encoder_Switch_Holding >= SWITCH_HOLD_TIME) {
-        if(Current_Screen != CHANGING_SECREEN_MODE)
+        if (Current_Screen != CHANGING_SECREEN_MODE)
             Last_Screen = Current_Screen;
         Current_Screen = CHANGING_SECREEN_MODE;
         //Rotary_Encoder_Switch_Holding = 0;
