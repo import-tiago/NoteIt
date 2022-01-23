@@ -39,7 +39,7 @@ const uint8_t scrollbar_bitmap[] = {  //4x49px
     0x00
 };
 
-
+uint8_t Current_Baudrate_Index = 0;
 uint32_t Baudrate_List[] = {
                             1200,
                             2400,
