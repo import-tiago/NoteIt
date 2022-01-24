@@ -89,7 +89,7 @@ enum Adjustments_Possibilities_in_Elements {
     FIVE_OPTIONS
 };
 
- const struct ScreensStruct {
+  struct ScreensStruct {
     uint8_t Home_Screen_Parameters[4][3][1];
     uint8_t Log_Settings_Screen_Parameters[6][3][1];
     uint8_t Clock_and_Calendar_Screen_Parameters[4][3][1];
@@ -117,6 +117,8 @@ enum Adjustments_Possibilities_in_Elements {
    }
 };
 
+#define MAX_OPTIONS_PER_PAGE 2
+static uint8_t Page_in_Screen = 1;
 
 uint8_t Elements_in_Screen[] = {
     ((sizeof(Screens.Home_Screen_Parameters) / sizeof(Screens.Home_Screen_Parameters[0]))-1),

@@ -304,44 +304,15 @@ void Show_Datalogger_State() {
         SSD1306_string(24, 34, state, 12, 0, oled_buf);
 }
 
-void Build_Scroll_Bar(uint8_t number_items) {
+void Build_Scroll_Bar(uint8_t number_items, uint8_t current_page) {
     char bar_size = SCROLL_BAR_MAX_SIZE / number_items;
     uint8_t x = 124;
     uint8_t y = 16;
 
-    SSD1306_bitmap(x, y, scrollbar_bitmap, 4, bar_size, oled_buf);
-
-}
-
-void Build_List_Log_Variables() {
-
-    int8_t x = 0, y = 54, i = 0, y_cursor;
-    char *variable_name;
-    char cursor_space = 8;
-    char checkbutton_space = 20;
-
-    x = 1;
-    y = 20;
-    y_cursor = y;
-
-    for (i = NUMBER_OF_LOG_VARIABLES; i >= 0; i--) {
-
-        variable_name = &Log_Variables[i][0];
-
-        if (blinky_right_cursor)
-            SSD1306_string(x, (y_cursor + 1) + (Current_Element_Selected * 16), ">", 12, 0, oled_buf);
-
-        SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
-        SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
-
-        y += 16;
-
-        if (y >= 50)
-            break;
-    }
-
-    Build_Scroll_Bar(NUMBER_OF_LOG_VARIABLES);
-
+    if (!current_page)
+        SSD1306_bitmap(x, y, scrollbar_bitmap, 4, bar_size, oled_buf);
+    else
+        SSD1306_bitmap(x, y * 2, scrollbar_bitmap, 4, bar_size, oled_buf);
 }
 
 void Build_Clock_and_Calendar_Adj() {
@@ -533,7 +504,50 @@ void print_rotary_state() {
 
     __no_operation();
 }
+void Build_List_Log_Variables() {
 
+    int8_t x = 0, y = 54, i = 0, y_cursor;
+    char *variable_name;
+    char cursor_space = 8;
+    char checkbutton_space = 20;
+
+    x = 1;
+    y = 20;
+    y_cursor = y;
+
+    for (i = (Page_in_Screen * MAX_OPTIONS_PER_PAGE) - 1; i >= ((Page_in_Screen - 1) * MAX_OPTIONS_PER_PAGE); i--) {
+
+        variable_name = &Log_Variables[i][0];
+
+        if (blinky_right_cursor) {
+            if (Page_in_Screen == MAX_OPTIONS_PER_PAGE - 1)
+                SSD1306_string(x, (y_cursor + 1) + (Current_Element_Selected * 16), ">", 12, 0, oled_buf);
+            else
+                SSD1306_string(x, (y_cursor + 1) + ((Current_Element_Selected - 2) * 16), ">", 12, 0, oled_buf);
+        }
+
+        SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
+
+        int p = Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
+
+        if (p){
+            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+            p=0;
+        }
+        else{
+            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
+            p=0;
+        }
+
+        y += 16;
+
+        if (y >= 50)
+            break;
+    }
+
+    Build_Scroll_Bar(NUMBER_OF_LOG_VARIABLES, Page_in_Screen - 1);
+
+}
 void Run_SFM() { //State Finite Machine
 
     switch (Current_Screen) {
@@ -602,17 +616,29 @@ void Run_SFM() { //State Finite Machine
         case LOG_SETTINGS_SCREEN: {
             Build_Screen(Screens.Log_Settings_Screen_Parameters, Elements_in_Screen[Current_Screen]);
             if (Rotary_Encoder_is_Clockwise()) {
-                if (Current_Element_Selected < Elements_in_Screen[Current_Screen])
+                if (Current_Element_Selected < Elements_in_Screen[Current_Screen] - MAX_OPTIONS_PER_PAGE) {
                     Current_Element_Selected++;
-                else
-                    Current_Element_Selected = 0;
+
+                    if (Current_Element_Selected >= MAX_OPTIONS_PER_PAGE) {
+                        if (Page_in_Screen < MAX_OPTIONS_PER_PAGE)
+                            Page_in_Screen++;
+                    }
+                }
             }
             else if (Rotary_Encoder_is_Counterclockwise()) {
-                if (Current_Element_Selected > 0)
+                if (Current_Element_Selected > 0) {
                     Current_Element_Selected--;
-                else
-                    Current_Element_Selected = Elements_in_Screen[Current_Screen] - 1;
 
+                    if (Current_Element_Selected < MAX_OPTIONS_PER_PAGE) {
+                        if (Page_in_Screen > MAX_OPTIONS_PER_PAGE - 1)
+                            Page_in_Screen--;
+                    }
+                }
+            }
+
+            if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED) {
+                Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0] = !Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
+                while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
             }
             break;
         }
@@ -796,7 +822,7 @@ __interrupt void System_Time_Tick_MiliSeconds() {
         blinky_page_button = 1;
 
     if (Current_Screen != CHANGING_SECREEN_MODE) {
-        if ((sys_tick_ms - blinky_right_cursor_count) > 1000) {
+        if ((sys_tick_ms - blinky_right_cursor_count) > 500) {
             blinky_right_cursor_count = sys_tick_ms;
             blinky_right_cursor = !blinky_right_cursor;
             blinky_left_cursor_count = sys_tick_ms;
