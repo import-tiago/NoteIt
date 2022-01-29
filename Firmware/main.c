@@ -510,6 +510,7 @@ void Build_List_Log_Variables() {
     char *variable_name;
     char cursor_space = 8;
     char checkbutton_space = 20;
+    int last = Current_Element_Selected;
 
     x = 1;
     y = 20;
@@ -526,23 +527,44 @@ void Build_List_Log_Variables() {
                 SSD1306_string(x, (y_cursor + 1) + ((Current_Element_Selected - 2) * 16), ">", 12, 0, oled_buf);
         }
 
-        SSD1306_string(x + cursor_space, y, variable_name, 12, 0, oled_buf);
+        int p = 0;
 
-        int p = Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
+        if (i < MAX_OPTIONS_PER_PAGE) {
 
-        if (p){
-            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
-            p=0;
+            p = (i * 16) + y + 2;
+
+            SSD1306_string(x + cursor_space, (abs(1 - i) * 16) + y, variable_name, 12, 0, oled_buf);
+            if (Screens.Log_Settings_Screen_Parameters[(i + 1)][2][0])
+                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+            else
+                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
         }
-        else{
-            SSD1306_bitmap(128 - checkbutton_space, y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
-            p=0;
+        else {
+
+            p = (abs(MAX_OPTIONS_PER_PAGE - i) * 16) + y + 2;
+            SSD1306_string(x + cursor_space, (abs(3 - i) * 16) + y, variable_name, 12, 0, oled_buf);
+
+            if (Screens.Log_Settings_Screen_Parameters[i + 1][2][0])
+                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+            else
+                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
         }
 
-        y += 16;
+        /*
+         if (Current_Element_Selected == last) {
+         last = Current_Element_Selected + 1;
 
-        if (y >= 50)
-            break;
+         if (Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0])
+         SSD1306_bitmap(128 - checkbutton_space, y + 2 + (Current_Element_Selected * (abs(3 - i) * 16)), Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+         else
+         SSD1306_bitmap(128 - checkbutton_space, y + 2 + (Current_Element_Selected * (abs(3 - i) * 16)), Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+
+         }
+         */
+
+        // y += 16;
+        //  if (y >= 50)
+        //      break;
     }
 
     Build_Scroll_Bar(NUMBER_OF_LOG_VARIABLES, Page_in_Screen - 1);
@@ -637,8 +659,9 @@ void Run_SFM() { //State Finite Machine
             }
 
             if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED) {
-                Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0] = !Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
                 while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
+                Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0] = !Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
+
             }
             break;
         }
@@ -794,7 +817,8 @@ int main(void) {
 
 // ISR TIMER
 #pragma vector = TIMER1_A0_VECTOR
-__interrupt void System_Time_Tick_MiliSeconds() {
+__interrupt
+void System_Time_Tick_MiliSeconds() {
     sys_tick_ms++;
 
     if ((sys_tick_ms - battery_voltage_update_count) > 5000) {
