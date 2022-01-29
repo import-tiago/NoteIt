@@ -411,7 +411,7 @@ void Build_Navigation_Buttons(uint8_t current_selected_screen) {
     }
 }
 
-void Build_Screen(const uint8_t screen_element[][3][1], int8_t number_elements) {
+void Build_Screen(uint8_t screen_element[][3][1], int8_t number_elements) {
 
     SSD1306_clear(oled_buf);
 
@@ -504,13 +504,13 @@ void print_rotary_state() {
 
     __no_operation();
 }
+
 void Build_List_Log_Variables() {
 
     int8_t x = 0, y = 54, i = 0, y_cursor;
     char *variable_name;
     char cursor_space = 8;
     char checkbutton_space = 20;
-    int last = Current_Element_Selected;
 
     x = 1;
     y = 20;
@@ -531,45 +531,32 @@ void Build_List_Log_Variables() {
 
         if (i < MAX_OPTIONS_PER_PAGE) {
 
-            p = (i * 16) + y + 2;
+            p = (NUMBER_OF_LOG_VARIABLES + 1) - (abs(((NUMBER_OF_LOG_VARIABLES + 1)) - (Page_in_Screen * MAX_OPTIONS_PER_PAGE)) + 1);
 
-            SSD1306_string(x + cursor_space, (abs(1 - i) * 16) + y, variable_name, 12, 0, oled_buf);
+            SSD1306_string(x + cursor_space, (abs(p - i) * 16) + y, variable_name, 12, 0, oled_buf);
+
             if (Screens.Log_Settings_Screen_Parameters[(i + 1)][2][0])
-                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+                SSD1306_bitmap(128 - checkbutton_space, (i * 16) + y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
             else
-                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
+                SSD1306_bitmap(128 - checkbutton_space, (i * 16) + y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
         }
         else {
 
-            p = (abs(MAX_OPTIONS_PER_PAGE - i) * 16) + y + 2;
-            SSD1306_string(x + cursor_space, (abs(3 - i) * 16) + y, variable_name, 12, 0, oled_buf);
+            p = (NUMBER_OF_LOG_VARIABLES + 1) - (abs(((NUMBER_OF_LOG_VARIABLES + 1)) - (Page_in_Screen * MAX_OPTIONS_PER_PAGE)) + 1);
+
+            SSD1306_string(x + cursor_space, (abs(p - i) * 16) + y, variable_name, 12, 0, oled_buf);
 
             if (Screens.Log_Settings_Screen_Parameters[i + 1][2][0])
-                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
+                SSD1306_bitmap(128 - checkbutton_space, (abs(MAX_OPTIONS_PER_PAGE - i) * 16) + y + 2, Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
             else
-                SSD1306_bitmap(128 - checkbutton_space, p, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
+                SSD1306_bitmap(128 - checkbutton_space, (abs(MAX_OPTIONS_PER_PAGE - i) * 16) + y + 2, Bitmap_CHECK_BUTTON, 10, 10, oled_buf);
         }
-
-        /*
-         if (Current_Element_Selected == last) {
-         last = Current_Element_Selected + 1;
-
-         if (Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0])
-         SSD1306_bitmap(128 - checkbutton_space, y + 2 + (Current_Element_Selected * (abs(3 - i) * 16)), Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
-         else
-         SSD1306_bitmap(128 - checkbutton_space, y + 2 + (Current_Element_Selected * (abs(3 - i) * 16)), Bitmap_CHECKED_BUTTON, 10, 10, oled_buf);
-
-         }
-         */
-
-        // y += 16;
-        //  if (y >= 50)
-        //      break;
     }
 
     Build_Scroll_Bar(NUMBER_OF_LOG_VARIABLES, Page_in_Screen - 1);
 
 }
+
 void Run_SFM() { //State Finite Machine
 
     switch (Current_Screen) {
