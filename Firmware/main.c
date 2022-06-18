@@ -188,6 +188,8 @@ uint32_t battery_voltage_update_count = 0;
 
 int8_t Last_Screen_Builded = -1;
 
+uint32_t test;
+
 void Show_Temperature(uint8_t x, uint8_t y, uint8_t font_size) {
     int temp_x = x;
     int temp_x2 = y;
@@ -575,6 +577,7 @@ void Run_SFM() { //State Finite Machine
                         next_screen = 0;
 
                     Last_Screen = next_screen;
+
                 }
                 else if (Rotary_Encoder_is_Counterclockwise()) {
                     if (Last_Screen > 0) {
@@ -645,9 +648,10 @@ void Run_SFM() { //State Finite Machine
                 }
             }
 
-            if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED) {
-                while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
-                Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0] = !Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
+            if (Rotary_Encoder_Push_Button() == BUTTON_PRESSED && Rotary_Encoder_Switch_Holding < 500) {
+                //while (Rotary_Encoder_Push_Button() == BUTTON_PRESSED);
+                if (Rotary_Encoder_Switch_Holding < SWITCH_HOLD_TIME)
+                    Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0] = !Screens.Log_Settings_Screen_Parameters[Current_Element_Selected + 1][2][0];
 
             }
             break;

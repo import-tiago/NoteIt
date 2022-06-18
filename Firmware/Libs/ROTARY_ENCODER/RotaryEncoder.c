@@ -15,7 +15,16 @@ int8_t Rotary_Encoder_Read() {
 }
 
 uint8_t Rotary_Encoder_Push_Button() {
-    return (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
+
+    uint16_t v = (P4IN & GPIO_ROTARY_ENCODER_BUTTON);
+    static uint16_t lastv;
+
+    if (v != lastv) {
+        Rotary_Encoder_Push_Button_Count++;
+        lastv = v;
+    }
+
+    return v;
 }
 
 uint8_t Rotary_Encoder_Changed(void) {

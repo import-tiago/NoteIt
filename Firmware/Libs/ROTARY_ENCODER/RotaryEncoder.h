@@ -11,6 +11,7 @@
 
 static uint32_t Rotary_Encoder_Switch_Holding = 0;
 static uint8_t Rotary_Encoder_Switch_Release = 0;
+static uint32_t Rotary_Encoder_Push_Button_Count = 0;
 
 int8_t Rotary_Encoder_Read(void) ;
 uint8_t Rotary_Encoder_Changed(void);
