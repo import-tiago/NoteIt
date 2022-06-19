@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.0125" altunitdist="inch" altunit="inch"/>
+<grid distance="0.025" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.0125" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="59" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="21" fill="1" visible="no" active="no"/>
@@ -5333,8 +5333,9 @@ Matte Tin (Sn) Plating, 2 Circuits</description>
 <part name="R3" library="My-RLC" library_urn="urn:adsk.eagle:library:35509816" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:35509946/1" value="4k7">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="U3" library="My-ICs" library_urn="urn:adsk.eagle:library:35512106" deviceset="S-8261" device="" package3d_urn="urn:adsk.eagle:package:36225862/1" value="S-8261">
+<part name="U3" library="My-ICs" library_urn="urn:adsk.eagle:library:35512106" deviceset="S-8261" device="" package3d_urn="urn:adsk.eagle:package:36225862/1" override_package3d_urn="urn:adsk.eagle:package:36228518/2" override_package_urn="urn:adsk.eagle:footprint:36225858/1" value="S-8261">
 <attribute name="PARTNO" value="*"/>
+<attribute name="SPICEPREFIX" value="X"/>
 </part>
 <part name="R7" library="My-RLC" library_urn="urn:adsk.eagle:library:35509816" deviceset="R_" device="0603" package3d_urn="urn:adsk.eagle:package:35509946/1" value="2k">
 <attribute name="PARTNO" value="*"/>
@@ -5596,13 +5597,13 @@ Matte Tin (Sn) Plating, 2 Circuits</description>
 <wire x1="182.88" y1="374.65" x2="182.88" y2="373.38" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <wire x1="182.88" y1="373.38" x2="181.61" y2="374.015" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"/>
 <text x="185.039" y="375.793" size="1.27" layer="208" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR">7μA max.</text>
-<text x="75.565" y="334.01" size="1.27" layer="208" font="vector" align="center" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">I-REG [mA]
+<text x="75.565" y="334.01" size="1.27" layer="208" font="vector" align="center" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">I-REG [mA]
 = 1000V / R-PROG</text>
-<wire x1="104.14" y1="379.73" x2="110.49" y2="379.73" width="0.1524" layer="208" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<wire x1="110.49" y1="379.73" x2="109.22" y2="379.095" width="0.1524" layer="208" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<wire x1="109.22" y1="379.095" x2="109.22" y2="380.365" width="0.1524" layer="208" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<wire x1="109.22" y1="380.365" x2="110.49" y2="379.73" width="0.1524" layer="208" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<text x="108.331" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">15mA to
+<wire x1="104.14" y1="379.73" x2="110.49" y2="379.73" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<wire x1="110.49" y1="379.73" x2="109.22" y2="379.095" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<wire x1="109.22" y1="379.095" x2="109.22" y2="380.365" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<wire x1="109.22" y1="380.365" x2="110.49" y2="379.73" width="0.1524" layer="208" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<text x="108.331" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">15mA to
 500mA max.</text>
 <text x="332.105" y="393.065" size="1.778" layer="208" align="center" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR">238mV drops
 at 500mA</text>
@@ -5618,7 +5619,7 @@ at 500mA</text>
 <text x="249.301" y="376.682" size="1.27" layer="208" rot="R180" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR">2.1μA max.</text>
 <text x="259.08" y="395.605" size="0.254" layer="201" align="center" grouprefs="POWER_SUPPLY BATTERY_MONITOR"> </text>
 <text x="185.42" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_PROTECTOR"> </text>
-<text x="44.45" y="395.605" size="0.254" layer="91" align="center" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"> </text>
+<text x="44.45" y="395.605" size="0.254" layer="91" align="center" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"> </text>
 <wire x1="249.555" y1="236.855" x2="278.765" y2="236.855" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <wire x1="278.765" y1="236.855" x2="278.765" y2="213.995" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
 <wire x1="278.765" y1="213.995" x2="249.555" y2="213.995" width="0.254" layer="204" style="shortdash" grouprefs="MICRO_SDCARD_CONTROLLER"/>
@@ -5666,12 +5667,12 @@ from SIMO (MOSI) pin.</text>
 <attribute name="NAME" x="458.47" y="190.5" size="1.27" layer="95"/>
 <attribute name="VALUE" x="458.47" y="188.341" size="1.27" layer="96"/>
 </instance>
-<instance part="U1" gate="G$1" x="90.17" y="368.935" smashed="yes" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">
+<instance part="U1" gate="G$1" x="90.17" y="368.935" smashed="yes" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">
 <attribute name="PARTNO" x="90.17" y="368.935" size="1.778" layer="96" display="off"/>
 <attribute name="NAME" x="77.47" y="387.985" size="1.778" layer="95"/>
 <attribute name="VALUE" x="77.47" y="385.445" size="1.778" layer="96"/>
 </instance>
-<instance part="R3" gate="G$1" x="62.23" y="334.01" smashed="yes" rot="R90" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY">
+<instance part="R3" gate="G$1" x="62.23" y="334.01" smashed="yes" rot="R90" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER">
 <attribute name="NAME" x="60.0964" y="334.01" size="1.27" layer="95" rot="R90" align="center"/>
 <attribute name="VALUE" x="64.262" y="334.01" size="1.27" layer="96" rot="R90" align="center"/>
 <attribute name="PARTNO" x="62.23" y="334.01" size="1.778" layer="96" display="off"/>
@@ -6101,15 +6102,15 @@ from SIMO (MOSI) pin.</text>
 <net name="0V" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="62.23" y1="328.93" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
+<wire x1="62.23" y1="328.93" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
 <pinref part="U1" gate="G$1" pin="VSS"/>
-<wire x1="88.9" y1="342.265" x2="88.9" y2="313.69" width="0.1524" layer="91" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<wire x1="88.9" y1="313.69" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
+<wire x1="88.9" y1="342.265" x2="88.9" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<wire x1="88.9" y1="313.69" x2="62.23" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
 <pinref part="R7" gate="G$1" pin="1"/>
 <wire x1="125.73" y1="313.69" x2="125.73" y2="316.23" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <junction x="125.73" y="313.69" grouprefs="POWER_SUPPLY"/>
 <wire x1="88.9" y1="313.69" x2="125.73" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
-<junction x="88.9" y="313.69" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
+<junction x="88.9" y="313.69" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
 <wire x1="217.805" y1="326.39" x2="217.805" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <wire x1="217.805" y1="313.69" x2="125.73" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY"/>
 <wire x1="332.74" y1="366.395" x2="332.74" y2="313.69" width="0.1524" layer="91" grouprefs="POWER_SUPPLY VOLTAGE_REGULATOR"/>
@@ -6552,8 +6553,8 @@ from SIMO (MOSI) pin.</text>
 <segment>
 <pinref part="U1" gate="G$1" pin="PROG"/>
 <pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="72.39" y1="353.695" x2="62.23" y2="353.695" width="0.1524" layer="91" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
-<wire x1="62.23" y1="353.695" x2="62.23" y2="339.09" width="0.1524" layer="91" grouprefs="BATTERY_CHARGING_MANAGER POWER_SUPPLY"/>
+<wire x1="72.39" y1="353.695" x2="62.23" y2="353.695" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
+<wire x1="62.23" y1="353.695" x2="62.23" y2="339.09" width="0.1524" layer="91" grouprefs="POWER_SUPPLY BATTERY_CHARGING_MANAGER"/>
 </segment>
 </net>
 <net name="N$29" class="0">
