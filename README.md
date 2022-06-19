@@ -1,7 +1,5 @@
 # NoteIt
 
-[![Status](https://img.shields.io/badge/status-WIP-red)](https://github.com/TiagoPaulaSilva/NoteIt) - waiting PCBs v1.2 from JLCPCB...
-
 **NoteIt** is a datalogger for devices based on UART protocols.
 
 It is powered by rechargeable battery, has micro-SD memory card storage with [FatFs](http://elm-chan.org/fsw/ff/00index_e.html), compatibility with 5V and 3.3V levels, automatic baud rate detector/manual baud rate selection; and, optionally, you can add date, time and temperature to the recorded data.
@@ -29,7 +27,11 @@ Custom symbols created using [image2cpp](https://javl.github.io/image2cpp/).
 
 
 ## Schematic Preview
-<p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/Schematic%20v1.2.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/Schematic_Preview.jpg" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
+<p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/NoteIt.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicPreview.png" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
+
+To improve the aesthetics and reliability of the project, all devices (symbol + footprint + 3D model) used in this development belong to my own libraries, which have been tested and validated over time:
+<p align="center"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicLibraries.png" ></p>
+
 
 ## PCB Preview
 - 50 mm x 35 mm / 4 layers.
