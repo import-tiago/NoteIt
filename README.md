@@ -30,12 +30,12 @@ Custom symbols created using [image2cpp](https://javl.github.io/image2cpp/).
 <p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/NoteIt.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicPreview.png" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
 
 To improve the aesthetics and reliability of the project, all devices (symbol + footprint + 3D model) used in this development belong to my own libraries, which have been tested and validated over time:
-<p align="center"><img img width="494" height="632"  src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicLibraries.png" ></p>
+<p align="center"><img width="494" height="632"  src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicLibraries.png" ></p>
 
 
 ## PCB Preview
 - 50 mm x 35 mm / 4 layers.
-<p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/tree/main/Hardware/1.%20Production"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Multilayer_Pewview.png" width="80%" height="80%" title="Watch the video" alt="Watch the video"></a></p>
+<p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/tree/main/Hardware/1.%20Production"><img width="465" height="327" src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/PCB_Multilayer_Preview.png"</a></p>
 
 ### Contributing
 0. Give this project a :star:
