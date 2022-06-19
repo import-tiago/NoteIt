@@ -30,7 +30,7 @@ Custom symbols created using [image2cpp](https://javl.github.io/image2cpp/).
 <p align="center"><a href="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Hardware/0.%20Project/NoteIt.pdf"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicPreview.png" width="100%" height="100%" title="Watch the video" alt="Watch the video"></a></p>
 
 To improve the aesthetics and reliability of the project, all devices (symbol + footprint + 3D model) used in this development belong to my own libraries, which have been tested and validated over time:
-<p align="center"><img src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicLibraries.png" ></p>
+<p align="center"><img img width="494" height="632"  src="https://github.com/TiagoPaulaSilva/NoteIt/blob/main/Assets/SchematicLibraries.png" ></p>
 
 
 ## PCB Preview
